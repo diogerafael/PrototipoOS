@@ -1,0 +1,122 @@
+unit UExibirVinculacoes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls,
+  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
+  dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls, Vcl.ExtCtrls,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TFrmExibirVinculacoes = class(TForm)
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    FDQuery1: TFDQuery;
+    shp1: TShape;
+    lbl1: TLabel;
+    Label1: TLabel;
+    DataSource1: TDataSource;
+    cxGrid1DBTableView1numero_os: TcxGridDBColumn;
+    cxGrid1DBTableView1descricao: TcxGridDBColumn;
+    cxGrid1DBTableView1solicitante: TcxGridDBColumn;
+    cxGrid1DBTableView1dt_chegada_geral: TcxGridDBColumn;
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  private
+    { Private declarations }
+    FIdParametro:Integer;
+    FNumeroOS:string;
+    FObject:TForm;
+    procedure CarregarDados(Obj:TForm);
+
+
+  public
+    { Public declarations }
+    constructor Create(AOwner : TComponent); overload;
+    constructor Create(AOwner : TComponent;_paramentroId:Integer;_numeroos:string); overload;
+  end;
+
+var
+  FrmExibirVinculacoes: TFrmExibirVinculacoes;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, uFrmCadastrarProjeto, uFrmCadastrarProjetoRural;
+
+{ TForm1 }
+
+procedure TFrmExibirVinculacoes.CarregarDados(Obj:TForm);
+begin
+  if obj is TfrmCadastrarProjeto then
+  begin
+    FDQuery1.SQL.Clear;
+    FDQuery1.Close;
+    FDQuery1.SQL.Add('SELECT o.numero_os, n.descricao , o.solicitante, o.dt_chegada_geral FROM  os_engenharia_projeto AS o '+
+                    ' INNER JOIN os_engenharia_notas AS n ON n.id_os_projeto = o.id WHERE  o.id_os_vinculacao = :id GROUP BY  o.id ORDER BY  o.dt_chegada_geral ');
+    FDQuery1.Params.ParamByName('id').AsInteger := FIdParametro;
+    FDQuery1.Open();
+  end;
+  if obj = TfrmCadastrarProjetoRural then
+  begin
+    FDQuery1.SQL.Clear;
+    FDQuery1.Close;
+    FDQuery1.SQL.Add('SELECT o.numero_os, n.descricao , o.dt_chegada_geral FROM  os_engenharia_projeto_rural AS o '+
+                    ' INNER JOIN os_engenharia_notas_rural AS n ON n.id_os_projeto = o.id WHERE  o.id_os_vinculacao = :id GROUP BY  o.id ORDER BY  o.dt_chegada_geral ');
+    FDQuery1.Params.ParamByName('id').AsInteger := FIdParametro;
+    FDQuery1.Open();
+  end;
+end;
+
+constructor TFrmExibirVinculacoes.Create(AOwner: TComponent);
+begin
+  inherited;
+end;
+
+constructor TFrmExibirVinculacoes.Create(AOwner: TComponent; _paramentroId: Integer;_numeroos:string);
+begin
+  inherited Create(AOwner);
+  FIdParametro := _paramentroId;
+  FNumeroOS    := _numeroos;
+end;
+
+procedure TFrmExibirVinculacoes.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if VK_ESCAPE = Key then
+  begin
+    self.Close;
+  end;
+end;
+
+procedure TFrmExibirVinculacoes.FormShow(Sender: TObject);
+begin
+  Label1.Caption := Label1.Caption+' '+FNumeroOS;
+  CarregarDados;
+end;
+
+end.

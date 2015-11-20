@@ -1,0 +1,513 @@
+unit uConsProjetoRural;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons, PngSpeedButton,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.Menus, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client,uFrmCadastrarProjetoRural;
+
+type
+  TfrmConsProjetoRural = class(TForm)
+    shp1: TShape;
+    lbl1: TLabel;
+    img10: TImage;
+    edtnome: TEdit;
+    lbltipo: TLabel;
+    lbl2: TLabel;
+    cbbopcao: TComboBox;
+    dbgrd1: TDBGrid;
+    btninserirbtnsair: TPngSpeedButton;
+    qry: TFDQuery;
+    ds1: TDataSource;
+    pm1: TPopupMenu;
+    itemCalculadoraF81: TMenuItem;
+    itemN3: TMenuItem;
+    itemConsultarPorNome1: TMenuItem;
+    itemN1: TMenuItem;
+    itemConsultarPorCPFCNPJ1: TMenuItem;
+    itemN2: TMenuItem;
+    itemConsultar1: TMenuItem;
+    procedure FormShow(Sender: TObject);
+    procedure edtnomeKeyPress(Sender: TObject; var Key: Char);
+    procedure dbgrd1DblClick(Sender: TObject);
+    procedure btninserirbtnsairClick(Sender: TObject);
+    procedure dbgrd1KeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+    procedure CarregaDados;
+    procedure CarregarDadosParaObjDedoDuro;
+    procedure MontarObjetoPesquisa(obj:TProjetoRural);
+    function PegarUltimaAlteracao(id_projeto: integer): string;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmConsProjetoRural: TfrmConsProjetoRural;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, UCad_Assentamento;
+
+procedure TfrmConsProjetoRural.btninserirbtnsairClick(Sender: TObject);
+begin
+  Self.Close;
+end;
+
+procedure TfrmConsProjetoRural.CarregaDados;
+var
+  qryTemp: TFDQuery;
+begin
+  if Self.Tag=1 then
+  begin
+    frmCadastrarProjetoRural.sbnovo.Enabled                     := False;
+    frmCadastrarProjetoRural.sbgravar.Enabled                   := True;
+    frmCadastrarProjetoRural.sbexcluir.Enabled                  := True;
+
+    {Montando a Tela}
+    frmCadastrarProjetoRural.FIdProjeto := qry.FieldByName('id').AsInteger;
+    frmCadastrarProjetoRural.edtnumos.Text := Trim(qry.FieldByName('numero_os').AsString);
+    frmCadastrarProjetoRural.rgAtvPassivo.ItemIndex := qry.FieldByName('ativo_passivo').AsInteger;
+    frmCadastrarProjetoRural.edtAtendido.Text    := qry.FieldByName('solicitanteatendido').AsString;
+    frmCadastrarProjetoRural.edtendereco.Text    := qry.FieldByName('endereco').AsString;
+    frmCadastrarProjetoRural.edtEnderecoRural.Text := qry.FieldByName('enderecorural').AsString;
+    frmCadastrarProjetoRural.edtcodmunicipio.Text  := qry.FieldByName('id_municipio').AsString;
+    frmCadastrarProjetoRural.edtdescmunicipio.Text := qry.FieldByName('nome_municipio').AsString;
+    frmCadastrarProjetoRural.cbbcrs.ItemIndex:= frmCadastrarProjetoRural.cbbcrs.Items.IndexOf(qry.FieldByName('crs_desc').AsString);
+    frmCadastrarProjetoRural.edtUniversalizaca.Text:= qry.FieldByName('universalizacao').AsString;
+    frmCadastrarProjetoRural.mmoobservacao.Text    := qry.FieldByName('observacao_geral').AsString;
+    frmCadastrarProjetoRural.rgimprocedente.ItemIndex := qry.FieldByName('improcedente').AsInteger;
+    frmCadastrarProjetoRural.rgAtvPassivo.ItemIndex   := qry.FieldByName('ativo_passivo').AsInteger;
+    if(qry.FieldByName('dias_topografia').AsString<>'0')then frmCadastrarProjetoRural.edtDiasTopografia.Text := qry.FieldByName('dias_topografia').AsString;
+    {Datas}
+    frmCadastrarProjetoRural.edtdtchegadageral.Text    := qry.FieldByName('dt_chegada_geral').AsString;
+    frmCadastrarProjetoRural.edtdtlimitegeral.Text     := qry.FieldByName('dt_limite_geral').AsString;
+    frmCadastrarProjetoRural.edtdtconclusao.Text       :=qry.FieldByName('dt_conclusao').AsString;
+    frmCadastrarProjetoRural.edtdtsolicitacaoTopografia.Text:= qry.FieldByName('dt_solicitacao_topografia').AsString;
+
+
+    {Documentacao}
+    if(qry.FieldByName('doc_celtins_passagem').AsInteger>0)then frmCadastrarProjetoRural.chkPassagem.Checked:=True;
+    if(qry.FieldByName('doc_celtins_terra').AsInteger>0)then frmCadastrarProjetoRural.chkTerra.Checked:=True;
+    if(qry.FieldByName('doc_celtins_rural').AsInteger>0)then frmCadastrarProjetoRural.chkRural.Checked:=True;
+    if(qry.FieldByName('doc_celtins_pessoais').AsInteger>0)then frmCadastrarProjetoRural.chkDocumentosPessoais.Checked:=True;
+
+    frmCadastrarProjetoRural.cbbstatus.ItemIndex:= frmCadastrarProjetoRural.cbbstatus.Items.IndexOf(qry.FieldByName('status_desc').AsString);
+    frmCadastrarProjetoRural.edtdiretorio.Text   := qry.FieldByName('caminho_arquivo').AsString;
+
+    {Campo}
+    if qry.FieldByName('id_tec_campo').AsString<>'0' then frmCadastrarProjetoRural.edtcodtecnico.Text := qry.FieldByName('id_tec_campo').AsString;
+    frmCadastrarProjetoRural.edtdesctecnico.Text:= qry.FieldByName('nometec').AsString;
+    frmCadastrarProjetoRural.edtdtchegada.Text:=qry.FieldByName('dt_chegada_tec').AsString;
+    frmCadastrarProjetoRural.edtdtliberacaotec.Text:=qry.FieldByName('dt_liberacao_tec').AsString;
+
+    {topografia}
+    if qry.FieldByName('id_topografo').AsString<>'0' then frmCadastrarProjetoRural.edtcodtopografo.Text :=  qry.FieldByName('id_topografo').AsString;
+    frmCadastrarProjetoRural.edtdesctopografo.Text:= qry.FieldByName('nome_topogado').AsString;
+    frmCadastrarProjetoRural.edtenviotopografia.Text := qry.FieldByName('dt_envio_topografia').AsString;
+    frmCadastrarProjetoRural.edtretornotopografia.Text:=qry.FieldByName('dt_chegada_topografia').AsString;
+
+    {Projeto}
+    if qry.FieldByName('id_projetista').AsString<>'0' then frmCadastrarProjetoRural.edtcodprojetista.Text := qry.FieldByName('id_projetista').AsString;
+    frmCadastrarProjetoRural.edtdescprojetista.Text := qry.FieldByName('nome_projetista').AsString;
+    frmCadastrarProjetoRural.edtdtenvioprojeto.Text := qry.FieldByName('dt_envio_projeto').AsString;
+    frmCadastrarProjetoRural.edtdtretornoprojeto.Text := qry.FieldByName('dt_chegada_projeto').AsString;
+
+    {Constrol de Datas e Prazo}
+    frmCadastrarProjetoRural.BuscarConfig;
+    sqlstr:='select * from os_cargahoraria_rural where id_projeto ='+qry.FieldByName('id').AsString+' order by id desc limit 1 ';
+
+    //carregar prorrogacao
+
+    if(ConsultaSqlFd(DataModule1.qryprorrogacao,sqlstr)=0)then
+    begin
+      //inserir prorrogacao
+        frmCadastrarProjetoRural.edtdtprorrogacao.Text:=DataModule1.qryprorrogacao.FieldByName('prorrogacao').AsString;
+        {Campo}
+         if Trim(frmCadastrarProjetoRural.edtdtchegada.Text) = '' then
+        begin
+          if Trim(frmCadastrarProjetoRural.edtdtliberacaotec.text) <> '' then
+            frmCadastrarProjetoRural.lblprazoservico.Caption := frmCadastrarProjetoRural.CalculaPrazo(frmCadastrarProjetoRural.edtdtliberacaotec.text,''
+            ,FloatToStr(frmCadastrarProjetoRural.qryconfigdias.FieldByName('dias_campo').AsFloat+DataModule1.qryprorrogacao.FieldByName('servcampo').AsFloat));
+        end
+        else
+        begin
+          if Trim(frmCadastrarProjetoRural.edtdtliberacaotec.text) <> '' then
+            frmCadastrarProjetoRural.edtdtchegadaExit(Self);
+        end;
+        {Topografia}
+        if Trim(frmCadastrarProjetoRural.edtretornotopografia.Text) = '' then
+        begin
+          if Trim(frmCadastrarProjetoRural.edtenviotopografia.text) <> '' then
+            frmCadastrarProjetoRural.lblprazoservico.Caption := frmCadastrarProjetoRural.CalculaPrazo(frmCadastrarProjetoRural.edtenviotopografia.text,''
+            ,FloatToStr(StrToInt(frmCadastrarProjetoRural.edtDiasTopografia.Text)+DataModule1.qryprorrogacao.FieldByName('atualizacaomub').AsFloat));
+        end
+        else
+        begin
+          if Trim(frmCadastrarProjetoRural.edtenviotopografia.text) <> '' then
+            frmCadastrarProjetoRural.edtretornotopografiaExit(Self);
+        end;
+        {Projeto}
+        if Trim(frmCadastrarProjetoRural.edtdtretornoprojeto.Text) = '' then
+        begin
+          if Trim(frmCadastrarProjetoRural.edtdtenvioprojeto.text) <> '' then
+            frmCadastrarProjetoRural.lblprazoprojeto.Caption := frmCadastrarProjetoRural.CalculaPrazo(frmCadastrarProjetoRural.edtdtenvioprojeto.text,''
+            ,FloatToStr(frmCadastrarProjetoRural.qryconfigdias.FieldByName('dias_projeto').AsFloat+DataModule1.qryprorrogacao.FieldByName('projeto').AsFloat));
+        end
+        else
+        begin
+          if Trim(frmCadastrarProjetoRural.edtdtenvioprojeto.text) <> '' then
+            frmCadastrarProjetoRural.edtdtretornoprojetoExit(Self);
+        end;
+    end
+    else
+    begin{Sem Prorrogacao}
+      if(frmCadastrarProjetoRural.rgAtvPassivo.ItemIndex=0)then
+      begin
+      {Campo}
+      if Trim(frmCadastrarProjetoRural.edtdtchegada.Text) = '' then
+        begin
+            if Trim(frmCadastrarProjetoRural.edtdtliberacaotec.text) <> '' then
+              frmCadastrarProjetoRural.lblprazoservico.Caption := frmCadastrarProjetoRural.CalculaPrazo(frmCadastrarProjetoRural.edtdtliberacaotec.text,'',frmCadastrarProjetoRural.qryconfigdias.FieldByName('dias_campo').AsString);
+        end;
+
+        if Trim(frmCadastrarProjetoRural.edtdtchegada.Text) <> '' then
+        begin
+            if Trim(frmCadastrarProjetoRural.edtdtliberacaotec.text) <> '' then
+              frmCadastrarProjetoRural.edtdtchegadaExit(Self);
+        end;
+        {Topografia}
+        if Trim(frmCadastrarProjetoRural.edtretornotopografia.Text) = '' then
+        begin
+            if Trim(frmCadastrarProjetoRural.edtenviotopografia.text) <> '' then
+              frmCadastrarProjetoRural.lblprazomub.Caption := frmCadastrarProjetoRural.CalculaPrazo(frmCadastrarProjetoRural.edtenviotopografia.text,'',frmCadastrarProjetoRural.edtDiasTopografia.Text);
+        end;
+        if Trim(frmCadastrarProjetoRural.edtretornotopografia.Text) <> '' then
+        begin
+            if Trim(frmCadastrarProjetoRural.edtenviotopografia.text) <> '' then
+              frmCadastrarProjetoRural.edtretornotopografiaExit(Self);
+        end;
+        {Projeto}
+        if Trim(frmCadastrarProjetoRural.edtdtretornoprojeto.Text) = '' then
+        begin
+            if Trim(frmCadastrarProjetoRural.edtdtenvioprojeto.text) <> '' then
+              frmCadastrarProjetoRural.lblprazoprojeto.Caption := frmCadastrarProjetoRural.CalculaPrazo(frmCadastrarProjetoRural.edtdtenvioprojeto.text,'',frmCadastrarProjetoRural.qryconfigdias.FieldByName('dias_projeto').AsString);
+        end;
+
+        if Trim(frmCadastrarProjetoRural.edtdtretornoprojeto.Text) <> '' then
+        begin
+            if Trim(frmCadastrarProjetoRural.edtdtenvioprojeto.text) <> '' then
+              frmCadastrarProjetoRural.edtdtretornoprojetoExit(Self);
+        end;
+
+      end;
+    end;
+    {Valores}
+      frmCadastrarProjetoRural.edtqtdposteprojurbano.Text       :=qry.FieldByName('qtd_post_proj_urb').AsString;
+      frmCadastrarProjetoRural.edtqtdposterural.Text            :=qry.FieldByName('qtd_post_proj_rur').AsString;
+      frmCadastrarProjetoRural.edtqtdlevantado.Text             :=qry.FieldByName('qtd_post_lev').AsString;
+      //frmCadastrarProjetoRural.edtqtdposteatualizado.Text       :=qry.FieldByName('qtd_post_atu').AsString;
+      frmCadastrarProjetoRural.edtqtdtopografia.Text            :=qry.FieldByName('qtd_topografia').AsString;
+      frmCadastrarProjetoRural.edtqttravessia.Text              :=qry.FieldByName('qtd_travessia').AsString;
+      frmCadastrarProjetoRural.edtqtincorporacao.Text           :=qry.FieldByName('qtd_incorporacao').AsString;
+      //frmCadastrarProjetoRural.edtqtdimprocedente.Text          :=qry.FieldByName('qtd_improcedente').AsString;
+      frmCadastrarProjetoRural.edtqtddeslocamento.Text          :=qry.FieldByName('qtd_deslocamento').AsString;
+      frmCadastrarProjetoRural.edtqtdoutros.Text                :=qry.FieldByName('qtd_outros').AsString;
+      frmCadastrarProjetoRural.edtqtdlevantamento.Text          :=qry.FieldByName('qtd_levantamento').AsString;
+
+      frmCadastrarProjetoRural.edtvlposteprojurbano.Text        :=FormatFloat('#####0.00',qry.FieldByName('vl_post_proj_urb').AsFloat);
+      frmCadastrarProjetoRural.edtvlposterural.Text             :=FormatFloat('#####0.00',qry.FieldByName('vl_post_porj_rur').AsFloat);
+      frmCadastrarProjetoRural.edtvllevantado.Text              :=FormatFloat('#####0.00',qry.FieldByName('vl_post_lev').AsFloat);
+     // frmCadastrarProjetoRural.edtvlposteatualizado.Text        :=FormatFloat('#####0.00',qry.FieldByName('vl_post_atu').AsFloat);
+      frmCadastrarProjetoRural.edtvlrtopografia.Text            :=FormatFloat('#####0.00',qry.FieldByName('vl_topografia').AsFloat);
+      frmCadastrarProjetoRural.edtvltravessia.Text              :=FormatFloat('#####0.00',qry.FieldByName('vl_travessia').AsFloat);
+      frmCadastrarProjetoRural.edtvlrincorporacao.Text          :=FormatFloat('#####0.00',qry.FieldByName('vl_incorporacao').AsFloat);
+      //frmCadastrarProjetoRural.edtedvlimprocedente.Text         :=FormatFloat('#####0.00',qry.FieldByName('vl_improcedente').AsFloat);
+      frmCadastrarProjetoRural.edtvldeslocamento.Text           :=FormatFloat('#####0.00',qry.FieldByName('vl_deslocamento').AsFloat);
+      frmCadastrarProjetoRural.edtvloutros.Text                 :=FormatFloat('#####0.00',qry.FieldByName('vl_outros').AsFloat);
+      frmCadastrarProjetoRural.edtvllevantamento.Text           :=FormatFloat('#####0.00',qry.FieldByName('vl_levantamento').AsFloat);
+
+      frmCadastrarProjetoRural.FIdUsuarioCad                    :=qry.FieldByName('id_func_cad').AsInteger;
+
+      frmCadastrarProjetoRural.edtdtDevolvida.Text              := qry.FieldByName('dt_devolvida').AsString;
+
+      frmCadastrarProjetoRural.dtLibTop.Text                    :=qry.FieldByName('dt_liberacao_top').AsString;
+
+      {Carregar Notas}
+      sqlstr :=' select * from os_engenharia_notas_rural where id_os_projeto = '+inttostr(frmCadastrarProjetoRural.FIdProjeto);
+      //carregar tabela de notas
+      ConsultaSqlFd(frmCadastrarProjetoRural.qrynota_rural,sqlstr);
+      {Carregar Revisao}
+      DataModule1.qryrevisaoos_rural.ParamByName('prcodprojeto').AsInteger :=qry.FieldByName('id').AsInteger;
+      DataModule1.qryrevisaoos_rural.Open();
+
+
+      qryTemp:=TFDQuery.Create(nil);
+      qryTemp.Connection:=DataModule1.ConMySql;
+      qryTemp.SQL.Add('select numero_os,id from os_engenharia_projeto_rural where id='+IntToStr(qry.FieldByName('id_os_vinculacao').AsInteger));
+      qryTemp.Open();
+      if not qryTemp.IsEmpty then frmCadastrarProjetoRural.edtVinculacao.Text:=qryTemp.FieldByName('numero_os').AsString;
+
+      frmCadastrarProjetoRural.ObjConsulta:= TProjetoRural.Create;
+      MontarObjetoPesquisa(frmCadastrarProjetoRural.ObjConsulta);
+
+      //pprazo gral
+      frmCadastrarProjetoRural.edtdtchegadageralExit(Self);
+      frmCadastrarProjetoRural.AtualizarGridSolicitante;
+      frmCadastrarProjetoRural.AtualizarGrid;
+
+      frmCadastrarProjetoRural.lblDedoDuro.Caption:= PegarUltimaAlteracao(frmCadastrarProjetoRural.FIdProjeto);
+
+  end;
+  if Self.Tag=2 then
+  begin
+    sqlstr :=' select * from os_engenharia_notas_rural where id_os_projeto = '+inttostr(qry.FieldByName('id').AsInteger);
+    qryTemp:=TFDQuery.Create(nil);
+    qryTemp.Connection:=DataModule1.ConMySql;
+    ConsultaSqlFd(qryTemp,sqlstr);
+    FrmCadAssentamento.EditNumeroNota.Text := qryTemp.FieldByName('descricao').AsString;
+
+  end;
+end;
+
+procedure TfrmConsProjetoRural.CarregarDadosParaObjDedoDuro;
+begin
+
+end;
+
+procedure TfrmConsProjetoRural.dbgrd1DblClick(Sender: TObject);
+begin
+//
+  CarregaDados;
+  Self.Close;
+end;
+
+procedure TfrmConsProjetoRural.dbgrd1KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if(Key= #13)then
+begin
+  CarregaDados;
+  Self.Close;
+end;
+end;
+
+procedure TfrmConsProjetoRural.edtnomeKeyPress(Sender: TObject;
+  var Key: Char);
+var
+consulta:string;
+begin
+  try
+      sqlstr:='';
+  sqlstr:=' select DISTINCT os.id,'+
+					' os.numero_os,           '+
+          ' osr.descricao as nomesolicitante ,'+
+					' os.doc_celtins_passagem,  '+
+					' os.doc_celtins_terra,os.doc_celtins_rural,os.doc_celtins_pessoais,'+
+					' os.solicitante,os.solicitanteatendido,os.cpf,os.endereco,os.enderecorural,'+
+					' os.caminho_arquivo ,os.telefone,os.id_municipio,                          '+
+          ' m.nome_municipio,os.id_crs,crs.descricao as crs_desc ,os.dt_limite_geral,os.universalizacao,'+
+          ' os.dt_chegada_geral,os.id_statusos,                                                          '+
+          ' os_st.descricao as status_desc,os.observacao_geral,os.id_tec_campo, fun.nome_razaosocial as nometec,'+
+          ' os.dt_liberacao_tec,os.dt_chegada_tec,os.id_projetista, fu.nome_razaosocial as nome_projetista,     '+
+          ' os.dt_envio_projeto,os.dt_chegada_projeto,os.topografo as nome_topogado,                            '+
+         // ' f.nome_razaosocial as nome_topogado,                                                              '+
+          ' os.qtd_deslocamento,os.qtd_improcedente,os.qtd_incorporacao,os.qtd_outros,                          '+
+          ' os.qtd_post_atu,os.qtd_post_lev,os.qtd_post_proj_rur,os.qtd_post_proj_urb,                          '+
+          ' os.qtd_topografia,os.qtd_travessia,os.vl_deslocamento,os.vl_improcedente,                           '+
+          ' os.vl_incorporacao,os.vl_outros,os.vl_post_atu,os.vl_post_lev,os.vl_post_porj_rur,                  '+
+          ' os.vl_post_proj_urb,os.vl_topografia,os.vl_travessia,os.id_func_cad,os.dt_conclusao,os.dt_envio_topografia,'+
+          ' os.dt_chegada_topografia,                                                                          '+
+          ' os.id_topografo ,os.dt_solicitacao_topografia,os.improcedente ,os.dias_topografia,os.ativo_passivo,'+
+          ' os.dt_devolvida,os.vl_levantamento,os.qtd_levantamento,os.dt_liberacao_top,id_os_vinculacao '+
+          ' from os_engenharia_projeto_rural as os                                                              '+
+          ' LEFT JOIN municipios as m ON (os.id_municipio = m.cod_municipio)                                    '+
+          ' left JOIN os_engenharia_crs as crs on (crs.id = os.id_crs)                                          '+
+          ' LEFT JOIN os_engenharia_status_rural as os_st on (os_st.Id = os.id_statusos)                        '+
+          ' LEFT JOIN cad_funcionarios as fun on (fun.Id = os.id_tec_campo)                                     '+
+          ' LEFT JOIN cad_funcionarios as fu on  (fu.Id = os.id_projetista)                                     '+
+          //' LEFT JOIN cad_funcionarios as f on (f.Id = os.id_topografo)   '+
+         // ' left join fornecedores as f on (f.CPF_CGC = os.id_topografo)'+
+          ' LEFT JOIN os_engenharia_clientes_rural osr on (osr.id_projeto=os.id) '+
+           'where ';
+
+    if key =#13 then
+    begin
+      if(edtnome.Text='')then
+      begin
+          sqlstr:=' select DISTINCT os.id,'+
+					' os.numero_os,           '+
+          ' osr.descricao as nomesolicitante ,'+
+					' os.doc_celtins_passagem,  '+
+					' os.doc_celtins_terra,os.doc_celtins_rural,os.doc_celtins_pessoais,'+
+					' os.solicitante,os.solicitanteatendido,os.cpf,os.endereco,os.enderecorural,'+
+					' os.caminho_arquivo ,os.telefone,os.id_municipio,                          '+
+          ' m.nome_municipio,os.id_crs,crs.descricao as crs_desc ,os.dt_limite_geral,os.universalizacao,'+
+          ' os.dt_chegada_geral,os.id_statusos,                                                          '+
+          ' os_st.descricao as status_desc,os.observacao_geral,os.id_tec_campo, fun.nome_razaosocial as nometec,'+
+          ' os.dt_liberacao_tec,os.dt_chegada_tec,os.id_projetista, fu.nome_razaosocial as nome_projetista,     '+
+          ' os.dt_envio_projeto,os.dt_chegada_projeto,os.topografo as nome_topogado,                                                          '+
+          //' f.nome_razaosocial as nome_topogado,                                                                '+
+          ' os.qtd_deslocamento,os.qtd_improcedente,os.qtd_incorporacao,os.qtd_outros,                          '+
+          ' os.qtd_post_atu,os.qtd_post_lev,os.qtd_post_proj_rur,os.qtd_post_proj_urb,                          '+
+          ' os.qtd_topografia,os.qtd_travessia,os.vl_deslocamento,os.vl_improcedente,                           '+
+          ' os.vl_incorporacao,os.vl_outros,os.vl_post_atu,os.vl_post_lev,os.vl_post_porj_rur,                  '+
+          ' os.vl_post_proj_urb,os.vl_topografia,os.vl_travessia,os.id_func_cad,os.dt_conclusao,os.dt_envio_topografia,'+
+          ' os.dt_chegada_topografia,                                                                          '+
+          ' os.id_topografo ,os.dt_solicitacao_topografia,os.improcedente ,os.dias_topografia ,os.ativo_passivo,'+
+          ' os.dt_devolvida,os.vl_levantamento,os.qtd_levantamento,os.dt_liberacao_top,id_os_vinculacao  '+
+          ' from os_engenharia_projeto_rural as os                                                              '+
+          ' LEFT JOIN municipios as m ON (os.id_municipio = m.cod_municipio)                                    '+
+          ' left JOIN os_engenharia_crs as crs on (crs.id = os.id_crs)                                          '+
+          ' LEFT JOIN os_engenharia_status_rural as os_st on (os_st.Id = os.id_statusos)                        '+
+          ' LEFT JOIN cad_funcionarios as fun on (fun.Id = os.id_tec_campo)                                     '+
+          ' LEFT JOIN cad_funcionarios as fu on  (fu.Id = os.id_projetista)                                     '+
+          //' LEFT JOIN cad_funcionarios as f on (f.Id = os.id_topografo)   '+
+          //' left join fornecedores as f on (f.CPF_CGC = os.id_topografo)'+
+          ' LEFT JOIN os_engenharia_clientes_rural osr on (osr.id_projeto=os.id) ';
+        if ConsultaSqlFd(qry,sqlstr) <> 0 then
+        begin
+          semregistros;
+          edtnome.SetFocus;
+        end
+        else
+          dbgrd1.SetFocus;
+      end
+      else
+      begin
+        if cbbopcao.ItemIndex =0 then  //consultaa by nota
+          sqlstr :=sqlstr+ '  os.id= (select  o.id_os_projeto from os_engenharia_notas_rural o where o.descricao ='+QuotedStr(edtnome.Text)+')'
+        else;
+         if cbbopcao.ItemIndex =1 then //consulta by os
+         begin
+          consulta :='  (numero_os like'+QuotedStr('%'+edtnome.Text+'%')+')';
+          sqlstr :=sqlstr+ consulta
+        end;
+        if cbbopcao.ItemIndex=2 then//consulta by cpf
+        begin
+          consulta :='  (cpf like'+QuotedStr('%'+edtnome.Text)+')';
+          sqlstr :=sqlstr+ consulta
+        end;
+        if cbbopcao.ItemIndex = 3then
+        begin
+          consulta :='  (osr.descricao like'+QuotedStr('%'+edtnome.Text+'%')+')';
+          sqlstr :=sqlstr+ consulta
+        end;
+
+        if ConsultaSqlFd(qry,sqlstr) <> 0 then
+        begin
+          semregistros;
+          edtnome.SetFocus;
+        end
+        else
+          dbgrd1.SetFocus;
+      end;
+
+    end;
+  except on E: Exception do
+    begin
+      CriarLog(Self,E,'Erro Consulta Projeto Rural');
+    end;
+  end;
+
+end;
+
+procedure TfrmConsProjetoRural.FormShow(Sender: TObject);
+begin
+  qry.Close;
+  edtnome.Clear;
+  cbbopcao.ItemIndex := 0;
+  edtnome.SetFocus;
+end;
+
+procedure TfrmConsProjetoRural.MontarObjetoPesquisa(obj: TProjetoRural);
+begin
+try
+{Montando a Tela}
+  obj.numero_os                    := Trim(qry.FieldByName('numero_os').AsString);
+  obj.ativo_passivo                := qry.FieldByName('ativo_passivo').AsInteger;
+  obj.endereco                     := qry.FieldByName('endereco').AsString;
+  obj.enderecorural                := qry.FieldByName('enderecorural').AsString;
+  obj.id_municipio                 := qry.FieldByName('id_municipio').AsString;
+  //obj.id_crs                       := frmCadastrarProjetoRural.cbbcrs.Items.IndexOf(qry.FieldByName('crs_desc').AsString);
+  obj.universalizacao              := qry.FieldByName('universalizacao').AsString;
+  obj.improcedente                 := qry.FieldByName('improcedente').AsInteger;
+  obj.ativo_passivo                := qry.FieldByName('ativo_passivo').AsInteger;
+  obj.dias_topografia              := qry.FieldByName('dias_topografia').AsInteger;
+  {Datas}
+  obj.dt_chegada_geral             := qry.FieldByName('dt_chegada_geral').AsString;
+  obj.dt_conclusao                 :=qry.FieldByName('dt_conclusao').AsString;
+  obj.dt_solicitacao_topografia    := qry.FieldByName('dt_solicitacao_topografia').AsString;
+
+
+  obj.id_statusos                  := inttostr(frmCadastrarProjetoRural.cbbstatus.Items.IndexOf(qry.FieldByName('status_desc').AsString));
+
+  {Campo}
+  obj.id_tec_campo                 :=qry.FieldByName('id_tec_campo').AsString;
+  obj.dt_chegada_tec               :=qry.FieldByName('dt_chegada_tec').AsString;
+  obj.dt_liberacao_tec             :=qry.FieldByName('dt_liberacao_tec').AsString;
+
+  {topografia}
+  obj.id_topografo                 :=qry.FieldByName('id_topografo').AsString;
+  obj.dt_envio_topografia          :=qry.FieldByName('dt_envio_topografia').AsString;
+  obj.dt_chegada_topografia        :=qry.FieldByName('dt_chegada_topografia').AsString;
+
+  {Projeto}
+  obj.id_projetista                := qry.FieldByName('id_projetista').AsString;
+  obj.dt_envio_projeto             := qry.FieldByName('dt_envio_projeto').AsString;
+  obj.dt_chegada_projeto           := qry.FieldByName('dt_chegada_projeto').AsString;
+
+  //carregar prorrogacao
+
+  {Valores}
+    obj.qtd_post_proj_urb          :=qry.FieldByName('qtd_post_proj_urb').AsString;
+    obj.qtd_post_proj_rur          :=qry.FieldByName('qtd_post_proj_rur').AsString;
+    obj.qtd_post_lev               :=qry.FieldByName('qtd_post_lev').AsString;
+    obj.qtd_topografia             :=qry.FieldByName('qtd_topografia').AsString;
+    obj.qtd_travessia              :=qry.FieldByName('qtd_travessia').AsString;
+    obj.qtd_incorporacao           :=qry.FieldByName('qtd_incorporacao').AsString;
+    obj.qtd_deslocamento           :=qry.FieldByName('qtd_deslocamento').AsString;
+    obj.qtd_outros                 :=qry.FieldByName('qtd_outros').AsString;
+    obj.qtd_levantamento           :=qry.FieldByName('qtd_levantamento').AsString;
+
+    obj.vl_post_proj_urb           :=FormatFloat('#####0.00',qry.FieldByName('vl_post_proj_urb').AsFloat);
+    obj.vl_post_porj_rur           :=FormatFloat('#####0.00',qry.FieldByName('vl_post_porj_rur').AsFloat);
+    obj.vl_post_lev                :=FormatFloat('#####0.00',qry.FieldByName('vl_post_lev').AsFloat);
+    obj.vl_topografia              :=FormatFloat('#####0.00',qry.FieldByName('vl_topografia').AsFloat);
+    obj.vl_travessia               :=FormatFloat('#####0.00',qry.FieldByName('vl_travessia').AsFloat);
+    obj.vl_incorporacao            :=FormatFloat('#####0.00',qry.FieldByName('vl_incorporacao').AsFloat);
+    obj.vl_deslocamento            :=FormatFloat('#####0.00',qry.FieldByName('vl_deslocamento').AsFloat);
+    obj.vl_outros                  :=FormatFloat('#####0.00',qry.FieldByName('vl_outros').AsFloat);
+    obj.vl_levantamento            :=FormatFloat('#####0.00',qry.FieldByName('vl_levantamento').AsFloat);
+    obj.dt_devolvida               := qry.FieldByName('dt_devolvida').AsString;
+except on E: Exception do
+  CriarLog(Self,E,'MOntar Objeto em Consulta');
+end;
+end;
+
+function TfrmConsProjetoRural.PegarUltimaAlteracao(id_projeto:integer): string;
+var
+ qryTemp:TFDQuery;
+begin
+try
+        try
+                qryTemp:=TFDQuery.Create(nil);
+                qryTemp.Connection:=DataModule1.ConMySql;
+                sqlstr:= 'select * from os_engenharia_dedo_rural where id_projeto='+IntToStr(id_projeto)+' order by codigo desc limit 1';
+               if ConsultaSqlFd(qryTemp,sqlstr)=0then
+                        Result:='Última Alteração :'+qryTemp.FieldByName('nome_usuario').AsString +' '+qryTemp.FieldByName('data_hora').AsString;
+        except on E: Exception do
+        CriarLog(Self,E,'Pegar Ultima Alteração Projeto');
+        end;
+finally
+        qryTemp.Free;
+end;
+end;
+end.

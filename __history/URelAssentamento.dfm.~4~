@@ -1,0 +1,24 @@
+inherited FrmRelPadrao1: TFrmRelPadrao1
+  Caption = 'FrmRelPadrao1'
+  ExplicitWidth = 570
+  ExplicitHeight = 475
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited lbl1: TLabel
+    Width = 179
+    Caption = 'Relat'#243'rio Assentamento'
+    ExplicitWidth = 179
+  end
+  inherited rdprnt1: TRDprint
+    Left = 460
+    Top = 15
+  end
+  inherited pm1: TPopupMenu
+    Left = 512
+    Top = 15
+  end
+  object FDQuery1: TFDQuery
+    Left = 416
+    Top = 24
+  end
+end

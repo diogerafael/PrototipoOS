@@ -1,0 +1,44 @@
+FormularioFrmRelProjetoStatusRural: Usuário:DEYJANNY SENA
+Ação:Gerando Relatorio Por Status Rural !
+12/06/2015 08:49:41:[FireDAC][Phys][MySQL] Unknown column 'os_engenharia_status.descricao' in 'order clause'
+----------------------------------------------------------------------
+FormularioFrmRelProjetoStatusRural: Usuário:DEYJANNY SENA
+Ação:Gerando Relatorio Por Status Rural !
+12/06/2015 08:49:51:[FireDAC][Phys][MySQL] Unknown column 'os_engenharia_status.descricao' in 'order clause'
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:45:13:Parameter 'dt_devolvido' not foundEDatabaseError
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:47:57:[FireDAC][Phys][MySQL] Unknown column 'contrato' in 'field list'EMySQLNativeException
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:49:12:Parameter 'contrato' not foundFormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:49:46:[FireDAC][Phys][MySQL] Unknown column 'id_os_vinculacao' in 'field list'EMySQLNativeException
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:52:10:Parameter 'dt_devolvido' not foundEDatabaseError
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:55:35:Parameter 'dt_devolvido' not fFormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:58:50:Parameter 'dt_devolvido' not foundEDatabaseError
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 12:59:49:[FireDAC][Phys][MySQL] Unknown column 'dt_devolvido' in 'field list'EMySQLNativeException
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 13:02:35:[FireDAC][Phys][MySQL] Unknown column 'dt_devolvido' in 'field list'EMySQLNativeException
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 13:06:15:[FireDAC][Phys][MySQL] Unknown column 'dt_devolvido' in 'field list'EMySQLNativeException
+----------------------------------------------------------------------

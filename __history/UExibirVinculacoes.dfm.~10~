@@ -1,0 +1,118 @@
+object FrmExibirVinculacoes: TFrmExibirVinculacoes
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = 'OS Vinculadas'
+  ClientHeight = 334
+  ClientWidth = 718
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object shp1: TShape
+    Left = 0
+    Top = 0
+    Width = 718
+    Height = 65
+    Align = alTop
+    ExplicitLeft = -68
+    ExplicitWidth = 776
+  end
+  object lbl1: TLabel
+    Left = 291
+    Top = 25
+    Width = 81
+    Height = 18
+    Alignment = taCenter
+    Caption = 'Vinculadas'
+    Color = clWhite
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 25
+    Top = 79
+    Width = 78
+    Height = 16
+    Caption = 'Vinculadas :'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object cxGrid1: TcxGrid
+    Left = 25
+    Top = 99
+    Width = 657
+    Height = 216
+    TabOrder = 0
+    object cxGrid1DBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
+      FilterBox.CustomizeDialog = False
+      DataController.DataSource = DataSource1
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+      OptionsSelection.CellSelect = False
+      object cxGrid1DBTableView1numero_os: TcxGridDBColumn
+        Caption = 'Nr. OS'
+        DataBinding.FieldName = 'numero_os'
+        Width = 135
+      end
+      object cxGrid1DBTableView1descricao: TcxGridDBColumn
+        Caption = 'Nota'
+        DataBinding.FieldName = 'descricao'
+        Width = 94
+      end
+      object cxGrid1DBTableView1solicitante: TcxGridDBColumn
+        Caption = 'Solicitante'
+        DataBinding.FieldName = 'solicitante'
+        Options.Editing = False
+        Width = 285
+      end
+      object cxGrid1DBTableView1dt_chegada_geral: TcxGridDBColumn
+        Caption = 'Dt. Recebimento'
+        DataBinding.FieldName = 'dt_chegada_geral'
+        Width = 120
+      end
+    end
+    object cxGrid1Level1: TcxGridLevel
+      GridView = cxGrid1DBTableView1
+    end
+  end
+  object FDQuery1: TFDQuery
+    Active = True
+    Connection = DataModule1.ConMySql
+    SQL.Strings = (
+      'SELECT o.numero_os'
+      '     , n.descricao'
+      '     , o.solicitante'
+      '     , o.dt_chegada_geral'
+      'FROM'
+      '  os_engenharia_projeto AS o'
+      'INNER JOIN os_engenharia_notas AS n'
+      'ON n.id_os_projeto = o.id')
+    Left = 560
+    Top = 64
+  end
+  object DataSource1: TDataSource
+    DataSet = FDQuery1
+    Left = 568
+    Top = 168
+  end
+end

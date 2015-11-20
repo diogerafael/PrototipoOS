@@ -1,0 +1,1749 @@
+date/time          : 2015-05-12, 12:31:55, 533ms
+computer name      : WORK
+user name          : D.Rafael
+registered owner   : D.Rafael
+operating system   : Windows 8.1 x64 build 9600
+system language    : Portuguese
+system up time     : 3 hours 51 minutes
+program up time    : 23 seconds
+processors         : 4x Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+physical memory    : 756/3820 MB (free/total)
+free disk space    : (C:) 5,92 GB
+display mode       : 1366x768, 32 bit
+process id         : $ea0
+allocated memory   : 99,07 MB
+largest free block : 1,31 GB
+executable         : PrototipoOS.exe
+exec. date/time    : 2015-05-12 12:31
+version            : 1.1.0.0
+compiled with      : Delphi XE6
+madExcept version  : 4.0.12
+callstack crc      : $ec77c68d, $149e2741, $149e2741
+exception number   : 1
+exception class    : EMySQLNativeException
+exception message  : [FireDAC][Phys][MySQL] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE id = 2' at line 1.
+
+main thread ($1928):
+009bc655 +119 PrototipoOS.exe FireDAC.Stan.Error                FDException
+00ab1b43 +397 PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.ProcessError
+00ab1deb +02b PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.Check
+00ab302e +06a PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.QuerySB
+00abf9d7 +14f PrototipoOS.exe FireDAC.Phys.MySQL                TFDPhysMySQLCommand.InternalExecute
+00a49ccc +068 PrototipoOS.exe FireDAC.Phys                      Process_HandleSystemFailure
+00a49dfe +042 PrototipoOS.exe FireDAC.Phys                      Process_SingleRow
+00a4ad18 +1f0 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteBase
+00a498c5 +009 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommandAsyncExecute.Execute
+00a1d63f +04b PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.ExecuteOperation
+00a1d96e +06e PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.Run
+00a44aba +086 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a44b0b +0d7 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a4af27 +05b PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.Execute
+00aa62b3 +0f7 PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.InternalExecute
+00aa520c +43c PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.SetPrepared
+00aa657d +02d PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.Execute
+00b6b808 +08c PrototipoOS.exe uFrmCadastrarProjetoRural 1292 +8 TfrmCadastrarProjetoRural.MenuItem8Click
+006a464e +0aa PrototipoOS.exe Vcl.Menus                         TMenuItem.Click
+006a5cec +018 PrototipoOS.exe Vcl.Menus                         TMenu.DispatchCommand
+006a6f5e +082 PrototipoOS.exe Vcl.Menus                         TPopupList.WndProc
+006a6ead +01d PrototipoOS.exe Vcl.Menus                         TPopupList.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bad32 +1aa PrototipoOS.exe Vcl.Forms                         TCustomForm.ShowModal
+00fac642 +022 PrototipoOS.exe uPrincipal                 110 +2 TfrmPrincipal.cxButton3Click
+005c56f7 +06f PrototipoOS.exe Vcl.Controls                      TControl.Click
+005e7f86 +01e PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.Click
+00934ce9 +06d PrototipoOS.exe cxButtons                         TcxCustomButton.Click
+005e8a8c +010 PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.CNCommand
+009353cd +02d PrototipoOS.exe cxButtons                         TcxCustomButton.CNCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c98e8 +1f8 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+005c4ddc +024 PrototipoOS.exe Vcl.Controls                      TControl.Perform
+005c9e1f +023 PrototipoOS.exe Vcl.Controls                      DoControlMsg
+005ca8a7 +00b PrototipoOS.exe Vcl.Controls                      TWinControl.WMCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+76afe4a4 +134 user32.dll                                        SendMessageW
+76afddd0 +090 user32.dll                                        CallWindowProcW
+005c9dca +0e6 PrototipoOS.exe Vcl.Controls                      TWinControl.DefaultHandler
+005c5b4c +010 PrototipoOS.exe Vcl.Controls                      TControl.WMLButtonUp
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bfbe1 +0c9 PrototipoOS.exe Vcl.Forms                         TApplication.Run
+00fe038e +062 PrototipoOS.exe PrototipoOS                 49 +8 initialization
+76e77c02 +022 KERNEL32.DLL                                      BaseThreadInitThunk
+
+thread $328: <priority:2>
+76b25de7 +47 user32.dll                GetMessageA
+004ae179 +0d PrototipoOS.exe madExcept CallThreadProcSafe
+004ae1de +32 PrototipoOS.exe madExcept ThreadExceptFrame
+76e77c02 +22 KERNEL32.DLL              BaseThreadInitThunk
+>> created by main thread ($1928) at:
+72485607 +00 winmm.dll
+
+thread $1940 (TJvTimerThread):
+769b2b7d +04d KERNELBASE.dll                 SleepEx
+00b31d52 +112 PrototipoOS.exe JvTimer        TJvTimerThread.Execute
+004ae293 +02b PrototipoOS.exe madExcept      HookedTThreadExecute
+00546629 +049 PrototipoOS.exe System.Classes ThreadProc
+0040b610 +028 PrototipoOS.exe System         ThreadWrapper
+004ae179 +00d PrototipoOS.exe madExcept      CallThreadProcSafe
+004ae1de +032 PrototipoOS.exe madExcept      ThreadExceptFrame
+76e77c02 +022 KERNEL32.DLL                   BaseThreadInitThunk
+>> created by main thread ($1928) at:
+00b31aca +04e PrototipoOS.exe JvTimer        TJvTimerThread.Create
+
+thread $15dc:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $6a4:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+modules:
+00400000 PrototipoOS.exe      1.1.0.0             C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+5f590000 libmysql_2.dll       6.1.5.0             C:\Sistema
+67890000 DWrite.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+6a900000 HHCtrl.OCX           6.3.9600.17415      C:\Windows\SYSTEM32
+6b5e0000 security.dll         6.3.9600.16384      C:\Windows\SYSTEM32
+70490000 oleacc.dll           7.2.9600.17415      C:\Windows\SYSTEM32
+708b0000 winspool.drv         6.3.9600.17415      C:\Windows\SYSTEM32
+70920000 rasadhlp.dll         6.3.9600.17415      C:\Windows\System32
+70980000 WINSTA.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+70df0000 gdiplus.dll          6.3.9600.17415      C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.17415_none_dad8722c5bcc2d8f
+71150000 propsys.dll          7.0.9600.17415      C:\Windows\system32
+716b0000 version.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71770000 winrnr.dll           6.3.9600.17415      C:\Windows\System32
+71780000 wsock32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71790000 DNSAPI.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+719b0000 NLAapi.dll           6.3.9600.17415      C:\Windows\system32
+719d0000 pnrpnsp.dll          6.3.9600.17415      C:\Windows\system32
+719f0000 napinsp.dll          6.3.9600.17415      C:\Windows\system32
+71b80000 mswsock.dll          6.3.9600.17415      C:\Windows\System32
+71cd0000 dwmapi.dll           6.3.9600.17415      C:\Windows\system32
+71cf0000 uxtheme.dll          6.3.9600.17415      C:\Windows\system32
+71e30000 DEVOBJ.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+71e60000 msimg32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71f00000 WINMMBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+72480000 winmm.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+72a50000 FaultRep.dll         6.3.9600.17550      C:\Windows\SYSTEM32
+72c50000 wtsapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+73040000 SECUR32.DLL          6.3.9600.17415      C:\Windows\SYSTEM32
+731c0000 kernel.appcore.dll   6.3.9600.17415      C:\Windows\SYSTEM32
+731d0000 comctl32.dll         6.10.9600.17415     C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9600.17415_none_a9ed7f470139b3c1
+73620000 SHCORE.DLL           6.3.9600.17666      C:\Windows\SYSTEM32
+747e0000 ntmarta.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74810000 bcryptPrimitives.dll 6.3.9600.17415      C:\Windows\SYSTEM32
+74870000 CRYPTBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+74880000 SspiCli.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74a10000 gdi32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+74b20000 WS2_32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+74be0000 oleaut32.dll         6.3.9600.17560      C:\Windows\SYSTEM32
+74c90000 msvcrt.dll           7.0.9600.17415      C:\Windows\SYSTEM32
+74dc0000 IMM32.DLL            6.3.9600.17415      C:\Windows\system32
+74df0000 MSCTF.dll            6.3.9600.17706      C:\Windows\SYSTEM32
+74f10000 comdlg32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+74fb0000 combase.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+75150000 ole32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+75280000 cfgmgr32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+75300000 NSI.dll              6.3.9600.17415      C:\Windows\SYSTEM32
+753a0000 shell32.dll          6.3.9600.17680      C:\Windows\SYSTEM32
+76650000 advapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+766d0000 RPCRT4.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76920000 clbcatq.dll          2001.12.10530.17415 C:\Windows\SYSTEM32
+769b0000 KERNELBASE.dll       6.3.9600.17415      C:\Windows\SYSTEM32
+76aa0000 SHLWAPI.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+76af0000 user32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76c50000 SETUPAPI.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+76e10000 sechost.dll          6.3.9600.17734      C:\Windows\SYSTEM32
+76e60000 KERNEL32.DLL         6.3.9600.17415      C:\Windows\SYSTEM32
+77080000 ntdll.dll            6.3.9600.17736      C:\Windows\SYSTEM32
+
+processes:
+0000 Idle                      0 0    0
+0004 System                    0 0    0
+013c smss.exe                  0 0    0
+01a8 csrss.exe                 0 0    0
+01ec wininit.exe               0 0    0
+01f4 csrss.exe                 1 0    0
+0220 services.exe              0 0    0
+0228 lsass.exe                 0 0    0
+0278 svchost.exe               0 0    0
+0298 svchost.exe               0 0    0
+02ec winlogon.exe              1 0    0
+0330 GbpSv.exe                 0 0    0
+034c dwm.exe                   1 0    0
+03ac svchost.exe               0 0    0
+03cc svchost.exe               0 0    0
+03e8 svchost.exe               0 0    0
+0114 svchost.exe               0 0    0
+021c igfxCUIService.exe        0 0    0
+0414 svchost.exe               0 0    0
+0458 audiodg.exe               0 0    0
+0500 spoolsv.exe               0 0    0
+0550 svchost.exe               0 0    0
+05cc AdminService.exe          0 0    0
+05ec ekrn.exe                  0 0    0
+05f8 dasHost.exe               0 0    0
+0618 FCUpdateService.exe       0 0    0
+0648 HeciServer.exe            0 0    0
+066c MotoHelperService.exe     0 0    0
+0688 mysqld.exe                0 0    0
+069c mysqld.exe                0 0    0
+06c0 ForwardDaemon.exe         0 0    0
+0724 sparkservice.exe          0 0    0
+074c sqlwriter.exe             0 0    0
+075c svchost.exe               0 0    0
+0794 TeamViewer_Service.exe    0 0    0
+07f8 core.exe                  0 0    0
+0b68 explorer.exe              1 716  473  normal
+0434 PresentationFontCache.exe 0 0    0
+0cb0 dllhost.exe               1 9    3    normal
+0d88 GbpSv.exe                 1 10   5    normal       C:\PROGRA~2\GbPlugin
+0df4 taskhostex.exe            1 13   16   normal
+0e60 igfxEM.exe                1 13   14   normal
+0e68 igfxHK.exe                1 13   13   normal
+0fa8 svchost.exe               0 0    0
+0fd8 svchost.exe               0 0    0
+04d8 SearchIndexer.exe         0 0    0
+0cc8 WUDFHost.exe              0 0    0
+1090 SkyDrive.exe              1 17   24   normal
+1194 TSVNCache.exe             1 9    5    normal
+1278 SettingSyncHost.exe       1 9    7    below normal
+12c8 BtvStack.exe              1 39   31   normal
+12e4 ActivateDesktop.exe       1 9    3    normal
+1300 core.exe                  1 4    1    normal
+1380 egui.exe                  1 208  59   normal
+0f38 EvernoteClipper.exe       1 18   11   normal       C:\Program Files (x86)\Evernote\Evernote
+0b5c bds.exe                   1 4239 1384 normal       C:\Program Files (x86)\Embarcadero\Studio\14.0\bin
+15e8 Skype.exe                 1 233  192  normal       C:\Program Files (x86)\Skype\Phone
+12d0 jhi_service.exe           0 0    0
+1478 LMS.exe                   0 0    0
+17c4 SpotifyWebHelper.exe      1 9    3    normal       C:\Users\D.Rafael\AppData\Roaming\Spotify
+0b20 navicat.exe               1 244  147  normal       C:\Program Files (x86)\PremiumSoft\Navicat Premium
+13c4 Evernote.exe              1 495  133  normal       C:\Program Files (x86)\Evernote\Evernote
+03c4 EvernoteTray.exe          1 12   8    normal       C:\Program Files (x86)\Evernote\Evernote
+11b0 chrome.exe                1 273  132  normal       C:\Program Files (x86)\Google\Chrome\Application
+0090 chrome.exe                1 9    11   normal       C:\Program Files (x86)\Google\Chrome\Application
+14b4 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+16d0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f0c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0480 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1120 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0c08 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+06d8 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+022c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+132c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f60 RuntimeBroker.exe         1 9    4    normal
+0f14 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0460 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1ac8 bds.exe                   1 3214 959  normal       C:\Program Files (x86)\Embarcadero\Studio\16.0\bin
+1b00 wmplayer.exe              1 479  146  normal       C:\Program Files (x86)\Windows Media Player
+0ee0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1798 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0b30 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+111c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1720 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+11c4 livecomm.exe              1 9    3    normal
+0ab4 SearchProtocolHost.exe    0 0    0
+1b80 SearchFilterHost.exe      0 0    0
+1988 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1348 svchost.exe               0 0    0
+0ea0 PrototipoOS.exe           1 428  222  normal       C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+1b10 WmiPrvSE.exe              0 0    0
+160c TrustedInstaller.exe      0 0    0
+0c74 TiWorker.exe              0 0    0
+
+hardware:
++ {1ed2bbf9-11f0-4084-b21f-ad83a8e6dcdc}
+  - Enviar para o OneNote 2010
+  - Fax
+  - Fila de Impressão da Raiz
+  - Foxit Reader PDF Printer
+  - Microsoft XPS Document Writer
++ {36fc9e60-c465-11cf-8056-444553540000}
+  - Generic USB Hub
+  - Generic USB Hub
+  - Intel(R) 8 Series USB Enhanced Host Controller #1 - 9C26
+  - Intel(R) USB 3.0 eXtensible Host Controller - 0100 (Microsoft)
+  - USB Composite Device
+  - USB Root Hub
+  - USB Root Hub (xHCI)
++ {4d36e965-e325-11ce-bfc1-08002be10318}
+  - HL-DT-ST DVDRAM GU71N
++ {4d36e966-e325-11ce-bfc1-08002be10318}
+  - PC com base em x64 ACPI
++ {4d36e967-e325-11ce-bfc1-08002be10318}
+  - KINGSTON SV300S37A120G
++ {4d36e968-e325-11ce-bfc1-08002be10318}
+  - Intel(R) HD Graphics Family (driver 10.18.10.3960)
++ {4d36e96a-e325-11ce-bfc1-08002be10318}
+  - Intel(R) 8 Series SATA AHCI Controller - 9C03 (driver 9.4.0.1023)
++ {4d36e96b-e325-11ce-bfc1-08002be10318}
+  - Teclado Padrão PS/2
++ {4d36e96c-e325-11ce-bfc1-08002be10318}
+  - Dispositivo de High Definition Audio
++ {4d36e96e-e325-11ce-bfc1-08002be10318}
+  - Monitor Genérico PnP
++ {4d36e96f-e325-11ce-bfc1-08002be10318}
+  - Mouse compatível com HID
+  - Mouse compatível com PS/2
++ {4d36e972-e325-11ce-bfc1-08002be10318}
+  - Adaptador do Microsoft ISATAP #3
+  - Adaptador do Microsoft ISATAP #4
+  - Adaptador Virtual Direto Wi-Fi da Microsoft
+  - Broadcom NetLink (TM) Gigabit Ethernet
+  - Broadcom NetLink (TM) Gigabit Ethernet - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Microsoft Kernel Debug Network Adapter
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter (driver 10.0.0.288)
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Teredo Tunneling Pseudo-Interface
+  - VirtualBox Host-Only Ethernet Adapter (driver 4.3.26.0)
++ {4d36e97b-e325-11ce-bfc1-08002be10318}
+  - Controlador de Espaços de Armazenamento da Microsoft
++ {4d36e97d-e325-11ce-bfc1-08002be10318}
+  - Barramento Redirecionador de Dispositivos de Área de Trabalho Remota
+  - Botão de recurso fixo ACPI
+  - Botão ligar/desligar ACPI
+  - Botão Suspender ACPI
+  - CMOS do sistema/relógio em tempo real
+  - Complexo da Raiz de PCI Express
+  - Controlador de acesso direto à memória
+  - Controlador de High Definition Audio
+  - Controlador de interrupção programável
+  - Driver de Renderização Básico da Microsoft
+  - Driver de Vídeo Básico da Microsoft
+  - Enumerador de Adaptador de Rede Virtual NDIS
+  - Enumerador de Barramento de Composição
+  - Enumerador de Barramento de Raiz UMBus
+  - Enumerador de Dispositivos de Software Plug and Play
+  - Enumerador de Unidade Virtual Microsoft
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Gerenciador de Volumes
+  - Intel(R) 8 Series LPC Controller (Premium SKU) - 9C43 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #3 - 9C14 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #4 - 9C16 (driver 9.4.0.1027)
+  - Intel(R) 82802 Firmware Hub Device
+  - Intel(R) Management Engine Interface
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - IWD Bus Enumerator (driver 5.5.40.0)
+  - Microsoft ACPI-Compliant Embedded Controller
+  - Microsoft ACPI-Compliant System
+  - Microsoft System Management BIOS Driver
+  - PCI standard host CPU bridge
+  - Qualcomm Atheros Bluetooth Bus (driver 8.0.1.316)
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Remote Desktop USB Hub
+  - Synaptics SMBus Driver (driver 17.0.6.23)
+  - Tampa ACPI
+  - Timer de eventos de alta precisão
+  - Timer do sistema
++ {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
++ {5175d334-c371-4806-b3ba-71fd53c9258d}
+  - Microsoft Visual Studio Location Simulator Sensor (driver 11.0.0.0)
++ {533c5b84-ec70-11d2-9505-00c04f79deaf}
+  - Cópia de sombra de volume genérica
++ {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+  - Barramento do Adaptador de Transição IPv4 IPv6 da Microsoft
+  - Microsoft Device Association Root Enumerator
++ {6bdd1fc6-810f-11d0-bec7-08002be2092f}
+  - HD WebCam
++ {72631e54-78a4-11d0-bcf7-00aa00b7b32a}
+  - Adaptador de CA da Microsoft
+  - Bateria de Método de Controle Compatível com ACPI da Microsoft
++ {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+  - Dispositivo de Entrada USB
++ {a0a588a4-c46f-4b37-b7ea-c82fe89870c6}
+  - Controlador de host SD compatível com padrão SDA
++ {c166523c-fe0c-4a94-a586-f1a80cfbbf3e}
+  - Alto-falantes (Dispositivo de High Definition Audio)
+  - Microfone (Dispositivo de High Definition Audio)
+
+cpu registers:
+eax = 098473e0
+ebx = 00000000
+ecx = 00000000
+edx = 02655bc0
+esi = 00a37040
+edi = 098473e0
+eip = 009bc65a
+esp = 0018ecbc
+ebp = 0018ed14
+
+stack dump:
+0018ecbc  5a c6 9b 00 de fa ed 0e - 01 00 00 00 07 00 00 00  Z...............
+0018eccc  d0 ec 18 00 5a c6 9b 00 - e0 73 84 09 00 00 00 00  ....Z....s......
+0018ecdc  40 70 a3 00 e0 73 84 09 - 14 ed 18 00 ec ec 18 00  @p...s..........
+0018ecec  1c ed 18 00 c4 ac 40 00 - 14 ed 18 00 94 00 00 00  ......@.........
+0018ecfc  b0 43 c4 0a 40 35 df 03 - e0 73 84 09 00 00 00 00  .C..@5...s......
+0018ed0c  00 00 00 00 00 00 00 00 - 98 ed 18 00 48 1b ab 00  ............H...
+0018ed1c  b0 ed 18 00 c4 ac 40 00 - 98 ed 18 00 f0 ce d8 03  ......@.........
+0018ed2c  02 00 00 00 40 35 df 03 - f0 ce d8 03 00 00 00 00  ....@5..........
+0018ed3c  00 00 00 00 d0 10 c4 07 - 64 ed 18 00 d5 21 5a 5f  ........d....!Z_
+0018ed4c  2f 11 c4 07 19 a0 c4 07 - 00 00 00 00 00 00 00 00  /...............
+0018ed5c  00 00 00 00 a0 1b ab 00 - b8 1b ab 00 00 00 00 00  ................
+0018ed6c  00 00 00 00 31 00 00 00 - 00 00 00 00 e0 73 84 09  ....1........s..
+0018ed7c  f0 ce d8 03 28 04 00 00 - 00 00 00 00 00 00 00 00  ....(...........
+0018ed8c  00 00 00 00 00 00 00 00 - 00 00 00 00 d0 ed 18 00  ................
+0018ed9c  f0 1d ab 00 40 63 69 07 - 00 00 00 00 f0 ce d8 03  ....@ci.........
+0018edac  33 30 ab 00 d8 ed 18 00 - c4 ac 40 00 d0 ed 18 00  30........@.....
+0018edbc  00 00 00 00 00 00 00 00 - 00 00 00 00 2c a9 e1 03  ............,...
+0018edcc  40 35 df 03 40 ee 18 00 - dc f9 ab 00 e4 ed 18 00  @5..@...........
+0018eddc  a3 ae 40 00 40 ee 18 00 - f0 ed 18 00 c4 ac 40 00  ..@.@.........@.
+0018edec  40 ee 18 00 fc ed 18 00 - c4 ac 40 00 40 ee 18 00  @.........@.@...
+
+disassembling:
+[...]
+00b6b7fb        call    -$196230 ($9d55d0)     ; FireDAC.Stan.Param.TFDParam.SetAsVariant
+00b6b800 1292   push    0
+00b6b802        xor     ecx, ecx
+00b6b804        xor     edx, edx
+00b6b806        mov     eax, ebx
+00b6b808      > call    -$c52bd ($aa6550)      ; FireDAC.Comp.Client.TFDCustomCommand.Execute
+00b6b80d 1294   lea     edx, [ebp-$14]
+00b6b810        mov     eax, [$108f2ec]
+00b6b815        mov     eax, [eax+$674]
+00b6b81b        call    -$717c48 ($453bd8)     ; System.SysUtils.IntToStr
+00b6b820        mov     ecx, [ebp-$14]
+[...]
+
+date/time          : 2015-05-12, 12:32:30, 215ms
+computer name      : WORK
+user name          : D.Rafael
+registered owner   : D.Rafael
+operating system   : Windows 8.1 x64 build 9600
+system language    : Portuguese
+system up time     : 3 hours 52 minutes
+program up time    : 57 seconds
+processors         : 4x Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+physical memory    : 752/3820 MB (free/total)
+free disk space    : (C:) 5,92 GB
+display mode       : 1366x768, 32 bit
+process id         : $ea0
+allocated memory   : 101,73 MB
+largest free block : 1,31 GB
+executable         : PrototipoOS.exe
+exec. date/time    : 2015-05-12 12:31
+version            : 1.1.0.0
+compiled with      : Delphi XE6
+madExcept version  : 4.0.12
+callstack crc      : $ec77c68d, $149e2741, $149e2741
+exception number   : 2
+exception class    : EMySQLNativeException
+exception message  : [FireDAC][Phys][MySQL] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE id = 2' at line 1.
+
+main thread ($1928):
+009bc655 +119 PrototipoOS.exe FireDAC.Stan.Error                FDException
+00ab1b43 +397 PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.ProcessError
+00ab1deb +02b PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.Check
+00ab302e +06a PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.QuerySB
+00abf9d7 +14f PrototipoOS.exe FireDAC.Phys.MySQL                TFDPhysMySQLCommand.InternalExecute
+00a49ccc +068 PrototipoOS.exe FireDAC.Phys                      Process_HandleSystemFailure
+00a49dfe +042 PrototipoOS.exe FireDAC.Phys                      Process_SingleRow
+00a4ad18 +1f0 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteBase
+00a498c5 +009 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommandAsyncExecute.Execute
+00a1d63f +04b PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.ExecuteOperation
+00a1d96e +06e PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.Run
+00a44aba +086 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a44b0b +0d7 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a4af27 +05b PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.Execute
+00aa62b3 +0f7 PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.InternalExecute
+00aa520c +43c PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.SetPrepared
+00aa657d +02d PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.Execute
+00b6b808 +08c PrototipoOS.exe uFrmCadastrarProjetoRural 1292 +8 TfrmCadastrarProjetoRural.MenuItem8Click
+006a464e +0aa PrototipoOS.exe Vcl.Menus                         TMenuItem.Click
+006a5cec +018 PrototipoOS.exe Vcl.Menus                         TMenu.DispatchCommand
+006a6f5e +082 PrototipoOS.exe Vcl.Menus                         TPopupList.WndProc
+006a6ead +01d PrototipoOS.exe Vcl.Menus                         TPopupList.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bad32 +1aa PrototipoOS.exe Vcl.Forms                         TCustomForm.ShowModal
+00fac642 +022 PrototipoOS.exe uPrincipal                 110 +2 TfrmPrincipal.cxButton3Click
+005c56f7 +06f PrototipoOS.exe Vcl.Controls                      TControl.Click
+005e7f86 +01e PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.Click
+00934ce9 +06d PrototipoOS.exe cxButtons                         TcxCustomButton.Click
+005e8a8c +010 PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.CNCommand
+009353cd +02d PrototipoOS.exe cxButtons                         TcxCustomButton.CNCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c98e8 +1f8 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+005c4ddc +024 PrototipoOS.exe Vcl.Controls                      TControl.Perform
+005c9e1f +023 PrototipoOS.exe Vcl.Controls                      DoControlMsg
+005ca8a7 +00b PrototipoOS.exe Vcl.Controls                      TWinControl.WMCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+76afe4a4 +134 user32.dll                                        SendMessageW
+76afddd0 +090 user32.dll                                        CallWindowProcW
+005c9dca +0e6 PrototipoOS.exe Vcl.Controls                      TWinControl.DefaultHandler
+005c5b4c +010 PrototipoOS.exe Vcl.Controls                      TControl.WMLButtonUp
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bfbe1 +0c9 PrototipoOS.exe Vcl.Forms                         TApplication.Run
+00fe038e +062 PrototipoOS.exe PrototipoOS                 49 +8 initialization
+76e77c02 +022 KERNEL32.DLL                                      BaseThreadInitThunk
+
+thread $328: <priority:2>
+76b25de7 +47 user32.dll                GetMessageA
+004ae179 +0d PrototipoOS.exe madExcept CallThreadProcSafe
+004ae1de +32 PrototipoOS.exe madExcept ThreadExceptFrame
+76e77c02 +22 KERNEL32.DLL              BaseThreadInitThunk
+>> created by main thread ($1928) at:
+72485607 +00 winmm.dll
+
+thread $1940 (TJvTimerThread):
+769b2b7d +04d KERNELBASE.dll                 SleepEx
+00b31d52 +112 PrototipoOS.exe JvTimer        TJvTimerThread.Execute
+004ae293 +02b PrototipoOS.exe madExcept      HookedTThreadExecute
+00546629 +049 PrototipoOS.exe System.Classes ThreadProc
+0040b610 +028 PrototipoOS.exe System         ThreadWrapper
+004ae179 +00d PrototipoOS.exe madExcept      CallThreadProcSafe
+004ae1de +032 PrototipoOS.exe madExcept      ThreadExceptFrame
+76e77c02 +022 KERNEL32.DLL                   BaseThreadInitThunk
+>> created by main thread ($1928) at:
+00b31aca +04e PrototipoOS.exe JvTimer        TJvTimerThread.Create
+
+thread $15dc:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $6a4:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $8c0:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $1ae8:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+modules:
+00400000 PrototipoOS.exe      1.1.0.0             C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+5f590000 libmysql_2.dll       6.1.5.0             C:\Sistema
+67890000 DWrite.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+6a900000 HHCtrl.OCX           6.3.9600.17415      C:\Windows\SYSTEM32
+6b5e0000 security.dll         6.3.9600.16384      C:\Windows\SYSTEM32
+70490000 oleacc.dll           7.2.9600.17415      C:\Windows\SYSTEM32
+708b0000 winspool.drv         6.3.9600.17415      C:\Windows\SYSTEM32
+70920000 rasadhlp.dll         6.3.9600.17415      C:\Windows\System32
+70980000 WINSTA.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+70df0000 gdiplus.dll          6.3.9600.17415      C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.17415_none_dad8722c5bcc2d8f
+71150000 propsys.dll          7.0.9600.17415      C:\Windows\system32
+716b0000 version.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71770000 winrnr.dll           6.3.9600.17415      C:\Windows\System32
+71780000 wsock32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71790000 DNSAPI.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+719b0000 NLAapi.dll           6.3.9600.17415      C:\Windows\system32
+719d0000 pnrpnsp.dll          6.3.9600.17415      C:\Windows\system32
+719f0000 napinsp.dll          6.3.9600.17415      C:\Windows\system32
+71b80000 mswsock.dll          6.3.9600.17415      C:\Windows\System32
+71cd0000 dwmapi.dll           6.3.9600.17415      C:\Windows\system32
+71cf0000 uxtheme.dll          6.3.9600.17415      C:\Windows\system32
+71e30000 DEVOBJ.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+71e60000 msimg32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71f00000 WINMMBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+72480000 winmm.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+72a50000 FaultRep.dll         6.3.9600.17550      C:\Windows\SYSTEM32
+72c50000 wtsapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+73040000 SECUR32.DLL          6.3.9600.17415      C:\Windows\SYSTEM32
+731c0000 kernel.appcore.dll   6.3.9600.17415      C:\Windows\SYSTEM32
+731d0000 comctl32.dll         6.10.9600.17415     C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9600.17415_none_a9ed7f470139b3c1
+73620000 SHCORE.DLL           6.3.9600.17666      C:\Windows\SYSTEM32
+747e0000 ntmarta.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74810000 bcryptPrimitives.dll 6.3.9600.17415      C:\Windows\SYSTEM32
+74870000 CRYPTBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+74880000 SspiCli.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74a10000 gdi32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+74b20000 WS2_32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+74be0000 oleaut32.dll         6.3.9600.17560      C:\Windows\SYSTEM32
+74c90000 msvcrt.dll           7.0.9600.17415      C:\Windows\SYSTEM32
+74dc0000 IMM32.DLL            6.3.9600.17415      C:\Windows\system32
+74df0000 MSCTF.dll            6.3.9600.17706      C:\Windows\SYSTEM32
+74f10000 comdlg32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+74fb0000 combase.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+75150000 ole32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+75280000 cfgmgr32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+752c0000 WINTRUST.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+75300000 NSI.dll              6.3.9600.17415      C:\Windows\SYSTEM32
+753a0000 shell32.dll          6.3.9600.17680      C:\Windows\SYSTEM32
+76650000 advapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+766d0000 RPCRT4.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76790000 CRYPT32.dll          6.3.9600.17475      C:\Windows\SYSTEM32
+76920000 clbcatq.dll          2001.12.10530.17415 C:\Windows\SYSTEM32
+769b0000 KERNELBASE.dll       6.3.9600.17415      C:\Windows\SYSTEM32
+76a90000 MSASN1.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76aa0000 SHLWAPI.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+76af0000 user32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76c50000 SETUPAPI.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+76e10000 sechost.dll          6.3.9600.17734      C:\Windows\SYSTEM32
+76e60000 KERNEL32.DLL         6.3.9600.17415      C:\Windows\SYSTEM32
+76fa0000 psapi.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+77080000 ntdll.dll            6.3.9600.17736      C:\Windows\SYSTEM32
+
+processes:
+0000 Idle                      0 0    0
+0004 System                    0 0    0
+013c smss.exe                  0 0    0
+01a8 csrss.exe                 0 0    0
+01ec wininit.exe               0 0    0
+01f4 csrss.exe                 1 0    0
+0220 services.exe              0 0    0
+0228 lsass.exe                 0 0    0
+0278 svchost.exe               0 0    0
+0298 svchost.exe               0 0    0
+02ec winlogon.exe              1 0    0
+0330 GbpSv.exe                 0 0    0
+034c dwm.exe                   1 0    0
+03ac svchost.exe               0 0    0
+03cc svchost.exe               0 0    0
+03e8 svchost.exe               0 0    0
+0114 svchost.exe               0 0    0
+021c igfxCUIService.exe        0 0    0
+0414 svchost.exe               0 0    0
+0458 audiodg.exe               0 0    0
+0500 spoolsv.exe               0 0    0
+0550 svchost.exe               0 0    0
+05cc AdminService.exe          0 0    0
+05ec ekrn.exe                  0 0    0
+05f8 dasHost.exe               0 0    0
+0618 FCUpdateService.exe       0 0    0
+0648 HeciServer.exe            0 0    0
+066c MotoHelperService.exe     0 0    0
+0688 mysqld.exe                0 0    0
+069c mysqld.exe                0 0    0
+06c0 ForwardDaemon.exe         0 0    0
+0724 sparkservice.exe          0 0    0
+074c sqlwriter.exe             0 0    0
+075c svchost.exe               0 0    0
+0794 TeamViewer_Service.exe    0 0    0
+07f8 core.exe                  0 0    0
+0b68 explorer.exe              1 716  473  normal
+0434 PresentationFontCache.exe 0 0    0
+0cb0 dllhost.exe               1 9    3    normal
+0d88 GbpSv.exe                 1 10   5    normal       C:\PROGRA~2\GbPlugin
+0df4 taskhostex.exe            1 13   16   normal
+0e60 igfxEM.exe                1 13   14   normal
+0e68 igfxHK.exe                1 13   13   normal
+0fa8 svchost.exe               0 0    0
+0fd8 svchost.exe               0 0    0
+04d8 SearchIndexer.exe         0 0    0
+0cc8 WUDFHost.exe              0 0    0
+1090 SkyDrive.exe              1 17   24   normal
+1194 TSVNCache.exe             1 9    5    normal
+1278 SettingSyncHost.exe       1 9    7    below normal
+12c8 BtvStack.exe              1 39   31   normal
+12e4 ActivateDesktop.exe       1 9    3    normal
+1300 core.exe                  1 4    1    normal
+1380 egui.exe                  1 208  59   normal
+0f38 EvernoteClipper.exe       1 18   11   normal       C:\Program Files (x86)\Evernote\Evernote
+0b5c bds.exe                   1 4242 1383 normal       C:\Program Files (x86)\Embarcadero\Studio\14.0\bin
+15e8 Skype.exe                 1 233  191  normal       C:\Program Files (x86)\Skype\Phone
+12d0 jhi_service.exe           0 0    0
+1478 LMS.exe                   0 0    0
+17c4 SpotifyWebHelper.exe      1 9    3    normal       C:\Users\D.Rafael\AppData\Roaming\Spotify
+0b20 navicat.exe               1 244  147  normal       C:\Program Files (x86)\PremiumSoft\Navicat Premium
+13c4 Evernote.exe              1 495  133  normal       C:\Program Files (x86)\Evernote\Evernote
+03c4 EvernoteTray.exe          1 12   8    normal       C:\Program Files (x86)\Evernote\Evernote
+11b0 chrome.exe                1 273  128  normal       C:\Program Files (x86)\Google\Chrome\Application
+0090 chrome.exe                1 9    11   normal       C:\Program Files (x86)\Google\Chrome\Application
+14b4 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+16d0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f0c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0480 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1120 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0c08 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+06d8 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+022c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+132c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f60 RuntimeBroker.exe         1 9    4    normal
+0f14 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0460 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1ac8 bds.exe                   1 3214 959  normal       C:\Program Files (x86)\Embarcadero\Studio\16.0\bin
+1b00 wmplayer.exe              1 479  146  normal       C:\Program Files (x86)\Windows Media Player
+0ee0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1798 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0b30 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+111c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1720 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+11c4 livecomm.exe              1 9    3    normal
+0ab4 SearchProtocolHost.exe    0 0    0
+1b80 SearchFilterHost.exe      0 0    0
+1988 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1348 svchost.exe               0 0    0
+0ea0 PrototipoOS.exe           1 431  223  normal       C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+1b10 WmiPrvSE.exe              0 0    0
+160c TrustedInstaller.exe      0 0    0
+0c74 TiWorker.exe              0 0    0
+197c sppsvc.exe                0 0    0
+
+hardware:
++ {1ed2bbf9-11f0-4084-b21f-ad83a8e6dcdc}
+  - Enviar para o OneNote 2010
+  - Fax
+  - Fila de Impressão da Raiz
+  - Foxit Reader PDF Printer
+  - Microsoft XPS Document Writer
++ {36fc9e60-c465-11cf-8056-444553540000}
+  - Generic USB Hub
+  - Generic USB Hub
+  - Intel(R) 8 Series USB Enhanced Host Controller #1 - 9C26
+  - Intel(R) USB 3.0 eXtensible Host Controller - 0100 (Microsoft)
+  - USB Composite Device
+  - USB Root Hub
+  - USB Root Hub (xHCI)
++ {4d36e965-e325-11ce-bfc1-08002be10318}
+  - HL-DT-ST DVDRAM GU71N
++ {4d36e966-e325-11ce-bfc1-08002be10318}
+  - PC com base em x64 ACPI
++ {4d36e967-e325-11ce-bfc1-08002be10318}
+  - KINGSTON SV300S37A120G
++ {4d36e968-e325-11ce-bfc1-08002be10318}
+  - Intel(R) HD Graphics Family (driver 10.18.10.3960)
++ {4d36e96a-e325-11ce-bfc1-08002be10318}
+  - Intel(R) 8 Series SATA AHCI Controller - 9C03 (driver 9.4.0.1023)
++ {4d36e96b-e325-11ce-bfc1-08002be10318}
+  - Teclado Padrão PS/2
++ {4d36e96c-e325-11ce-bfc1-08002be10318}
+  - Dispositivo de High Definition Audio
++ {4d36e96e-e325-11ce-bfc1-08002be10318}
+  - Monitor Genérico PnP
++ {4d36e96f-e325-11ce-bfc1-08002be10318}
+  - Mouse compatível com HID
+  - Mouse compatível com PS/2
++ {4d36e972-e325-11ce-bfc1-08002be10318}
+  - Adaptador do Microsoft ISATAP #3
+  - Adaptador do Microsoft ISATAP #4
+  - Adaptador Virtual Direto Wi-Fi da Microsoft
+  - Broadcom NetLink (TM) Gigabit Ethernet
+  - Broadcom NetLink (TM) Gigabit Ethernet - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Microsoft Kernel Debug Network Adapter
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter (driver 10.0.0.288)
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Teredo Tunneling Pseudo-Interface
+  - VirtualBox Host-Only Ethernet Adapter (driver 4.3.26.0)
++ {4d36e97b-e325-11ce-bfc1-08002be10318}
+  - Controlador de Espaços de Armazenamento da Microsoft
++ {4d36e97d-e325-11ce-bfc1-08002be10318}
+  - Barramento Redirecionador de Dispositivos de Área de Trabalho Remota
+  - Botão de recurso fixo ACPI
+  - Botão ligar/desligar ACPI
+  - Botão Suspender ACPI
+  - CMOS do sistema/relógio em tempo real
+  - Complexo da Raiz de PCI Express
+  - Controlador de acesso direto à memória
+  - Controlador de High Definition Audio
+  - Controlador de interrupção programável
+  - Driver de Renderização Básico da Microsoft
+  - Driver de Vídeo Básico da Microsoft
+  - Enumerador de Adaptador de Rede Virtual NDIS
+  - Enumerador de Barramento de Composição
+  - Enumerador de Barramento de Raiz UMBus
+  - Enumerador de Dispositivos de Software Plug and Play
+  - Enumerador de Unidade Virtual Microsoft
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Gerenciador de Volumes
+  - Intel(R) 8 Series LPC Controller (Premium SKU) - 9C43 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #3 - 9C14 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #4 - 9C16 (driver 9.4.0.1027)
+  - Intel(R) 82802 Firmware Hub Device
+  - Intel(R) Management Engine Interface
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - IWD Bus Enumerator (driver 5.5.40.0)
+  - Microsoft ACPI-Compliant Embedded Controller
+  - Microsoft ACPI-Compliant System
+  - Microsoft System Management BIOS Driver
+  - PCI standard host CPU bridge
+  - Qualcomm Atheros Bluetooth Bus (driver 8.0.1.316)
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Remote Desktop USB Hub
+  - Synaptics SMBus Driver (driver 17.0.6.23)
+  - Tampa ACPI
+  - Timer de eventos de alta precisão
+  - Timer do sistema
++ {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
++ {5175d334-c371-4806-b3ba-71fd53c9258d}
+  - Microsoft Visual Studio Location Simulator Sensor (driver 11.0.0.0)
++ {533c5b84-ec70-11d2-9505-00c04f79deaf}
+  - Cópia de sombra de volume genérica
++ {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+  - Barramento do Adaptador de Transição IPv4 IPv6 da Microsoft
+  - Microsoft Device Association Root Enumerator
++ {6bdd1fc6-810f-11d0-bec7-08002be2092f}
+  - HD WebCam
++ {72631e54-78a4-11d0-bcf7-00aa00b7b32a}
+  - Adaptador de CA da Microsoft
+  - Bateria de Método de Controle Compatível com ACPI da Microsoft
++ {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+  - Dispositivo de Entrada USB
++ {a0a588a4-c46f-4b37-b7ea-c82fe89870c6}
+  - Controlador de host SD compatível com padrão SDA
++ {c166523c-fe0c-4a94-a586-f1a80cfbbf3e}
+  - Alto-falantes (Dispositivo de High Definition Audio)
+  - Microfone (Dispositivo de High Definition Audio)
+
+cpu registers:
+eax = 098473a8
+ebx = 00000000
+ecx = 00000000
+edx = 02655bc0
+esi = 00a37040
+edi = 098473a8
+eip = 009bc65a
+esp = 0018ecbc
+ebp = 0018ed14
+
+stack dump:
+0018ecbc  5a c6 9b 00 de fa ed 0e - 01 00 00 00 07 00 00 00  Z...............
+0018eccc  d0 ec 18 00 5a c6 9b 00 - a8 73 84 09 00 00 00 00  ....Z....s......
+0018ecdc  40 70 a3 00 a8 73 84 09 - 14 ed 18 00 ec ec 18 00  @p...s..........
+0018ecec  1c ed 18 00 c4 ac 40 00 - 14 ed 18 00 94 00 00 00  ......@.........
+0018ecfc  d0 3b c4 0a 40 35 df 03 - a8 73 84 09 00 00 00 00  .;..@5...s......
+0018ed0c  00 00 00 00 00 00 00 00 - 98 ed 18 00 48 1b ab 00  ............H...
+0018ed1c  b0 ed 18 00 c4 ac 40 00 - 98 ed 18 00 f0 ce d8 03  ......@.........
+0018ed2c  02 00 00 00 40 35 df 03 - f0 ce d8 03 00 00 00 00  ....@5..........
+0018ed3c  00 00 00 00 d0 10 c4 07 - 64 ed 18 00 d5 21 5a 5f  ........d....!Z_
+0018ed4c  2f 11 c4 07 19 a0 c4 07 - 00 00 00 00 00 00 00 00  /...............
+0018ed5c  00 00 00 00 a0 1b ab 00 - b8 1b ab 00 00 00 00 00  ................
+0018ed6c  00 00 00 00 31 00 00 00 - 00 00 00 00 a8 73 84 09  ....1........s..
+0018ed7c  f0 ce d8 03 28 04 00 00 - 00 00 00 00 00 00 00 00  ....(...........
+0018ed8c  00 00 00 00 00 00 00 00 - 00 00 00 00 d0 ed 18 00  ................
+0018ed9c  f0 1d ab 00 b8 72 69 07 - 00 00 00 00 f0 ce d8 03  .....ri.........
+0018edac  33 30 ab 00 d8 ed 18 00 - c4 ac 40 00 d0 ed 18 00  30........@.....
+0018edbc  00 00 00 00 00 00 00 00 - 00 00 00 00 7c b4 7e 04  ............|.~.
+0018edcc  40 35 df 03 40 ee 18 00 - dc f9 ab 00 e4 ed 18 00  @5..@...........
+0018eddc  a3 ae 40 00 40 ee 18 00 - f0 ed 18 00 c4 ac 40 00  ..@.@.........@.
+0018edec  40 ee 18 00 fc ed 18 00 - c4 ac 40 00 40 ee 18 00  @.........@.@...
+
+disassembling:
+[...]
+00b6b7fb        call    -$196230 ($9d55d0)     ; FireDAC.Stan.Param.TFDParam.SetAsVariant
+00b6b800 1292   push    0
+00b6b802        xor     ecx, ecx
+00b6b804        xor     edx, edx
+00b6b806        mov     eax, ebx
+00b6b808      > call    -$c52bd ($aa6550)      ; FireDAC.Comp.Client.TFDCustomCommand.Execute
+00b6b80d 1294   int     3
+00b6b80e        push    ebp
+00b6b80f        in      al, dx
+00b6b810        mov     eax, [$108f2ec]
+00b6b815        mov     eax, [eax+$674]
+[...]
+
+date/time          : 2015-05-12, 12:35:30, 678ms
+computer name      : WORK
+user name          : D.Rafael
+registered owner   : D.Rafael
+operating system   : Windows 8.1 x64 build 9600
+system language    : Portuguese
+system up time     : 3 hours 55 minutes
+program up time    : 31 seconds
+processors         : 4x Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+physical memory    : 968/3820 MB (free/total)
+free disk space    : (C:) 5,91 GB
+display mode       : 1366x768, 32 bit
+process id         : $448
+allocated memory   : 99,24 MB
+largest free block : 1,32 GB
+executable         : PrototipoOS.exe
+exec. date/time    : 2015-05-12 12:34
+version            : 1.1.0.0
+compiled with      : Delphi XE6
+madExcept version  : 4.0.12
+callstack crc      : $ec77c68d, $149e2741, $149e2741
+exception number   : 1
+exception class    : EMySQLNativeException
+exception message  : [FireDAC][Phys][MySQL] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE os_engenharia_revisao_rural_servicocampo.id = 3' at line 1.
+
+main thread ($1a30):
+009bc655 +119 PrototipoOS.exe FireDAC.Stan.Error                FDException
+00ab1b43 +397 PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.ProcessError
+00ab1deb +02b PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.Check
+00ab302e +06a PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.QuerySB
+00abf9d7 +14f PrototipoOS.exe FireDAC.Phys.MySQL                TFDPhysMySQLCommand.InternalExecute
+00a49ccc +068 PrototipoOS.exe FireDAC.Phys                      Process_HandleSystemFailure
+00a49dfe +042 PrototipoOS.exe FireDAC.Phys                      Process_SingleRow
+00a4ad18 +1f0 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteBase
+00a498c5 +009 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommandAsyncExecute.Execute
+00a1d63f +04b PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.ExecuteOperation
+00a1d96e +06e PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.Run
+00a44aba +086 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a44b0b +0d7 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a4af27 +05b PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.Execute
+00aa62b3 +0f7 PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.InternalExecute
+00aa520c +43c PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.SetPrepared
+00aa657d +02d PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.Execute
+00b6b854 +08c PrototipoOS.exe uFrmCadastrarProjetoRural 1292 +8 TfrmCadastrarProjetoRural.MenuItem8Click
+006a464e +0aa PrototipoOS.exe Vcl.Menus                         TMenuItem.Click
+006a5cec +018 PrototipoOS.exe Vcl.Menus                         TMenu.DispatchCommand
+006a6f5e +082 PrototipoOS.exe Vcl.Menus                         TPopupList.WndProc
+006a6ead +01d PrototipoOS.exe Vcl.Menus                         TPopupList.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bad32 +1aa PrototipoOS.exe Vcl.Forms                         TCustomForm.ShowModal
+00fac6de +022 PrototipoOS.exe uPrincipal                 110 +2 TfrmPrincipal.cxButton3Click
+005c56f7 +06f PrototipoOS.exe Vcl.Controls                      TControl.Click
+005e7f86 +01e PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.Click
+00934ce9 +06d PrototipoOS.exe cxButtons                         TcxCustomButton.Click
+005e8a8c +010 PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.CNCommand
+009353cd +02d PrototipoOS.exe cxButtons                         TcxCustomButton.CNCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c98e8 +1f8 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+005c4ddc +024 PrototipoOS.exe Vcl.Controls                      TControl.Perform
+005c9e1f +023 PrototipoOS.exe Vcl.Controls                      DoControlMsg
+005ca8a7 +00b PrototipoOS.exe Vcl.Controls                      TWinControl.WMCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+76afe4a4 +134 user32.dll                                        SendMessageW
+76afddd0 +090 user32.dll                                        CallWindowProcW
+005c9dca +0e6 PrototipoOS.exe Vcl.Controls                      TWinControl.DefaultHandler
+005c5b4c +010 PrototipoOS.exe Vcl.Controls                      TControl.WMLButtonUp
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bfbe1 +0c9 PrototipoOS.exe Vcl.Forms                         TApplication.Run
+00fe038e +062 PrototipoOS.exe PrototipoOS                 49 +8 initialization
+76e77c02 +022 KERNEL32.DLL                                      BaseThreadInitThunk
+
+thread $180c: <priority:2>
+76b25de7 +47 user32.dll                GetMessageA
+004ae179 +0d PrototipoOS.exe madExcept CallThreadProcSafe
+004ae1de +32 PrototipoOS.exe madExcept ThreadExceptFrame
+76e77c02 +22 KERNEL32.DLL              BaseThreadInitThunk
+>> created by main thread ($1a30) at:
+72485607 +00 winmm.dll
+
+thread $1a4 (TJvTimerThread):
+769b2b7d +04d KERNELBASE.dll                 SleepEx
+00b31d52 +112 PrototipoOS.exe JvTimer        TJvTimerThread.Execute
+004ae293 +02b PrototipoOS.exe madExcept      HookedTThreadExecute
+00546629 +049 PrototipoOS.exe System.Classes ThreadProc
+0040b610 +028 PrototipoOS.exe System         ThreadWrapper
+004ae179 +00d PrototipoOS.exe madExcept      CallThreadProcSafe
+004ae1de +032 PrototipoOS.exe madExcept      ThreadExceptFrame
+76e77c02 +022 KERNEL32.DLL                   BaseThreadInitThunk
+>> created by main thread ($1a30) at:
+00b31aca +04e PrototipoOS.exe JvTimer        TJvTimerThread.Create
+
+thread $62c:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $17f8:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $e94:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $1980:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+modules:
+00400000 PrototipoOS.exe      1.1.0.0             C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+604d0000 libmysql_2.dll       6.1.5.0             C:\Sistema
+67890000 DWrite.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+6a900000 HHCtrl.OCX           6.3.9600.17415      C:\Windows\SYSTEM32
+6b5e0000 security.dll         6.3.9600.16384      C:\Windows\SYSTEM32
+70490000 oleacc.dll           7.2.9600.17415      C:\Windows\SYSTEM32
+708b0000 winspool.drv         6.3.9600.17415      C:\Windows\SYSTEM32
+70920000 rasadhlp.dll         6.3.9600.17415      C:\Windows\System32
+70980000 WINSTA.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+70df0000 gdiplus.dll          6.3.9600.17415      C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.17415_none_dad8722c5bcc2d8f
+71150000 propsys.dll          7.0.9600.17415      C:\Windows\system32
+716b0000 version.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71770000 winrnr.dll           6.3.9600.17415      C:\Windows\System32
+71780000 wsock32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71790000 DNSAPI.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+719b0000 NLAapi.dll           6.3.9600.17415      C:\Windows\system32
+719d0000 pnrpnsp.dll          6.3.9600.17415      C:\Windows\system32
+719f0000 napinsp.dll          6.3.9600.17415      C:\Windows\system32
+71b80000 mswsock.dll          6.3.9600.17415      C:\Windows\System32
+71cd0000 dwmapi.dll           6.3.9600.17415      C:\Windows\system32
+71cf0000 uxtheme.dll          6.3.9600.17415      C:\Windows\system32
+71e30000 DEVOBJ.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+71e60000 msimg32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71f00000 WINMMBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+72480000 winmm.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+72a50000 FaultRep.dll         6.3.9600.17550      C:\Windows\SYSTEM32
+72c50000 wtsapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+73040000 SECUR32.DLL          6.3.9600.17415      C:\Windows\SYSTEM32
+731c0000 kernel.appcore.dll   6.3.9600.17415      C:\Windows\SYSTEM32
+731d0000 comctl32.dll         6.10.9600.17415     C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9600.17415_none_a9ed7f470139b3c1
+73620000 SHCORE.DLL           6.3.9600.17666      C:\Windows\SYSTEM32
+747e0000 ntmarta.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74810000 bcryptPrimitives.dll 6.3.9600.17415      C:\Windows\SYSTEM32
+74870000 CRYPTBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+74880000 SspiCli.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74a10000 gdi32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+74b20000 WS2_32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+74be0000 oleaut32.dll         6.3.9600.17560      C:\Windows\SYSTEM32
+74c90000 msvcrt.dll           7.0.9600.17415      C:\Windows\SYSTEM32
+74dc0000 IMM32.DLL            6.3.9600.17415      C:\Windows\system32
+74df0000 MSCTF.dll            6.3.9600.17706      C:\Windows\SYSTEM32
+74f10000 comdlg32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+74fb0000 combase.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+75150000 ole32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+75280000 cfgmgr32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+75300000 NSI.dll              6.3.9600.17415      C:\Windows\SYSTEM32
+753a0000 shell32.dll          6.3.9600.17680      C:\Windows\SYSTEM32
+76650000 advapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+766d0000 RPCRT4.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76920000 clbcatq.dll          2001.12.10530.17415 C:\Windows\SYSTEM32
+769b0000 KERNELBASE.dll       6.3.9600.17415      C:\Windows\SYSTEM32
+76aa0000 SHLWAPI.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+76af0000 user32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76c50000 SETUPAPI.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+76e10000 sechost.dll          6.3.9600.17734      C:\Windows\SYSTEM32
+76e60000 KERNEL32.DLL         6.3.9600.17415      C:\Windows\SYSTEM32
+77080000 ntdll.dll            6.3.9600.17736      C:\Windows\SYSTEM32
+
+processes:
+0000 Idle                      0 0    0
+0004 System                    0 0    0
+013c smss.exe                  0 0    0
+01a8 csrss.exe                 0 0    0
+01ec wininit.exe               0 0    0
+01f4 csrss.exe                 1 0    0
+0220 services.exe              0 0    0
+0228 lsass.exe                 0 0    0
+0278 svchost.exe               0 0    0
+0298 svchost.exe               0 0    0
+02ec winlogon.exe              1 0    0
+0330 GbpSv.exe                 0 0    0
+034c dwm.exe                   1 0    0
+03ac svchost.exe               0 0    0
+03cc svchost.exe               0 0    0
+03e8 svchost.exe               0 0    0
+0114 svchost.exe               0 0    0
+021c igfxCUIService.exe        0 0    0
+0414 svchost.exe               0 0    0
+0458 audiodg.exe               0 0    0
+0500 spoolsv.exe               0 0    0
+0550 svchost.exe               0 0    0
+05cc AdminService.exe          0 0    0
+05ec ekrn.exe                  0 0    0
+05f8 dasHost.exe               0 0    0
+0618 FCUpdateService.exe       0 0    0
+0648 HeciServer.exe            0 0    0
+066c MotoHelperService.exe     0 0    0
+0688 mysqld.exe                0 0    0
+069c mysqld.exe                0 0    0
+06c0 ForwardDaemon.exe         0 0    0
+0724 sparkservice.exe          0 0    0
+074c sqlwriter.exe             0 0    0
+075c svchost.exe               0 0    0
+0794 TeamViewer_Service.exe    0 0    0
+07f8 core.exe                  0 0    0
+0b68 explorer.exe              1 716  473  normal
+0434 PresentationFontCache.exe 0 0    0
+0cb0 dllhost.exe               1 9    3    normal
+0d88 GbpSv.exe                 1 10   5    normal       C:\PROGRA~2\GbPlugin
+0df4 taskhostex.exe            1 13   16   normal
+0e60 igfxEM.exe                1 13   14   normal
+0e68 igfxHK.exe                1 13   13   normal
+0fa8 svchost.exe               0 0    0
+0fd8 svchost.exe               0 0    0
+04d8 SearchIndexer.exe         0 0    0
+0cc8 WUDFHost.exe              0 0    0
+1090 SkyDrive.exe              1 17   24   normal
+1194 TSVNCache.exe             1 9    5    normal
+1278 SettingSyncHost.exe       1 9    7    below normal
+12c8 BtvStack.exe              1 39   31   normal
+12e4 ActivateDesktop.exe       1 9    3    normal
+1300 core.exe                  1 4    1    normal
+1380 egui.exe                  1 208  61   normal
+0f38 EvernoteClipper.exe       1 18   11   normal       C:\Program Files (x86)\Evernote\Evernote
+0b5c bds.exe                   1 4235 1384 normal       C:\Program Files (x86)\Embarcadero\Studio\14.0\bin
+15e8 Skype.exe                 1 227  171  normal       C:\Program Files (x86)\Skype\Phone
+12d0 jhi_service.exe           0 0    0
+1478 LMS.exe                   0 0    0
+17c4 SpotifyWebHelper.exe      1 9    3    normal       C:\Users\D.Rafael\AppData\Roaming\Spotify
+0b20 navicat.exe               1 244  147  normal       C:\Program Files (x86)\PremiumSoft\Navicat Premium
+13c4 Evernote.exe              1 495  133  normal       C:\Program Files (x86)\Evernote\Evernote
+03c4 EvernoteTray.exe          1 12   8    normal       C:\Program Files (x86)\Evernote\Evernote
+11b0 chrome.exe                1 273  126  normal       C:\Program Files (x86)\Google\Chrome\Application
+0090 chrome.exe                1 9    11   normal       C:\Program Files (x86)\Google\Chrome\Application
+14b4 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+16d0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f0c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0480 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1120 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0c08 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+06d8 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+022c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+132c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f60 RuntimeBroker.exe         1 9    4    normal
+0f14 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0460 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1ac8 bds.exe                   1 3214 959  normal       C:\Program Files (x86)\Embarcadero\Studio\16.0\bin
+1b00 wmplayer.exe              1 479  146  normal       C:\Program Files (x86)\Windows Media Player
+0ee0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1798 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0b30 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+111c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1720 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0ab4 SearchProtocolHost.exe    0 0    0
+07e0 svchost.exe               0 0    0
+0448 PrototipoOS.exe           1 428  221  normal       C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+
+hardware:
++ {1ed2bbf9-11f0-4084-b21f-ad83a8e6dcdc}
+  - Enviar para o OneNote 2010
+  - Fax
+  - Fila de Impressão da Raiz
+  - Foxit Reader PDF Printer
+  - Microsoft XPS Document Writer
++ {36fc9e60-c465-11cf-8056-444553540000}
+  - Generic USB Hub
+  - Generic USB Hub
+  - Intel(R) 8 Series USB Enhanced Host Controller #1 - 9C26
+  - Intel(R) USB 3.0 eXtensible Host Controller - 0100 (Microsoft)
+  - USB Composite Device
+  - USB Root Hub
+  - USB Root Hub (xHCI)
++ {4d36e965-e325-11ce-bfc1-08002be10318}
+  - HL-DT-ST DVDRAM GU71N
++ {4d36e966-e325-11ce-bfc1-08002be10318}
+  - PC com base em x64 ACPI
++ {4d36e967-e325-11ce-bfc1-08002be10318}
+  - KINGSTON SV300S37A120G
++ {4d36e968-e325-11ce-bfc1-08002be10318}
+  - Intel(R) HD Graphics Family (driver 10.18.10.3960)
++ {4d36e96a-e325-11ce-bfc1-08002be10318}
+  - Intel(R) 8 Series SATA AHCI Controller - 9C03 (driver 9.4.0.1023)
++ {4d36e96b-e325-11ce-bfc1-08002be10318}
+  - Teclado Padrão PS/2
++ {4d36e96c-e325-11ce-bfc1-08002be10318}
+  - Dispositivo de High Definition Audio
++ {4d36e96e-e325-11ce-bfc1-08002be10318}
+  - Monitor Genérico PnP
++ {4d36e96f-e325-11ce-bfc1-08002be10318}
+  - Mouse compatível com HID
+  - Mouse compatível com PS/2
++ {4d36e972-e325-11ce-bfc1-08002be10318}
+  - Adaptador do Microsoft ISATAP #3
+  - Adaptador do Microsoft ISATAP #4
+  - Adaptador Virtual Direto Wi-Fi da Microsoft
+  - Broadcom NetLink (TM) Gigabit Ethernet
+  - Broadcom NetLink (TM) Gigabit Ethernet - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Microsoft Kernel Debug Network Adapter
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter (driver 10.0.0.288)
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Teredo Tunneling Pseudo-Interface
+  - VirtualBox Host-Only Ethernet Adapter (driver 4.3.26.0)
++ {4d36e97b-e325-11ce-bfc1-08002be10318}
+  - Controlador de Espaços de Armazenamento da Microsoft
++ {4d36e97d-e325-11ce-bfc1-08002be10318}
+  - Barramento Redirecionador de Dispositivos de Área de Trabalho Remota
+  - Botão de recurso fixo ACPI
+  - Botão ligar/desligar ACPI
+  - Botão Suspender ACPI
+  - CMOS do sistema/relógio em tempo real
+  - Complexo da Raiz de PCI Express
+  - Controlador de acesso direto à memória
+  - Controlador de High Definition Audio
+  - Controlador de interrupção programável
+  - Driver de Renderização Básico da Microsoft
+  - Driver de Vídeo Básico da Microsoft
+  - Enumerador de Adaptador de Rede Virtual NDIS
+  - Enumerador de Barramento de Composição
+  - Enumerador de Barramento de Raiz UMBus
+  - Enumerador de Dispositivos de Software Plug and Play
+  - Enumerador de Unidade Virtual Microsoft
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Gerenciador de Volumes
+  - Intel(R) 8 Series LPC Controller (Premium SKU) - 9C43 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #3 - 9C14 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #4 - 9C16 (driver 9.4.0.1027)
+  - Intel(R) 82802 Firmware Hub Device
+  - Intel(R) Management Engine Interface
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - IWD Bus Enumerator (driver 5.5.40.0)
+  - Microsoft ACPI-Compliant Embedded Controller
+  - Microsoft ACPI-Compliant System
+  - Microsoft System Management BIOS Driver
+  - PCI standard host CPU bridge
+  - Qualcomm Atheros Bluetooth Bus (driver 8.0.1.316)
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Remote Desktop USB Hub
+  - Synaptics SMBus Driver (driver 17.0.6.23)
+  - Tampa ACPI
+  - Timer de eventos de alta precisão
+  - Timer do sistema
++ {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
++ {5175d334-c371-4806-b3ba-71fd53c9258d}
+  - Microsoft Visual Studio Location Simulator Sensor (driver 11.0.0.0)
++ {533c5b84-ec70-11d2-9505-00c04f79deaf}
+  - Cópia de sombra de volume genérica
++ {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+  - Barramento do Adaptador de Transição IPv4 IPv6 da Microsoft
+  - Microsoft Device Association Root Enumerator
++ {6bdd1fc6-810f-11d0-bec7-08002be2092f}
+  - HD WebCam
++ {72631e54-78a4-11d0-bcf7-00aa00b7b32a}
+  - Adaptador de CA da Microsoft
+  - Bateria de Método de Controle Compatível com ACPI da Microsoft
++ {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+  - Dispositivo de Entrada USB
++ {a0a588a4-c46f-4b37-b7ea-c82fe89870c6}
+  - Controlador de host SD compatível com padrão SDA
++ {c166523c-fe0c-4a94-a586-f1a80cfbbf3e}
+  - Alto-falantes (Dispositivo de High Definition Audio)
+  - Microfone (Dispositivo de High Definition Audio)
+
+cpu registers:
+eax = 098473e0
+ebx = 00000000
+ecx = 00000000
+edx = 00285bc0
+esi = 00a37040
+edi = 098473e0
+eip = 009bc65a
+esp = 0018ecbc
+ebp = 0018ed14
+
+stack dump:
+0018ecbc  5a c6 9b 00 de fa ed 0e - 01 00 00 00 07 00 00 00  Z...............
+0018eccc  d0 ec 18 00 5a c6 9b 00 - e0 73 84 09 00 00 00 00  ....Z....s......
+0018ecdc  40 70 a3 00 e0 73 84 09 - 14 ed 18 00 ec ec 18 00  @p...s..........
+0018ecec  1c ed 18 00 c4 ac 40 00 - 14 ed 18 00 bd 00 00 00  ......@.........
+0018ecfc  00 3b 8f 09 40 35 cd 03 - e0 73 84 09 00 00 00 00  .;..@5...s......
+0018ed0c  00 00 00 00 00 00 00 00 - 98 ed 18 00 48 1b ab 00  ............H...
+0018ed1c  b0 ed 18 00 c4 ac 40 00 - 98 ed 18 00 f0 ce c6 03  ......@.........
+0018ed2c  02 00 00 00 40 35 cd 03 - f0 ce c6 03 00 00 00 00  ....@5..........
+0018ed3c  00 00 00 00 d0 10 ca 07 - 64 ed 18 00 d5 21 4e 60  ........d....!N`
+0018ed4c  2f 11 ca 07 19 a0 ca 07 - 00 00 00 00 00 00 00 00  /...............
+0018ed5c  00 00 00 00 a0 1b ab 00 - b8 1b ab 00 00 00 00 00  ................
+0018ed6c  00 00 00 00 31 00 00 00 - 00 00 00 00 e0 73 84 09  ....1........s..
+0018ed7c  f0 ce c6 03 28 04 00 00 - 00 00 00 00 00 00 00 00  ....(...........
+0018ed8c  00 00 00 00 00 00 00 00 - 00 00 00 00 d0 ed 18 00  ................
+0018ed9c  f0 1d ab 00 40 63 69 07 - 00 00 00 00 f0 ce c6 03  ....@ci.........
+0018edac  33 30 ab 00 d8 ed 18 00 - c4 ac 40 00 d0 ed 18 00  30........@.....
+0018edbc  00 00 00 00 00 00 00 00 - 00 00 00 00 cc fd 86 09  ................
+0018edcc  40 35 cd 03 40 ee 18 00 - dc f9 ab 00 e4 ed 18 00  @5..@...........
+0018eddc  a3 ae 40 00 40 ee 18 00 - f0 ed 18 00 c4 ac 40 00  ..@.@.........@.
+0018edec  40 ee 18 00 fc ed 18 00 - c4 ac 40 00 40 ee 18 00  @.........@.@...
+
+disassembling:
+[...]
+00b6b847        call    -$19627c ($9d55d0)     ; FireDAC.Stan.Param.TFDParam.SetAsVariant
+00b6b84c 1292   push    0
+00b6b84e        xor     ecx, ecx
+00b6b850        xor     edx, edx
+00b6b852        mov     eax, ebx
+00b6b854      > call    -$c5309 ($aa6550)      ; FireDAC.Comp.Client.TFDCustomCommand.Execute
+00b6b859 1294   int     3
+00b6b85a        push    ebp
+00b6b85b        in      al, dx
+00b6b85c        mov     eax, [$108f2ec]
+00b6b861        mov     eax, [eax+$674]
+[...]
+
+date/time          : 2015-05-12, 12:38:22, 915ms
+computer name      : WORK
+user name          : D.Rafael
+registered owner   : D.Rafael
+operating system   : Windows 8.1 x64 build 9600
+system language    : Portuguese
+system up time     : 3 hours 58 minutes
+program up time    : 30 seconds
+processors         : 4x Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+physical memory    : 875/3820 MB (free/total)
+free disk space    : (C:) 5,83 GB
+display mode       : 1366x768, 32 bit
+process id         : $1258
+allocated memory   : 99,07 MB
+largest free block : 1,32 GB
+executable         : PrototipoOS.exe
+exec. date/time    : 2015-05-12 12:37
+version            : 1.1.0.0
+compiled with      : Delphi XE6
+madExcept version  : 4.0.12
+callstack crc      : $ec77c68d, $3d3b50b1, $3d3b50b1
+exception number   : 1
+exception class    : EMySQLNativeException
+exception message  : [FireDAC][Phys][MySQL] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE os_engenharia_revisao_rural_servicocampo.id = 2' at line 1.
+
+main thread ($1184):
+009bc655 +119 PrototipoOS.exe FireDAC.Stan.Error                FDException
+00ab1b43 +397 PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.ProcessError
+00ab1deb +02b PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.Check
+00ab302e +06a PrototipoOS.exe FireDAC.Phys.MySQLWrapper         TMySQLSession.QuerySB
+00abf9d7 +14f PrototipoOS.exe FireDAC.Phys.MySQL                TFDPhysMySQLCommand.InternalExecute
+00a49ccc +068 PrototipoOS.exe FireDAC.Phys                      Process_HandleSystemFailure
+00a49dfe +042 PrototipoOS.exe FireDAC.Phys                      Process_SingleRow
+00a4ad18 +1f0 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteBase
+00a498c5 +009 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommandAsyncExecute.Execute
+00a1d63f +04b PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.ExecuteOperation
+00a1d96e +06e PrototipoOS.exe FireDAC.Stan.Async                TFDStanAsyncExecutor.Run
+00a44aba +086 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a44b0b +0d7 PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.ExecuteTask
+00a4af27 +05b PrototipoOS.exe FireDAC.Phys                      TFDPhysCommand.Execute
+00aa62b3 +0f7 PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.InternalExecute
+00aa520c +43c PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.SetPrepared
+00aa657d +02d PrototipoOS.exe FireDAC.Comp.Client               TFDCustomCommand.Execute
+00b6b840 +078 PrototipoOS.exe uFrmCadastrarProjetoRural 1292 +8 TfrmCadastrarProjetoRural.MenuItem8Click
+006a464e +0aa PrototipoOS.exe Vcl.Menus                         TMenuItem.Click
+006a5cec +018 PrototipoOS.exe Vcl.Menus                         TMenu.DispatchCommand
+006a6f5e +082 PrototipoOS.exe Vcl.Menus                         TPopupList.WndProc
+006a6ead +01d PrototipoOS.exe Vcl.Menus                         TPopupList.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bad32 +1aa PrototipoOS.exe Vcl.Forms                         TCustomForm.ShowModal
+00fac6c2 +022 PrototipoOS.exe uPrincipal                 110 +2 TfrmPrincipal.cxButton3Click
+005c56f7 +06f PrototipoOS.exe Vcl.Controls                      TControl.Click
+005e7f86 +01e PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.Click
+00934ce9 +06d PrototipoOS.exe cxButtons                         TcxCustomButton.Click
+005e8a8c +010 PrototipoOS.exe Vcl.StdCtrls                      TCustomButton.CNCommand
+009353cd +02d PrototipoOS.exe cxButtons                         TcxCustomButton.CNCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c98e8 +1f8 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+005c4ddc +024 PrototipoOS.exe Vcl.Controls                      TControl.Perform
+005c9e1f +023 PrototipoOS.exe Vcl.Controls                      DoControlMsg
+005ca8a7 +00b PrototipoOS.exe Vcl.Controls                      TWinControl.WMCommand
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+770c07d4 +034 ntdll.dll                                         KiUserCallbackDispatcher
+76afe4a4 +134 user32.dll                                        SendMessageW
+76afddd0 +090 user32.dll                                        CallWindowProcW
+005c9dca +0e6 PrototipoOS.exe Vcl.Controls                      TWinControl.DefaultHandler
+005c5b4c +010 PrototipoOS.exe Vcl.Controls                      TControl.WMLButtonUp
+005c51a1 +2bd PrototipoOS.exe Vcl.Controls                      TControl.WndProc
+005c9cb9 +5c9 PrototipoOS.exe Vcl.Controls                      TWinControl.WndProc
+005e7c30 +06c PrototipoOS.exe Vcl.StdCtrls                      TButtonControl.WndProc
+00935344 +078 PrototipoOS.exe cxButtons                         TcxCustomButton.WndProc
+005c9300 +02c PrototipoOS.exe Vcl.Controls                      TWinControl.MainWndProc
+0054a17c +014 PrototipoOS.exe System.Classes                    StdWndProc
+76afa6db +00b user32.dll                                        DispatchMessageW
+006bf86b +0f3 PrototipoOS.exe Vcl.Forms                         TApplication.ProcessMessage
+006bf8ae +00a PrototipoOS.exe Vcl.Forms                         TApplication.HandleMessage
+006bfbe1 +0c9 PrototipoOS.exe Vcl.Forms                         TApplication.Run
+00fe038e +062 PrototipoOS.exe PrototipoOS                 49 +8 initialization
+76e77c02 +022 KERNEL32.DLL                                      BaseThreadInitThunk
+
+thread $1868: <priority:2>
+76b25de7 +47 user32.dll                GetMessageA
+004ae179 +0d PrototipoOS.exe madExcept CallThreadProcSafe
+004ae1de +32 PrototipoOS.exe madExcept ThreadExceptFrame
+76e77c02 +22 KERNEL32.DLL              BaseThreadInitThunk
+>> created by main thread ($1184) at:
+72485607 +00 winmm.dll
+
+thread $1b78 (TJvTimerThread):
+769b2b7d +04d KERNELBASE.dll                 SleepEx
+00b31d52 +112 PrototipoOS.exe JvTimer        TJvTimerThread.Execute
+004ae293 +02b PrototipoOS.exe madExcept      HookedTThreadExecute
+00546629 +049 PrototipoOS.exe System.Classes ThreadProc
+0040b610 +028 PrototipoOS.exe System         ThreadWrapper
+004ae179 +00d PrototipoOS.exe madExcept      CallThreadProcSafe
+004ae1de +032 PrototipoOS.exe madExcept      ThreadExceptFrame
+76e77c02 +022 KERNEL32.DLL                   BaseThreadInitThunk
+>> created by main thread ($1184) at:
+00b31aca +04e PrototipoOS.exe JvTimer        TJvTimerThread.Create
+
+thread $16f0:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $1918:
+76e77c02 +22 KERNEL32.DLL  BaseThreadInitThunk
+
+modules:
+00400000 PrototipoOS.exe      1.1.0.0             C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+604d0000 libmysql_2.dll       6.1.5.0             C:\Sistema
+67890000 DWrite.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+6a900000 HHCtrl.OCX           6.3.9600.17415      C:\Windows\SYSTEM32
+6b5e0000 security.dll         6.3.9600.16384      C:\Windows\SYSTEM32
+70490000 oleacc.dll           7.2.9600.17415      C:\Windows\SYSTEM32
+708b0000 winspool.drv         6.3.9600.17415      C:\Windows\SYSTEM32
+70920000 rasadhlp.dll         6.3.9600.17415      C:\Windows\System32
+70980000 WINSTA.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+70df0000 gdiplus.dll          6.3.9600.17415      C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.17415_none_dad8722c5bcc2d8f
+71150000 propsys.dll          7.0.9600.17415      C:\Windows\system32
+716b0000 version.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71770000 winrnr.dll           6.3.9600.17415      C:\Windows\System32
+71780000 wsock32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71790000 DNSAPI.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+719b0000 NLAapi.dll           6.3.9600.17415      C:\Windows\system32
+719d0000 pnrpnsp.dll          6.3.9600.17415      C:\Windows\system32
+719f0000 napinsp.dll          6.3.9600.17415      C:\Windows\system32
+71b80000 mswsock.dll          6.3.9600.17415      C:\Windows\System32
+71cd0000 dwmapi.dll           6.3.9600.17415      C:\Windows\system32
+71cf0000 uxtheme.dll          6.3.9600.17415      C:\Windows\system32
+71e30000 DEVOBJ.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+71e60000 msimg32.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+71f00000 WINMMBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+72480000 winmm.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+72a50000 FaultRep.dll         6.3.9600.17550      C:\Windows\SYSTEM32
+72c50000 wtsapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+73040000 SECUR32.DLL          6.3.9600.17415      C:\Windows\SYSTEM32
+731c0000 kernel.appcore.dll   6.3.9600.17415      C:\Windows\SYSTEM32
+731d0000 comctl32.dll         6.10.9600.17415     C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9600.17415_none_a9ed7f470139b3c1
+73620000 SHCORE.DLL           6.3.9600.17666      C:\Windows\SYSTEM32
+747e0000 ntmarta.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74810000 bcryptPrimitives.dll 6.3.9600.17415      C:\Windows\SYSTEM32
+74870000 CRYPTBASE.dll        6.3.9600.17415      C:\Windows\SYSTEM32
+74880000 SspiCli.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+74a10000 gdi32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+74b20000 WS2_32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+74be0000 oleaut32.dll         6.3.9600.17560      C:\Windows\SYSTEM32
+74c90000 msvcrt.dll           7.0.9600.17415      C:\Windows\SYSTEM32
+74dc0000 IMM32.DLL            6.3.9600.17415      C:\Windows\system32
+74df0000 MSCTF.dll            6.3.9600.17706      C:\Windows\SYSTEM32
+74f10000 comdlg32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+74fb0000 combase.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+75150000 ole32.dll            6.3.9600.17415      C:\Windows\SYSTEM32
+75280000 cfgmgr32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+75300000 NSI.dll              6.3.9600.17415      C:\Windows\SYSTEM32
+753a0000 shell32.dll          6.3.9600.17680      C:\Windows\SYSTEM32
+76650000 advapi32.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+766d0000 RPCRT4.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76920000 clbcatq.dll          2001.12.10530.17415 C:\Windows\SYSTEM32
+769b0000 KERNELBASE.dll       6.3.9600.17415      C:\Windows\SYSTEM32
+76aa0000 SHLWAPI.dll          6.3.9600.17415      C:\Windows\SYSTEM32
+76af0000 user32.dll           6.3.9600.17415      C:\Windows\SYSTEM32
+76c50000 SETUPAPI.dll         6.3.9600.17415      C:\Windows\SYSTEM32
+76e10000 sechost.dll          6.3.9600.17734      C:\Windows\SYSTEM32
+76e60000 KERNEL32.DLL         6.3.9600.17415      C:\Windows\SYSTEM32
+77080000 ntdll.dll            6.3.9600.17736      C:\Windows\SYSTEM32
+
+processes:
+0000 Idle                      0 0    0
+0004 System                    0 0    0
+013c smss.exe                  0 0    0
+01a8 csrss.exe                 0 0    0
+01ec wininit.exe               0 0    0
+01f4 csrss.exe                 1 0    0
+0220 services.exe              0 0    0
+0228 lsass.exe                 0 0    0
+0278 svchost.exe               0 0    0
+0298 svchost.exe               0 0    0
+02ec winlogon.exe              1 0    0
+0330 GbpSv.exe                 0 0    0
+034c dwm.exe                   1 0    0
+03ac svchost.exe               0 0    0
+03cc svchost.exe               0 0    0
+03e8 svchost.exe               0 0    0
+0114 svchost.exe               0 0    0
+021c igfxCUIService.exe        0 0    0
+0414 svchost.exe               0 0    0
+0458 audiodg.exe               0 0    0
+0500 spoolsv.exe               0 0    0
+0550 svchost.exe               0 0    0
+05cc AdminService.exe          0 0    0
+05ec ekrn.exe                  0 0    0
+05f8 dasHost.exe               0 0    0
+0618 FCUpdateService.exe       0 0    0
+0648 HeciServer.exe            0 0    0
+066c MotoHelperService.exe     0 0    0
+0688 mysqld.exe                0 0    0
+069c mysqld.exe                0 0    0
+06c0 ForwardDaemon.exe         0 0    0
+0724 sparkservice.exe          0 0    0
+074c sqlwriter.exe             0 0    0
+075c svchost.exe               0 0    0
+0794 TeamViewer_Service.exe    0 0    0
+07f8 core.exe                  0 0    0
+0b68 explorer.exe              1 716  471  normal
+0434 PresentationFontCache.exe 0 0    0
+0cb0 dllhost.exe               1 9    3    normal
+0d88 GbpSv.exe                 1 10   5    normal       C:\PROGRA~2\GbPlugin
+0df4 taskhostex.exe            1 13   16   normal
+0e60 igfxEM.exe                1 13   14   normal
+0e68 igfxHK.exe                1 13   13   normal
+0fa8 svchost.exe               0 0    0
+0fd8 svchost.exe               0 0    0
+04d8 SearchIndexer.exe         0 0    0
+0cc8 WUDFHost.exe              0 0    0
+1090 SkyDrive.exe              1 17   24   normal
+1194 TSVNCache.exe             1 9    5    normal
+1278 SettingSyncHost.exe       1 9    7    below normal
+12c8 BtvStack.exe              1 39   31   normal
+12e4 ActivateDesktop.exe       1 9    3    normal
+1300 core.exe                  1 4    1    normal
+1380 egui.exe                  1 218  57   normal
+0f38 EvernoteClipper.exe       1 18   11   normal       C:\Program Files (x86)\Evernote\Evernote
+0b5c bds.exe                   1 4245 1392 normal       C:\Program Files (x86)\Embarcadero\Studio\14.0\bin
+15e8 Skype.exe                 1 227  170  normal       C:\Program Files (x86)\Skype\Phone
+12d0 jhi_service.exe           0 0    0
+1478 LMS.exe                   0 0    0
+17c4 SpotifyWebHelper.exe      1 9    3    normal       C:\Users\D.Rafael\AppData\Roaming\Spotify
+0b20 navicat.exe               1 244  147  normal       C:\Program Files (x86)\PremiumSoft\Navicat Premium
+13c4 Evernote.exe              1 495  133  normal       C:\Program Files (x86)\Evernote\Evernote
+03c4 EvernoteTray.exe          1 12   8    normal       C:\Program Files (x86)\Evernote\Evernote
+11b0 chrome.exe                1 273  126  normal       C:\Program Files (x86)\Google\Chrome\Application
+0090 chrome.exe                1 9    11   normal       C:\Program Files (x86)\Google\Chrome\Application
+14b4 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+16d0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f0c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0480 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1120 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0c08 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+06d8 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+022c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+132c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0f60 RuntimeBroker.exe         1 9    4    normal
+0f14 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0460 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1ac8 bds.exe                   1 3214 959  normal       C:\Program Files (x86)\Embarcadero\Studio\16.0\bin
+1b00 wmplayer.exe              1 479  146  normal       C:\Program Files (x86)\Windows Media Player
+0ee0 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1798 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0b30 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+111c chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+1720 chrome.exe                1 0    0    normal       C:\Program Files (x86)\Google\Chrome\Application
+0ab4 SearchProtocolHost.exe    0 0    0
+1ac4 svchost.exe               0 0    0
+1258 PrototipoOS.exe           1 428  222  normal       C:\Users\D.Rafael\Documents\Dinamo\Prototipo\Win32\Release
+
+hardware:
++ {1ed2bbf9-11f0-4084-b21f-ad83a8e6dcdc}
+  - Enviar para o OneNote 2010
+  - Fax
+  - Fila de Impressão da Raiz
+  - Foxit Reader PDF Printer
+  - Microsoft XPS Document Writer
++ {36fc9e60-c465-11cf-8056-444553540000}
+  - Generic USB Hub
+  - Generic USB Hub
+  - Intel(R) 8 Series USB Enhanced Host Controller #1 - 9C26
+  - Intel(R) USB 3.0 eXtensible Host Controller - 0100 (Microsoft)
+  - USB Composite Device
+  - USB Root Hub
+  - USB Root Hub (xHCI)
++ {4d36e965-e325-11ce-bfc1-08002be10318}
+  - HL-DT-ST DVDRAM GU71N
++ {4d36e966-e325-11ce-bfc1-08002be10318}
+  - PC com base em x64 ACPI
++ {4d36e967-e325-11ce-bfc1-08002be10318}
+  - KINGSTON SV300S37A120G
++ {4d36e968-e325-11ce-bfc1-08002be10318}
+  - Intel(R) HD Graphics Family (driver 10.18.10.3960)
++ {4d36e96a-e325-11ce-bfc1-08002be10318}
+  - Intel(R) 8 Series SATA AHCI Controller - 9C03 (driver 9.4.0.1023)
++ {4d36e96b-e325-11ce-bfc1-08002be10318}
+  - Teclado Padrão PS/2
++ {4d36e96c-e325-11ce-bfc1-08002be10318}
+  - Dispositivo de High Definition Audio
++ {4d36e96e-e325-11ce-bfc1-08002be10318}
+  - Monitor Genérico PnP
++ {4d36e96f-e325-11ce-bfc1-08002be10318}
+  - Mouse compatível com HID
+  - Mouse compatível com PS/2
++ {4d36e972-e325-11ce-bfc1-08002be10318}
+  - Adaptador do Microsoft ISATAP #3
+  - Adaptador do Microsoft ISATAP #4
+  - Adaptador Virtual Direto Wi-Fi da Microsoft
+  - Broadcom NetLink (TM) Gigabit Ethernet
+  - Broadcom NetLink (TM) Gigabit Ethernet - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Microsoft Kernel Debug Network Adapter
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter (driver 10.0.0.288)
+  - Qualcomm Atheros AR5B125 Wireless Network Adapter - VirtualBox Bridged Networking Driver Miniport (driver 4.3.26.0)
+  - Teredo Tunneling Pseudo-Interface
+  - VirtualBox Host-Only Ethernet Adapter (driver 4.3.26.0)
++ {4d36e97b-e325-11ce-bfc1-08002be10318}
+  - Controlador de Espaços de Armazenamento da Microsoft
++ {4d36e97d-e325-11ce-bfc1-08002be10318}
+  - Barramento Redirecionador de Dispositivos de Área de Trabalho Remota
+  - Botão de recurso fixo ACPI
+  - Botão ligar/desligar ACPI
+  - Botão Suspender ACPI
+  - CMOS do sistema/relógio em tempo real
+  - Complexo da Raiz de PCI Express
+  - Controlador de acesso direto à memória
+  - Controlador de High Definition Audio
+  - Controlador de interrupção programável
+  - Driver de Renderização Básico da Microsoft
+  - Driver de Vídeo Básico da Microsoft
+  - Enumerador de Adaptador de Rede Virtual NDIS
+  - Enumerador de Barramento de Composição
+  - Enumerador de Barramento de Raiz UMBus
+  - Enumerador de Dispositivos de Software Plug and Play
+  - Enumerador de Unidade Virtual Microsoft
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Enumerador UMBus
+  - Gerenciador de Volumes
+  - Intel(R) 8 Series LPC Controller (Premium SKU) - 9C43 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #3 - 9C14 (driver 9.4.0.1027)
+  - Intel(R) 8 Series PCI Express Root Port #4 - 9C16 (driver 9.4.0.1027)
+  - Intel(R) 82802 Firmware Hub Device
+  - Intel(R) Management Engine Interface
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - Interface de Gerenciamento do Microsoft Windows para ACPI
+  - IWD Bus Enumerator (driver 5.5.40.0)
+  - Microsoft ACPI-Compliant Embedded Controller
+  - Microsoft ACPI-Compliant System
+  - Microsoft System Management BIOS Driver
+  - PCI standard host CPU bridge
+  - Qualcomm Atheros Bluetooth Bus (driver 8.0.1.316)
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Recursos da placa-mãe
+  - Remote Desktop USB Hub
+  - Synaptics SMBus Driver (driver 17.0.6.23)
+  - Tampa ACPI
+  - Timer de eventos de alta precisão
+  - Timer do sistema
++ {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
+  - Intel(R) Core(TM) i5-4200U CPU @ 1.60GHz
++ {5175d334-c371-4806-b3ba-71fd53c9258d}
+  - Microsoft Visual Studio Location Simulator Sensor (driver 11.0.0.0)
++ {533c5b84-ec70-11d2-9505-00c04f79deaf}
+  - Cópia de sombra de volume genérica
++ {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+  - Barramento do Adaptador de Transição IPv4 IPv6 da Microsoft
+  - Microsoft Device Association Root Enumerator
++ {6bdd1fc6-810f-11d0-bec7-08002be2092f}
+  - HD WebCam
++ {72631e54-78a4-11d0-bcf7-00aa00b7b32a}
+  - Adaptador de CA da Microsoft
+  - Bateria de Método de Controle Compatível com ACPI da Microsoft
++ {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+  - Dispositivo de Entrada USB
++ {a0a588a4-c46f-4b37-b7ea-c82fe89870c6}
+  - Controlador de host SD compatível com padrão SDA
++ {c166523c-fe0c-4a94-a586-f1a80cfbbf3e}
+  - Alto-falantes (Dispositivo de High Definition Audio)
+  - Microfone (Dispositivo de High Definition Audio)
+
+cpu registers:
+eax = 098573e0
+ebx = 00000000
+ecx = 00000000
+edx = 025d5bc0
+esi = 00a37040
+edi = 098573e0
+eip = 009bc65a
+esp = 0018eccc
+ebp = 0018ed24
+
+stack dump:
+0018eccc  5a c6 9b 00 de fa ed 0e - 01 00 00 00 07 00 00 00  Z...............
+0018ecdc  e0 ec 18 00 5a c6 9b 00 - e0 73 85 09 00 00 00 00  ....Z....s......
+0018ecec  40 70 a3 00 e0 73 85 09 - 24 ed 18 00 fc ec 18 00  @p...s..$.......
+0018ecfc  2c ed 18 00 c4 ac 40 00 - 24 ed 18 00 bd 00 00 00  ,.....@.$.......
+0018ed0c  00 3b 90 09 40 35 3c 00 - e0 73 85 09 00 00 00 00  .;..@5<..s......
+0018ed1c  00 00 00 00 00 00 00 00 - a8 ed 18 00 48 1b ab 00  ............H...
+0018ed2c  c0 ed 18 00 c4 ac 40 00 - a8 ed 18 00 f0 ce 35 00  ......@.......5.
+0018ed3c  02 00 00 00 40 35 3c 00 - f0 ce 35 00 00 00 00 00  ....@5<...5.....
+0018ed4c  00 00 00 00 d0 10 b8 07 - 74 ed 18 00 d5 21 4e 60  ........t....!N`
+0018ed5c  2f 11 b8 07 19 a0 b8 07 - 00 00 00 00 00 00 00 00  /...............
+0018ed6c  00 00 00 00 a0 1b ab 00 - b8 1b ab 00 00 00 00 00  ................
+0018ed7c  00 00 00 00 31 00 00 00 - 00 00 00 00 e0 73 85 09  ....1........s..
+0018ed8c  f0 ce 35 00 28 04 00 00 - 00 00 00 00 00 00 00 00  ..5.(...........
+0018ed9c  00 00 00 00 00 00 00 00 - 00 00 00 00 e0 ed 18 00  ................
+0018edac  f0 1d ab 00 28 9c 41 0a - 00 00 00 00 f0 ce 35 00  ....(.A.......5.
+0018edbc  33 30 ab 00 e8 ed 18 00 - c4 ac 40 00 e0 ed 18 00  30........@.....
+0018edcc  00 00 00 00 00 00 00 00 - 00 00 00 00 cc fd 87 09  ................
+0018eddc  40 35 3c 00 50 ee 18 00 - dc f9 ab 00 f4 ed 18 00  @5<.P...........
+0018edec  a3 ae 40 00 50 ee 18 00 - 00 ee 18 00 c4 ac 40 00  ..@.P.........@.
+0018edfc  50 ee 18 00 0c ee 18 00 - c4 ac 40 00 50 ee 18 00  P.........@.P...
+
+disassembling:
+[...]
+00b6b833        call    -$196c3c ($9d4bfc)     ; FireDAC.Stan.Param.TFDParam.SetAsInteger
+00b6b838 1292   push    0
+00b6b83a        xor     ecx, ecx
+00b6b83c        xor     edx, edx
+00b6b83e        mov     eax, ebx
+00b6b840      > call    -$c52f5 ($aa6550)      ; FireDAC.Comp.Client.TFDCustomCommand.Execute
+00b6b845 1294   int     3
+00b6b846        push    ebp
+00b6b847        cld
+00b6b848        mov     eax, [$108f2ec]
+00b6b84d        mov     eax, [eax+$674]
+[...]
+

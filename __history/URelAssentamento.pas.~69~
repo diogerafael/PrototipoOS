@@ -1,0 +1,147 @@
+unit URelAssentamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, URelPadrao, Vcl.Menus, RDprint,
+  Vcl.Buttons, PngSpeedButton, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.Samples.Gauges, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxContainer, cxEdit, Vcl.ComCtrls, dxCore, cxDateUtils, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
+  dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, cxTextEdit,
+  cxMaskEdit, cxDropDownEdit, cxCalendar;
+
+type
+  TFrmRelAssentamento = class(TFrmRelPadrao)
+    FDQuery1: TFDQuery;
+    GroupBox1: TGroupBox;
+    edtini: TcxDateEdit;
+    edtfim: TcxDateEdit;
+    procedure btnrelatorioClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure CorpoRel;
+    procedure CabecalhoRel;
+    procedure RodapeRel;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmRelAssentamento: TFrmRelAssentamento;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule;
+
+{ TFrmRelPadrao1 }
+
+procedure TFrmRelAssentamento.btnrelatorioClick(Sender: TObject);
+begin
+  inherited;
+  CabecalhoRel;
+  CorpoRel;
+  RodapeRel;
+end;
+
+procedure TFrmRelAssentamento.CabecalhoRel;
+begin
+  sqlstr:=' SELECT '+
+             ' os_assentamento_rural.descricao as assentamento ,os_assentamento_rural.data,'+
+             ' os_assentamento_rural.id,'+
+             ' os_engenharia_notas_rural.descricao as notas,'+
+             ' os_engenharia_clientes_rural.descricao as clientes '+
+           ' FROM '+
+             ' os_assentamento_rural,'+
+             ' os_assentamento_os,'+
+             ' os_engenharia_notas_rural,'+
+             ' os_engenharia_clientes_rural '+
+           ' WHERE '+
+             ' (os_assentamento_rural.id = os_assentamento_os.id_assentamento_rural)'+
+            ' AND (os_engenharia_notas_rural.id_os_projeto = os_assentamento_os.id_os_rural)'+
+            ' AND (os_engenharia_clientes_rural.id_projeto = os_assentamento_os.id_os_rural) '+
+            ' and (os_assentamento_rural.data between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text)) )';
+
+  if ConsultaSqlFd(FDQuery1,sqlstr)<>0 then
+  begin
+    SemRegistros;
+    Abort;
+  end
+  else
+  begin
+
+    if(not DataModule1.qryEMPRESA.Active)then
+    begin
+      DataModule1.qryEMPRESA.Active := True;
+    end;
+
+    rdprnt1.TamanhoQteColunas:=137;
+    rdprnt1.TamanhoQteLinhas:=66;
+    rdprnt1.OpcoesPreview.Preview:=True;
+    rdprnt1.OpcoesPreview.PreviewZoom := -1; rdprnt1.OpcoesPreview.Remalina := false; rdprnt1.OpcoesPreview.PaginaZebrada := true; //zoom 100%
+
+    rdprnt1.Abrir;
+    rdprnt1.impf(01,01,datamodule1.qryEMPRESA.FieldByName('nome_razaosocial').AsString,[negrito]);
+    rdprnt1.impf(01,40,'CNPJ: '+datamodule1.qryempresa.Fieldbyname('cnpj').asstring,[comp17,negrito]);
+    rdprnt1.impf(01,60,RetornaDataMysqlComHora(),[comp17,negrito]);
+    rdprnt1.imp(02,01,_traco137);
+    rdprnt1.impf(03,01,'RELATÓRIO DE ASSENTAMENTOS',[comp17,negrito]);
+    rdprnt1.imp(04,01,_traco137);
+
+    rdprnt1.impf(05,01,'CÓDIGO',[comp17,negrito]);
+    rdprnt1.impf(05,20,'DATA',[comp17,negrito]);
+    rdprnt1.impf(05,35,'DESCRIÇÃO',[comp17,negrito]);
+    rdprnt1.impf(05,70,'NOTA',[comp17,negrito]);
+    rdprnt1.impf(05,100,'CLIENTE',[comp17,negrito]);
+
+  end;
+
+end;
+
+procedure TFrmRelAssentamento.CorpoRel;
+var
+linha:Integer;
+begin
+  //montar relatorio
+  linha := 6;
+  FDQuery1.First;
+  g1.MaxValue := FDQuery1.RecordCount;
+  while not FDQuery1.Eof do
+  begin
+    rdprnt1.impf(linha,01,FDQuery1.FieldByName('id').AsString,[comp17]);
+    rdprnt1.impf(linha,20,FDQuery1.FieldByName('data').AsString,[comp17]);
+    rdprnt1.impf(linha,35,FDQuery1.FieldByName('assentamento').AsString,[comp17]);
+    rdprnt1.impf(linha,70,FDQuery1.FieldByName('notas').AsString,[comp17]);
+    rdprnt1.impf(linha,100,FDQuery1.FieldByName('clientes').AsString,[comp17]);    //clientes
+    Inc(linha);
+    FDQuery1.Next;
+    g1.Progress:=g1.Progress+1;
+  end;
+
+end;
+
+procedure TFrmRelAssentamento.RodapeRel;
+begin
+  rdprnt1.Fechar;
+end;
+
+end.

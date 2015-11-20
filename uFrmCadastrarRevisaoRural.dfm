@@ -1,0 +1,195 @@
+inherited frmCadastrarRevisaoRural: TfrmCadastrarRevisaoRural
+  Left = 502
+  Top = 161
+  Caption = 'Revis'#227'o Rural'
+  ClientHeight = 304
+  ClientWidth = 551
+  OnClose = FormClose
+  ExplicitWidth = 567
+  ExplicitHeight = 343
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel1: TPanel
+    Width = 551
+    ExplicitWidth = 551
+    inherited sbexcluir: TPngSpeedButton
+      OnClick = sbexcluirClick
+    end
+    inherited sbgravar: TPngSpeedButton
+      OnClick = sbgravarClick
+    end
+    inherited sbnovo: TPngSpeedButton
+      OnClick = sbnovoClick
+    end
+  end
+  object grp4: TGroupBox [1]
+    Left = 13
+    Top = 74
+    Width = 521
+    Height = 214
+    Caption = 'Projeto'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    object lbl24: TLabel
+      Left = 10
+      Top = 24
+      Width = 51
+      Height = 14
+      Caption = 'Projetista'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lbl25: TLabel
+      Left = 11
+      Top = 48
+      Width = 29
+      Height = 14
+      Caption = 'Envio'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lbl26: TLabel
+      Left = 197
+      Top = 48
+      Width = 44
+      Height = 14
+      Caption = 'Retorno'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object edtdtenviorevisao: TcxDateEdit
+      Left = 67
+      Top = 44
+      ParentFont = False
+      Properties.DateOnError = deNull
+      Style.BorderStyle = ebsUltraFlat
+      Style.Color = clWindow
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -12
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = []
+      Style.ButtonStyle = btsDefault
+      Style.ButtonTransparency = ebtHideUnselected
+      Style.IsFontAssigned = True
+      StyleFocused.Color = clMoneyGreen
+      TabOrder = 2
+      Width = 120
+    end
+    object edtdtretornorevisao: TcxDateEdit
+      Left = 247
+      Top = 44
+      ParentFont = False
+      Properties.DateOnError = deNull
+      Style.BorderStyle = ebsUltraFlat
+      Style.Color = clWindow
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -12
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = []
+      Style.ButtonStyle = btsDefault
+      Style.ButtonTransparency = ebtHideUnselected
+      Style.IsFontAssigned = True
+      StyleFocused.Color = clMoneyGreen
+      TabOrder = 3
+      Width = 120
+    end
+    object dbgrd2: TDBGrid
+      Left = 3
+      Top = 72
+      Width = 502
+      Height = 129
+      DataSource = ds1
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      ReadOnly = True
+      TabOrder = 4
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      OnDblClick = dbgrd2DblClick
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'dt_inicio'
+          Title.Caption = 'Inicio'
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'dt_fim'
+          Title.Caption = 'Fim'
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'nome'
+          Title.Caption = 'Projetista'
+          Width = 280
+          Visible = True
+        end>
+    end
+    object edtcodprojetistarevisao: TEdit
+      Left = 67
+      Top = 22
+      Width = 28
+      Height = 19
+      Ctl3D = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentCtl3D = False
+      ParentFont = False
+      TabOrder = 0
+      OnKeyPress = edtcodprojetistarevisaoKeyPress
+    end
+    object edtdescprojetistarevisao: TEdit
+      Left = 97
+      Top = 22
+      Width = 270
+      Height = 19
+      Ctl3D = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentCtl3D = False
+      ParentFont = False
+      TabOrder = 1
+    end
+  end
+  object qry: TFDQuery
+    Connection = DataModule1.ConMySql
+    Left = 357
+    Top = 194
+  end
+  object ds1: TDataSource
+    DataSet = qry
+    Left = 413
+    Top = 194
+  end
+end

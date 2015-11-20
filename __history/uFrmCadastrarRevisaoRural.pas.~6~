@@ -1,0 +1,463 @@
+unit uFrmCadastrarRevisaoRural;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UPadraoNovo, Vcl.Menus,
+  Vcl.Buttons, PngSpeedButton, Vcl.ExtCtrls, cxControls,
+  cxContainer, cxEdit, Vcl.ComCtrls,
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Vcl.StdCtrls,
+  Vcl.Grids, Vcl.DBGrids, cxTextEdit, cxMaskEdit, cxDropDownEdit,
+  cxCalendar, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
+  dxCore, cxDateUtils, dxSkinsCore, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle,
+  dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary,
+  dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, FireDAC.Stan.Intf,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf;
+
+type
+  TfrmCadastrarRevisaoRural = class(TFrmCadPadraoNovoGrande)
+    grp4: TGroupBox;
+    lbl24: TLabel;
+    lbl25: TLabel;
+    lbl26: TLabel;
+    edtdtenviorevisao: TcxDateEdit;
+    edtdtretornorevisao: TcxDateEdit;
+    dbgrd2: TDBGrid;
+    edtcodprojetistarevisao: TEdit;
+    edtdescprojetistarevisao: TEdit;
+    qry: TFDQuery;
+    ds1: TDataSource;
+    procedure sbnovoClick(Sender: TObject);
+    procedure dbgrd2DblClick(Sender: TObject);
+    procedure sbgravarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure edtcodprojetistarevisaoKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure sbexcluirClick(Sender: TObject);
+  private
+    { Private declarations }
+    FidRevisao:Integer;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastrarRevisaoRural: TfrmCadastrarRevisaoRural;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, uFrmCadastrarProjetoRural, UConsFuncionario;
+
+procedure TfrmCadastrarRevisaoRural.dbgrd2DblClick(Sender: TObject);
+begin
+  inherited;
+  //setas os dados para edicao
+   if Self.Tag=0 then
+  begin
+    edtcodprojetistarevisao.Text:=qry.FieldByName('cod_projetista').AsString;
+    edtdescprojetistarevisao.Text:=qry.FieldByName('nome').AsString;
+    edtdtenviorevisao.Text:= qry.FieldByName('dt_inicio').AsString;
+    edtdtretornorevisao.Text:= qry.FieldByName('dt_fim').AsString;
+    FidRevisao:=qry.FieldByName('id').AsInteger;
+  end;
+  if Self.Tag=1 then
+  begin
+    edtcodprojetistarevisao.Text:=qry.FieldByName('id_tecnico').AsString;
+    edtdescprojetistarevisao.Text:=qry.FieldByName('nome').AsString;
+    edtdtenviorevisao.Text:= qry.FieldByName('dt_inicio').AsString;
+    edtdtretornorevisao.Text:= qry.FieldByName('dt_fim').AsString;
+    FidRevisao:=qry.FieldByName('id').AsInteger;
+  end;
+  if Self.Tag=2 then
+  begin
+    edtcodprojetistarevisao.Text:=qry.FieldByName('id_tecnico').AsString;
+    edtdescprojetistarevisao.Text:=qry.FieldByName('nome').AsString;
+    edtdtenviorevisao.Text:= qry.FieldByName('dt_inicio').AsString;
+    edtdtretornorevisao.Text:= qry.FieldByName('dt_fim').AsString;
+    FidRevisao:=qry.FieldByName('id').AsInteger;
+  end;
+  //habilitando botoes
+
+  sbnovo.Enabled      := False;
+  sbgravar.Enabled    :=  True;
+  sbconsultar.Enabled :=  False;
+  sbexcluir.Enabled   :=  False;
+  SpeedButton1.Enabled:=True;
+end;
+
+procedure TfrmCadastrarRevisaoRural.edtcodprojetistarevisaoKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+  inherited;
+    if key = #13 then
+  begin
+    if trim(edtcodprojetistarevisao.text)='' then
+    begin
+      if FrmConsFuncionario = nil then
+      Application.CreateForm(TFrmConsFuncionario,FrmConsFuncionario);
+      FrmConsFuncionario.Tag :=10;
+      FrmConsFuncionario.ShowModal;
+    end
+    else
+    begin
+      sqlstr:='select * from cad_funcionarios where id='+edtcodprojetistarevisao.Text;
+      if ConsultaSqlFd(datamodule1.Query01,sqlstr)<> 0  then
+      begin
+        SemRegistros;
+        if FrmConsFuncionario = nil then
+        Application.CreateForm(TFrmConsFuncionario,FrmConsFuncionario);
+        FrmConsFuncionario.Tag :=10;
+        FrmConsFuncionario.ShowModal;
+      end
+      else
+      begin
+        edtcodprojetistarevisao.text  := datamodule1.Query01.fieldbyname('id').asstring;
+        edtdescprojetistarevisao.text := datamodule1.Query01.fieldbyname('nome_razaosocial').asstring;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmCadastrarRevisaoRural.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  frmCadastrarProjetoRural.AtualizarGrid;
+end;
+
+procedure TfrmCadastrarRevisaoRural.FormShow(Sender: TObject);
+begin
+  inherited;
+   if Self.Tag=0 then  //projeto
+   begin
+    sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural os '+
+              'left JOIN cad_funcionarios  cad on os.cod_projetista = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+   end;
+   if Self.Tag=1 then//levantamento
+   begin
+    sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural_servicocampo os '+
+              'left JOIN cad_funcionarios  cad on os.id_tecnico = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+     lbl24.Caption:='Levantador';
+   end;
+   if Self.Tag=2 then//topografia
+   begin
+    sqlstr:='SELECT os.* FROM os_engenharia_revisao_rural_topografia os   WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+    ConsultaSqlFd(qry,sqlstr);
+     lbl24.Caption:='Topografo';
+   end;
+end;
+
+procedure TfrmCadastrarRevisaoRural.sbexcluirClick(Sender: TObject);
+begin
+  inherited;
+  //deletar revisao
+  if Self.Tag=0 then//projeto
+  begin
+  with DataModule1.comand do
+  begin
+    sqlstr:='DELETE from os_engenharia_revisao_rural WHERE id = :id';
+    CommandText.Add(sqlstr);
+    ParamByName('id').Value:=FidRevisao;
+    Execute();
+  end;
+    sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural os '+
+              'left JOIN cad_funcionarios  cad on os.cod_projetista = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+     edtdtenviorevisao.Clear;
+     edtdtretornorevisao.Clear;
+     edtcodprojetistarevisao.Clear;
+     edtdescprojetistarevisao.Clear;
+
+    sbnovo.Enabled      :=  True;
+    sbgravar.Enabled    :=  False;
+    sbconsultar.Enabled :=  True;
+    sbexcluir.Enabled   :=  False;
+  end;
+  if Self.tag=1 then//levantamento
+  begin
+  with DataModule1.comand do
+  begin
+    sqlstr:='DELETE from os_engenharia_revisao_rural_servicocampo WHERE id = :id';
+    CommandText.Add(sqlstr);
+    ParamByName('id').Value:=FidRevisao;
+    Execute();
+  end;
+    sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural_servicocampo os '+
+              'left JOIN cad_funcionarios  cad on os.id_tecnico = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+     edtdtenviorevisao.Clear;
+     edtdtretornorevisao.Clear;
+     edtcodprojetistarevisao.Clear;
+     edtdescprojetistarevisao.Clear;
+
+    sbnovo.Enabled      :=  True;
+    sbgravar.Enabled    :=  False;
+    sbconsultar.Enabled :=  True;
+    sbexcluir.Enabled   :=  False;
+  end;
+
+  if Self.Tag=2 then//projeto
+  begin
+      with DataModule1.comand do
+  begin
+    sqlstr:='DELETE from os_engenharia_revisao_rural_topografia WHERE id = :id';
+    CommandText.Add(sqlstr);
+    ParamByName('id').Value:=FidRevisao;
+    Execute();
+  end;
+    sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural_topografia os '+
+              'left JOIN cad_funcionarios  cad on os.cod_projetista = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+     edtdtenviorevisao.Clear;
+     edtdtretornorevisao.Clear;
+     edtcodprojetistarevisao.Clear;
+     edtdescprojetistarevisao.Clear;
+
+    sbnovo.Enabled      :=  True;
+    sbgravar.Enabled    :=  False;
+    sbconsultar.Enabled :=  True;
+    sbexcluir.Enabled   :=  False;
+  end;
+end;
+
+procedure TfrmCadastrarRevisaoRural.sbgravarClick(Sender: TObject);
+begin
+  inherited;
+  if Obrigatorio(Self,edtcodprojetistarevisao,'Inserir Projetista !')then Exit;
+  if Obrigatorio(Self,edtdtenviorevisao,'Inserir Inicio da Revisão')then exit;
+
+  if Self.Tag=0 then //projeto
+  begin
+    with  DataModule1.comand do
+  begin
+    sqlstr:='UPDATE os_engenharia_revisao_rural SET cod_projetista= :cod_projetista,'+
+            'dt_inicio= :dt_inicio,dt_fim= :dt_fim WHERE id = :ID ';
+    CommandText.Add(sqlstr);
+     ParamByName('cod_projetista').Value:=Trim(edtcodprojetistarevisao.Text);
+     ParamByName('dt_inicio').Value:=(edtdtenviorevisao.Date);
+     ParamByName('dt_fim').Value:=(edtdtretornorevisao.Date);
+     ParamByName('id').Value:=FidRevisao;
+     Execute();
+     CommandText.Clear;
+  end;
+
+  sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural os '+
+              'inner JOIN cad_funcionarios  cad on os.cod_projetista = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+     edtdtenviorevisao.Clear;
+     edtdtretornorevisao.Clear;
+     edtcodprojetistarevisao.Clear;
+     edtdescprojetistarevisao.Clear;
+
+    sbnovo.Enabled      :=  True;
+    sbgravar.Enabled    :=  False;
+    sbconsultar.Enabled :=  True;
+    sbexcluir.Enabled   :=  False;
+
+    Application.MessageBox('Revisão Editada com Sucesso !', 'Informação',MB_OK + MB_ICONINFORMATION);
+  end;
+
+  if Self.Tag=1 then //levantamento
+  begin
+        with  DataModule1.comand do
+  begin
+    sqlstr:='UPDATE os_engenharia_revisao_rural_servicocampo SET id_tecnico= :cod_projetista,'+
+            'dt_inicio= :dt_inicio,dt_fim= :dt_fim WHERE id = :ID ';
+    CommandText.Add(sqlstr);
+     ParamByName('cod_projetista').Value:=Trim(edtcodprojetistarevisao.Text);
+     ParamByName('dt_inicio').Value:=(edtdtenviorevisao.Date);
+     ParamByName('dt_fim').Value:=(edtdtretornorevisao.Date);
+     ParamByName('id').Value:=FidRevisao;
+     Execute();
+     CommandText.Clear;
+  end;
+
+  sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural_servicocampo os '+
+              'inner JOIN cad_funcionarios  cad on os.id_tecnico WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+     edtdtenviorevisao.Clear;
+     edtdtretornorevisao.Clear;
+     edtcodprojetistarevisao.Clear;
+     edtdescprojetistarevisao.Clear;
+
+    sbnovo.Enabled      :=  True;
+    sbgravar.Enabled    :=  False;
+    sbconsultar.Enabled :=  True;
+    sbexcluir.Enabled   :=  False;
+
+    Application.MessageBox('Revisão Editada com Sucesso !', 'Informação',MB_OK + MB_ICONINFORMATION);
+  end;
+
+  if Self.Tag=2 then //projeto
+  begin
+    with  DataModule1.comand do
+  begin
+    sqlstr:='UPDATE os_engenharia_revisao_topografia SET cod_projetista= :cod_projetista,'+
+            'dt_inicio= :dt_inicio,dt_fim= :dt_fim WHERE id = :ID ';
+    CommandText.Add(sqlstr);
+     ParamByName('cod_projetista').Value:=Trim(edtcodprojetistarevisao.Text);
+     ParamByName('dt_inicio').Value:=(edtdtenviorevisao.Date);
+     ParamByName('dt_fim').Value:=(edtdtretornorevisao.Date);
+     ParamByName('id').Value:=FidRevisao;
+     Execute();
+     CommandText.Clear;
+  end;
+
+  sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_topografia os '+
+              'left JOIN cad_funcionarios  cad on os.cod_projetista = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+     ConsultaSqlFd(qry,sqlstr);
+     edtdtenviorevisao.Clear;
+     edtdtretornorevisao.Clear;
+     edtcodprojetistarevisao.Clear;
+     edtdescprojetistarevisao.Clear;
+
+    sbnovo.Enabled      :=  True;
+    sbgravar.Enabled    :=  False;
+    sbconsultar.Enabled :=  True;
+    sbexcluir.Enabled   :=  False;
+
+    Application.MessageBox('Revisão Editada com Sucesso !', 'Informação',MB_OK + MB_ICONINFORMATION);
+  end;
+end;
+procedure TfrmCadastrarRevisaoRural.sbnovoClick(Sender: TObject);
+begin
+  inherited;
+  if Obrigatorio(Self,edtcodprojetistarevisao,'Inserir Projetista !')then Exit;
+  if Obrigatorio(Self,edtdtenviorevisao,'Inserir Inicio da Revisão')then exit;
+
+  with DataModule1.comand do
+  begin
+    //verificando se o projeto ja esta salvo
+    if(frmCadastrarProjetoRural.FIdProjeto=0)then
+    begin
+      ShowMessage('Nescessário Salvar o Projeto Para Inserir Uma Revisão');
+    end
+    else
+    begin
+      if Self.Tag=0 then
+      begin
+        CommandText.Add('INSERT INTO os_engenharia_revisao_rural '+
+                '(cod_projetista,dt_inicio,dt_fim,id_projeto) '+
+                ' values '+
+                '(:cod_projetista,:dt_inicio,:dt_fim,:id_projeto)');
+
+       ParamByName('cod_projetista').Value:=Trim(edtcodprojetistarevisao.Text);
+       ParamByName('dt_inicio').Value:=(edtdtenviorevisao.Date);
+       ParamByName('dt_fim').Value:=(edtdtretornorevisao.Date);
+       ParamByName('id_projeto').Value:=frmCadastrarProjetoRural.FIdProjeto;
+
+       Execute();
+       CommandText.Clear;
+       //carregar
+       sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural os '+
+                'left JOIN cad_funcionarios  cad on os.cod_projetista = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+       ConsultaSqlFd(qry,sqlstr);
+       edtdtenviorevisao.Clear;
+       edtdtretornorevisao.Clear;
+       edtcodprojetistarevisao.Clear;
+       edtdescprojetistarevisao.Clear;
+
+       frmCadastrarProjetoRural.AtualizarGrid;
+
+       Application.MessageBox('Revisão Inserida com Sucesso !', 'Informação',
+         MB_OK + MB_ICONINFORMATION);
+
+         edtcodprojetistarevisao.SetFocus;
+      end;
+      if Self.Tag=1 then //levantamento
+      begin
+        CommandText.Clear;
+        CommandText.Add('INSERT INTO os_engenharia_revisao_rural_servicocampo '+
+                '(id_tecnico,dt_inicio,dt_fim,id_projeto) '+
+                ' values '+
+                '(:cod_projetista,:dt_inicio,:dt_fim,:id_projeto)');
+
+       ParamByName('cod_projetista').Value:=Trim(edtcodprojetistarevisao.Text);
+       ParamByName('dt_inicio').AsDateTime:=(edtdtenviorevisao.Date);
+       ParamByName('dt_fim').AsDateTime:=(edtdtretornorevisao.Date);
+       ParamByName('id_projeto').AsInteger:=frmCadastrarProjetoRural.FIdProjeto;
+
+       Execute();
+       CommandText.Clear;
+       //carregar
+       sqlstr:='SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao_rural_servicocampo os '+
+                'left JOIN cad_funcionarios  cad on os.id_tecnico = cad.id WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+       ConsultaSqlFd(qry,sqlstr);
+       edtdtenviorevisao.Clear;
+       edtdtretornorevisao.Clear;
+       edtcodprojetistarevisao.Clear;
+       edtdescprojetistarevisao.Clear;
+
+       frmCadastrarProjetoRural.AtualizarGrid;
+
+       Application.MessageBox('Revisão Inserida com Sucesso !', 'Informação',
+         MB_OK + MB_ICONINFORMATION);
+       edtcodprojetistarevisao.SetFocus;
+      end;
+      if Self.Tag=2 then //topografia
+      begin
+        CommandText.Add('INSERT INTO os_engenharia_revisao_rural_topografia '+
+                '(cod_projetista,dt_inicio,dt_fim,id_projeto) '+
+                ' values '+
+                '(:cod_projetista,:dt_inicio,:dt_fim,:id_projeto)');
+
+       ParamByName('cod_projetista').Value:=Trim(edtcodprojetistarevisao.Text);
+       ParamByName('dt_inicio').Value:=(edtdtenviorevisao.Date);
+       ParamByName('dt_fim').Value:=(edtdtretornorevisao.Date);
+       ParamByName('id_projeto').Value:=frmCadastrarProjetoRural.FIdProjeto;
+
+       Execute();
+       CommandText.Clear;
+       //carregar
+     sqlstr:=  ' SELECT os.* FROM os_engenharia_revisao_rural_topografia os   WHERE os.id_projeto='+IntToStr(frmCadastrarProjetoRural.FIdProjeto);
+       ConsultaSqlFd(qry,sqlstr);
+       edtdtenviorevisao.Clear;
+       edtdtretornorevisao.Clear;
+       edtcodprojetistarevisao.Clear;
+       edtdescprojetistarevisao.Clear;
+
+       frmCadastrarProjetoRural.AtualizarGrid;
+
+       Application.MessageBox('Revisão Inserida com Sucesso !', 'Informação',
+         MB_OK + MB_ICONINFORMATION);
+
+         edtcodprojetistarevisao.SetFocus;
+      end;
+    end;
+  end;
+end;
+end.
+

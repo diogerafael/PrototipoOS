@@ -1,0 +1,79 @@
+object FrmExibirVinculacoes: TFrmExibirVinculacoes
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = 'OS Vinculadas'
+  ClientHeight = 334
+  ClientWidth = 718
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object shp1: TShape
+    Left = 0
+    Top = 0
+    Width = 718
+    Height = 65
+    Align = alTop
+    ExplicitLeft = -68
+    ExplicitWidth = 776
+  end
+  object lbl1: TLabel
+    Left = 291
+    Top = 25
+    Width = 81
+    Height = 18
+    Alignment = taCenter
+    Caption = 'Vinculadas'
+    Color = clWhite
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 40
+    Top = 88
+    Width = 31
+    Height = 13
+    Caption = 'Label1'
+  end
+  object cxGrid1: TcxGrid
+    Left = 25
+    Top = 99
+    Width = 657
+    Height = 216
+    TabOrder = 0
+    object cxGrid1DBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
+      DataController.DataSource = DataSource1
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+    end
+    object cxGrid1Level1: TcxGridLevel
+      GridView = cxGrid1DBTableView1
+    end
+  end
+  object FDQuery1: TFDQuery
+    Connection = DataModule1.ConMySql
+    Left = 384
+    Top = 136
+  end
+  object DataSource1: TDataSource
+    DataSet = FDQuery1
+    Left = 568
+    Top = 168
+  end
+end

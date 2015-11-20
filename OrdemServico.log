@@ -1,0 +1,146 @@
+FormularioFrmCadSolicitante: Usuário:DEYJANNY SENA
+Ação:[FireDAC][Phys][MySQL] Cannot add or update a child row: a foreign key constraint fails (`supoc`.`os_engenharia_clientes_rural`, CONSTRAINT `fk` FOREIGN KEY (`id_projeto`) REFERENCES `os_engenharia_projeto_rural` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+23/09/2015 14:03:12:[FireDAC][Phys][MySQL] Cannot add or update a child row: a foreign key constraint fails (`supoc`.`os_engenharia_clientes_rural`, CONSTRAINT `fk` FOREIGN KEY (`id_projeto`) REFERENCES `os_engenharia_projeto_rural` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)EMySQLNativeException
+----------------------------------------------------------------------
+FormularioFrmCadSolicitante: Usuário:DEYJANNY SENA
+Ação:[FireDAC][Phys][MySQL] Cannot add or update a child row: a foreign key constraint fails (`supoc`.`os_engenharia_clientes_rural`, CONSTRAINT `fk` FOREIGN KEY (`id_projeto`) REFERENCES `os_engenharia_projeto_rural` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+23/09/2015 14:03:22:[FireDAC][Phys][MySQL] Cannot add or update a child row: a foreign key constraint fails (`supoc`.`os_engenharia_clientes_rural`, CONSTRAINT `fk` FOREIGN KEY (`id_projeto`) REFERENCES `os_engenharia_projeto_rural` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)EMySQLNativeException
+----------------------------------------------------------------------
+FormularioFrmCadSolicitante: Usuário:DEYJANNY SENA
+Ação:[FireDAC][Phys][MySQL] Cannot add or update a child row: a foreign key constraint fails (`supoc`.`os_engenharia_clientes_rural`, CONSTRAINT `fk` FOREIGN KEY (`id_projeto`) REFERENCES `os_engenharia_projeto_rural` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+23/09/2015 14:04:13:[FireDAC][Phys][MySQL] Cannot add or update a child row: a foreign key constraint fails (`supoc`.`os_engenharia_clientes_rural`, CONSTRAINT `fk` FOREIGN KEY (`id_projeto`) REFERENCES `os_engenharia_projeto_rural` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)EMySQLNativeException
+----------------------------------------------------------------------
+FormularioFrmRelProjetoStatusRural: Usuário:DEYJANNY SENA
+Ação:Gerando Relatorio Por Status Rural !
+23/09/2015 14:33:12:Operation abortedEAbort
+----------------------------------------------------------------------
+FormularioFrmRelProjetoStatusRural: Usuário:DEYJANNY SENA
+Ação:Gerando Relatorio Por Status Rural !
+23/09/2015 14:33:20:Operation abortedEAbort
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DEYJANNY SENA
+Ação:Erro 
+23/09/2015 15:09:06:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY CORREIA CHAVES
+Ação:Gerar Relatorio Projetista
+31/10/2015 17:41:45:Operation abortedEAbort
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY CORREIA CHAVES
+Ação:Gerar Relatorio Projetista
+31/10/2015 17:43:38:Operation abortedEAbort
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY CORREIA CHAVES
+Ação:Gerar Relatorio Projetista
+31/10/2015 18:07:49:qryEMPRESA: Field 'nome_razaosocial' not foundEDatabaseError
+----------------------------------------------------------------------
+FormulariofrmCadastrarProjeto: Usuário:DARLEY CORREIA CHAVES
+Ação:Gerar Relatorio Projetista
+31/10/2015 19:18:22:Field '' not foundEDatabaseError
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+06/11/2015 00:07:34:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno_1: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+07/11/2015 00:15:29:qryusFormularioFrmOrdemServicoInterno_1: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+07/11/2015 00:16:36:[FireDAC][Phys][MySQL] Field 'status' doesn't have a default valueEMySQLNativeException
+----------------------------------------------------------------------
+FormularioFrmRelProdutividade: Usuário:DARLEY CORREIA CHAVES
+Ação:Gerar Relatorio Produtividade
+07/11/2015 19:32:28:Operation abortedEAbort
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+11/11/2015 02:05:23:[FireDAC][Phys][MySQL] Duplicate entry '11' for key 'UK_os_engenharia_ordem_servico_cod_solicitante'EMySQLNativeException
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+11/11/2015 02:06:19:[FireDAC][Phys][MySQL] Duplicate entry '11' for key 'UK_os_engenharia_ordem_servico_cod_solicitante'EMySQLNativeException
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+12/11/2015 21:56:35:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+12/11/2015 22:00:10:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+12/11/2015 22:04:34:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+12/11/2015 23:44:30:qryCRUD: Parameter 'id' not foundEDatabaseError
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+12/11/2015 23:46:51:[FireDAC][Phys][MySQL] Table 'supoc.os_engenharia_ordem_servido' doesn't existEMySQLNativeException
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+12/11/2015 23:47:01:[FireDAC][Phys][MySQL] Table 'supoc.os_engenharia_ordem_servido' doesn't existEMySQLNativeException
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+13/11/2015 00:48:30:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+13/11/2015 00:51:33:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+15/11/2015 00:46:18:'' is not a valid integer valueEConvertError
+----------------------------------------------------------------------
+FormularioFrmOrdemServicoInterno: Usuário:DARLEY CORREIA CHAVES
+Ação:Inserir Ordem Servico Interno
+15/11/2015 01:15:11:'' is not a valid integer valueEConvertError
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+15/11/2015 01:17:28:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+15/11/2015 01:18:02:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+15/11/2015 01:18:13:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+15/11/2015 01:19:31:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+15/11/2015 01:20:31:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+15/11/2015 01:23:01:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormularioFrmConsOrdemServico: Usuário:DARLEY CORREIA CHAVES
+Ação:Carregar Dados Ordem Servico Interno
+15/11/2015 02:16:52:FDQuery1: Field 'id' not foundEDatabaseError
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+19/11/2015 22:49:32:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+19/11/2015 23:51:11:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+19/11/2015 23:52:14:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------
+FormulariofrmPrincipal: Usuário:DARLEY CORREIA CHAVES
+Ação:Abrir Tela de OS!
+19/11/2015 23:55:06:Invalid class typecastEInvalidCast
+----------------------------------------------------------------------

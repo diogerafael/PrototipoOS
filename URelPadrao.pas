@@ -1,0 +1,64 @@
+unit URelPadrao;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Buttons, PngSpeedButton, ExtCtrls, Menus, RDprint, StdCtrls,
+  pngimage, Gauges;
+
+type
+  TFrmRelPadrao = class(TForm)
+    g1: TGauge;
+    shp1: TShape;
+    img10: TImage;
+    lbl1: TLabel;
+    rdprnt1: TRDprint;
+    pm1: TPopupMenu;
+    pnl1: TPanel;
+    btnsair: TPngSpeedButton;
+    btnrelatorio: TPngSpeedButton;
+    mnicalculadora: TMenuItem;
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnsairClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure mnicalculadoraClick(Sender: TObject);
+  private
+    { Private declarations }
+
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmRelPadrao: TFrmRelPadrao;
+
+implementation
+
+
+
+{$R *.dfm}
+
+procedure TFrmRelPadrao.btnsairClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFrmRelPadrao.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = vk_escape  then
+    Close;
+end;
+
+procedure TFrmRelPadrao.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13 then selectnext(activecontrol,true,true);
+end;
+
+procedure TFrmRelPadrao.mnicalculadoraClick(Sender: TObject);
+begin
+  //Calculadora();
+end;
+
+end.

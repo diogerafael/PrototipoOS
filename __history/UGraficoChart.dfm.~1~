@@ -1,0 +1,76 @@
+object FrmGraficoPostProj: TFrmGraficoPostProj
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = 'Gr'#225'fico Postes Projetados'
+  ClientHeight = 361
+  ClientWidth = 631
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnKeyDown = FormKeyDown
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DBChart1: TDBChart
+    Left = 8
+    Top = 23
+    Width = 605
+    Height = 325
+    Title.Text.Strings = (
+      'Postes Projetados')
+    TabOrder = 0
+    DefaultCanvas = 'TGDIPlusCanvas'
+    PrintMargins = (
+      15
+      31
+      15
+      31)
+    ColorPaletteIndex = 13
+    object Series1: TBarSeries
+      DataSource = FDQuery1
+      Title = 'Gr'#225'fico Postes Projetados'
+      XLabelsSource = 'diaMes'
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      XValues.ValueSource = 'diaMes'
+      YValues.Name = 'Bar'
+      YValues.Order = loNone
+      YValues.ValueSource = 'qtdPost'
+    end
+  end
+  object FDQuery1: TFDQuery
+    Connection = DataModule1.ConMySql
+    SQL.Strings = (
+      
+        'select sum(os.qtd_post_proj_urb) as qtdPost,EXTRACT(day FROM os.' +
+        'dt_conclusao)as diaMes,os.dt_conclusao '
+      'from os_engenharia_projeto os  where'
+      'os.dt_conclusao BETWEEN :dtini and :dtfim'
+      'GROUP BY EXTRACT(day FROM os.dt_conclusao)')
+    Left = 496
+    Top = 8
+    ParamData = <
+      item
+        Name = 'DTINI'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'DTFIM'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object DataSource1: TDataSource
+    Left = 432
+    Top = 8
+  end
+end

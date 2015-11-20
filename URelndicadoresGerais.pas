@@ -1,0 +1,355 @@
+unit URelndicadoresGerais;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, URelPadrao, Vcl.Menus, RDprint,
+  Vcl.Buttons, PngSpeedButton, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.Samples.Gauges, cxControls,
+  cxContainer, cxEdit, Vcl.ComCtrls,
+
+
+
+
+
+
+
+
+
+
+
+
+
+  cxTextEdit,
+  cxMaskEdit, cxDropDownEdit, cxCalendar,FireDAC.Comp.Client, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, dxCore, cxDateUtils, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
+  dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue;
+
+type
+  TFrmRelIndicadoresGerais = class(TFrmRelPadrao)
+    grp2: TGroupBox;
+    lbl3: TLabel;
+    lbl2: TLabel;
+    edtini: TcxDateEdit;
+    edtfim: TcxDateEdit;
+    GrficoPostesProjetados1: TMenuItem;
+    procedure FormShow(Sender: TObject);
+    procedure btnrelatorioClick(Sender: TObject);
+    procedure GrficoPostesProjetados1Click(Sender: TObject);
+  private
+    { Private declarations }
+    procedure Cabecalho;
+    procedure Corpo(qry:TFDQuery);
+    procedure Rodape;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmRelIndicadoresGerais: TFrmRelIndicadoresGerais;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, UGraficoChart;
+
+procedure TFrmRelIndicadoresGerais.btnrelatorioClick(Sender: TObject);
+begin
+  inherited;
+  Cabecalho;
+  Rodape;
+end;
+
+procedure TFrmRelIndicadoresGerais.Cabecalho;
+var
+  qry:tfdquery;
+  sql:WideString;
+begin
+  try
+    qry := TFDQuery.Create(nil);
+    qry.Connection := DataModule1.ConMySql;
+
+      qry.sql.text := ' SELECT (SELECT COUNT(id) FROM os_engenharia_projeto os where os.dt_conclusao BETWEEN :datainicial and :datafinal) AS totalgeral,'+
+      '(SELECT COUNT(id) FROM os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal) AS totalSemLevantamento,'+
+      '(SELECT COUNT(id) FROM os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal) AS totalComLevantamento,'+
+      '(SELECT COUNT(id) FROM os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal ) AS totalTopografia,'+
+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=7)as totalDevolvidasGeral,'+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=7)as totalDevolvidasComLevantamento,'+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=7)as totalDevolvidasSomLevantamento,'+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=7)as totalDevolvidasTopografia,'+
+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=10)as totalImprocedenteGeral,'+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=10)as totalImprocedenteComLevantamento,'+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=10)as totalImprocedenteSemLevantamento,'+
+      '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=10)as totalImprocedenteTopografia,'+
+
+
+     '(select COUNT(id) from os_engenharia_projeto os  WHERE  os.dt_conclusao  BETWEEN :datainicial and :datafinal and os.id_statusos=8)as totalEnviadasGeral,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8)as totalEnviadasComLevantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8)as totalEnviadasSemLevantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8)as totalEnviadasTopografia,'+
+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and (os.id_statusos<>8 and os.id_statusos<>10) )as totalEmAbertoGeral,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and (os.id_statusos<>8 and os.id_statusos<>10) )as totalEmAbertoComLEvantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and (os.id_statusos<>8 and os.id_statusos<>10) )as totalEmAbertoSemLEvantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and (os.id_statusos<>8 and os.id_statusos<>10) )as totalEmAbertoTopografia,'+
+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral)as totalEnviadasNoPrazoGeral,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral)as totalEnviadasForaPrazoGeral,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral)as totalEnviadasNoPrazoComLevantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral)as totalEnviadasNoPrazoSemLevantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral)as totalEnviadasNoPrazoTopografia,'+
+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral)as totalEnviadasForaPrazoComLevantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral)as totalEnviadasForaPrazoSemLevantamento,'+
+     '(select COUNT(id) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral)as totalEnviadasForaPrazoTopografia,'+
+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8)as totalPostesProjetados,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral )as totalPostesProjetadosNoPrazo,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral )as totalPostesProjetadosForaPrazo,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8)as totalPostesProjetadosComLevantamento,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral)as '+ 'totalPostesProjetadosComLevantamentoForaPrazo,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 1 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral)as totalPostesProjetadosComLevantamentoNoPrazo,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8)as totalPostesProjetadosSemLevantamento,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral)as '+'totalPostesProjetadosSemLevantamentoForaPrazo,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 2 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral)as '+'totalPostesProjetadosSemmLevantamentoNoPrazo,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8  )as totalPostesProjetadosTopografia,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os WHERE id_tipoos = 3 and os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao <=os.dt_limite_geral)as totalPostesProjetadosNoPrazoTopografia,'+
+     '(select sum(os.qtd_post_proj_urb) from os_engenharia_projeto os '+
+     ' WHERE id_tipoos = 3 and	   os.dt_conclusao BETWEEN :datainicial and :datafinal and os.id_statusos=8 and os.dt_conclusao >os.dt_limite_geral)as totalPostesProjetadosForaPrazoTopografia '+
+     ' FROM os_engenharia_projeto os LIMIT 1';
+
+          sql := qry.SQL.Text;
+          qry.Params.ParamByName('datainicial').AsDate := edtini.Date;
+          qry.Params.ParamByName('datafinal').AsDate   := edtfim.Date;
+          qry.Open();
+    if(qry.IsEmpty)then
+    begin
+      SemRegistros;
+      Abort;
+    end
+    else
+    begin
+      if(not DataModule1.qryEMPRESA.Active)then
+      begin
+        DataModule1.qryEMPRESA.Active := True;
+      end;
+
+      rdprnt1.TamanhoQteColunas:=137;
+      rdprnt1.TamanhoQteLinhas:=66;
+      rdprnt1.OpcoesPreview.Preview:=True;
+      rdprnt1.OpcoesPreview.PreviewZoom := -1; rdprnt1.OpcoesPreview.Remalina := false; rdprnt1.OpcoesPreview.PaginaZebrada := true; //zoom 100%
+      conta:=0;
+      rdprnt1.Abrir;
+      rdprnt1.impf(01,01,datamodule1.qryEMPRESA.FieldByName('nome_razaosocial').AsString,[negrito]);
+      rdprnt1.impf(01,80,'CNPJ: '+datamodule1.qryempresa.Fieldbyname('cnpj').asstring,[comp17,negrito]);
+      rdprnt1.impf(01,100,RetornaDataMysqlComHora(),[comp17,negrito]);
+      rdprnt1.imp(02,01,_traco137);
+      rdprnt1.impc(03,60,'RELATÓRIO DE INDICADORES GERAIS',[comp17,negrito]);
+      rdprnt1.imp(04,01,_traco137);
+      rdprnt1.impf(05,01,'DATA CONCLUSÃO INICIAL: '+edtini.text+' - DATA FINAL: '+edtfim.text,[comp17,negrito]);
+      rdprnt1.imp(06,01,_traco137);
+
+      rdprnt1.Impf(07,01,'ITEM',[comp17,negrito]);
+      rdprnt1.impf(07,35,'OS SOLICITADAS',[comp17,negrito]);
+      rdprnt1.impf(07,80,'OS ENVIADAS X PRAZO',[comp17,negrito]);
+      rdprnt1.impf(07,105,'POSTES PROJETADOS',[comp17,negrito]);
+      {OA SOLICITADAS}
+      rdprnt1.impf(08,20,'TOTAL',[comp17,negrito]);
+      rdprnt1.impf(08,30,'DEVOVIDAS',[comp17,negrito]);
+      rdprnt1.impf(08,40,'IMPROCEDENTES',[comp17,negrito]);
+      rdprnt1.impf(08,55,'ENVIADAS',[comp17,negrito]);
+
+      rdprnt1.impf(08,65,'EM ABERTO',[comp17,negrito]);
+      {ENVIADAS X PRAZO}
+      rdprnt1.impf(08,80,'EM DIAS',[comp17,negrito]);
+      rdprnt1.impf(08,90,'ATRASO',[comp17,negrito]);
+      {POSTES PROJETADOS}
+      rdprnt1.impf(08,105,'QTD.',[comp17,negrito]);
+      rdprnt1.impf(08,115,'EM DIAS',[comp17,negrito]);
+      rdprnt1.impf(08,125,'ATRASO',[comp17,negrito]);
+
+      {ITENS}
+      rdprnt1.impf(09,1,'OS SOLICITADAS..:',[comp17,negrito]);
+      rdprnt1.impf(10,1,'COM LEVANTAMENTO:',[comp17,negrito]);
+      rdprnt1.impf(11,1,'SEM LEVANTAMENTO:',[comp17,negrito]);
+      rdprnt1.impf(12,1,'TOPOGRAFIA......:',[comp17,negrito]);
+      rdprnt1.imp(13,01,_traco137);
+      rdprnt1.impf(14,1,'OS SOLICITADAS-%',[comp17,negrito]);
+      rdprnt1.impf(15,1,'COM LEVANTAMENTO:',[comp17,negrito]);
+      rdprnt1.impf(16,1,'SEM LEVANTAMENTO:',[comp17,negrito]);
+      rdprnt1.impf(17,1,'TOPOGRAFIA......:',[comp17,negrito]);
+
+      Corpo(qry);
+    end;
+
+  except on E: Exception do
+    CriarLog(Self,E,'Gerar Relatorio Indicadores');
+  end;
+end;
+
+procedure TFrmRelIndicadoresGerais.Corpo(qry:TFDQuery);
+begin
+  try
+    //concluidos
+    rdprnt1.impf(09,20,qry.FieldByName('totalgeral').AsString,[comp17]);
+    rdprnt1.impf(10,20,qry.FieldByName('totalComLevantamento').AsString,[comp17]);
+    rdprnt1.impf(11,20,qry.FieldByName('totalSemLevantamento').AsString,[comp17]);
+    rdprnt1.impf(12,20,qry.FieldByName('totalTopografia').AsString,[comp17]);
+
+    //devolvidas
+    rdprnt1.impf(09,30,qry.FieldByName('totalDevolvidasGeral').AsString,[comp17]);
+    rdprnt1.impf(10,30,qry.FieldByName('totalDevolvidasComLevantamento').AsString,[comp17]);
+    rdprnt1.impf(11,30,qry.FieldByName('totalDevolvidasSomLevantamento').AsString,[comp17]);
+    rdprnt1.impf(12,30,qry.FieldByName('totalDevolvidasTopografia').AsString,[comp17]);
+
+    //improcedentes
+    rdprnt1.impf(09,40,qry.FieldByName('totalImprocedenteGeral').AsString,[comp17]);
+    rdprnt1.impf(10,40,qry.FieldByName('totalImprocedenteComLevantamento').AsString,[comp17]);
+    rdprnt1.impf(11,40,qry.FieldByName('totalImprocedenteSemLevantamento').AsString,[comp17]);
+    rdprnt1.impf(12,40,qry.FieldByName('totalImprocedenteTopografia').AsString,[comp17]);
+
+    //Enviadas
+    rdprnt1.impf(09,55,qry.FieldByName('totalEnviadasGeral').AsString,[comp17]);
+    rdprnt1.impf(10,55,qry.FieldByName('totalEnviadasComLevantamento').AsString,[comp17]);
+    rdprnt1.impf(11,55,qry.FieldByName('totalEnviadasSemLevantamento').AsString,[comp17]);
+    rdprnt1.impf(12,55,qry.FieldByName('totalEnviadasTopografia').AsString,[comp17]);
+
+    //em aberto
+    rdprnt1.impf(09,65,qry.FieldByName('totalEmAbertoGeral').AsString,[comp17]);
+    rdprnt1.impf(10,65,qry.FieldByName('totalEmAbertoComLEvantamento').AsString,[comp17]);
+    rdprnt1.impf(11,65,qry.FieldByName('totalEmAbertoSemLEvantamento').AsString,[comp17]);
+    rdprnt1.impf(12,65,qry.FieldByName('totalEmAbertoTopografia').AsString,[comp17]);
+
+    //enviadas x prazo
+    rdprnt1.impf(09,80,qry.FieldByName('totalEnviadasNoPrazoGeral').AsString,[comp17]);
+    rdprnt1.impf(10,80,qry.FieldByName('totalEnviadasNoPrazoComLevantamento').AsString,[comp17]);
+    rdprnt1.impf(11,80,qry.FieldByName('totalEnviadasNoPrazoSemLevantamento').AsString,[comp17]);
+    rdprnt1.impf(12,80,qry.FieldByName('totalEnviadasNoPrazoTopografia').AsString,[comp17]);
+
+    rdprnt1.impf(09,90,qry.FieldByName('totalEnviadasForaPrazoGeral').AsString,[comp17]);
+    rdprnt1.impf(10,90,qry.FieldByName('totalEnviadasForaPrazoComLevantamento').AsString,[comp17]);
+    rdprnt1.impf(11,90,qry.FieldByName('totalEnviadasForaPrazoSemLevantamento').AsString,[comp17]);
+    rdprnt1.impf(12,90,qry.FieldByName('totalEnviadasForaPrazoTopografia').AsString,[comp17]);
+
+    //postes projetados
+    rdprnt1.impf(09,105,qry.FieldByName('totalPostesProjetados').AsString,[comp17]);
+    rdprnt1.impf(10,105,qry.FieldByName('totalPostesProjetadosComLevantamento').AsString,[comp17]);
+    rdprnt1.impf(11,105,qry.FieldByName('totalPostesProjetadosSemLevantamento').AsString,[comp17]);
+    rdprnt1.impf(12,105,qry.FieldByName('totalPostesProjetadosTopografia').AsString,[comp17]);
+
+    //postes projetados em dias
+    rdprnt1.impf(09,115,qry.FieldByName('totalPostesProjetadosNoPrazo').AsString,[comp17]);
+    rdprnt1.impf(10,115,qry.FieldByName('totalPostesProjetadosComLevantamentoNoPrazo').AsString,[comp17]);
+    rdprnt1.impf(11,115,qry.FieldByName('totalPostesProjetadosSemmLevantamentoNoPrazo').AsString,[comp17]);
+    rdprnt1.impf(12,115,qry.FieldByName('totalPostesProjetadosNoPrazoTopografia').AsString,[comp17]);
+
+    //fora do prazo
+    rdprnt1.impf(09,125,qry.FieldByName('totalPostesProjetadosForaPrazo').AsString,[comp17]);
+    rdprnt1.impf(10,125,qry.FieldByName('totalPostesProjetadosComLevantamentoForaPrazo').AsString,[comp17]);
+    rdprnt1.impf(11,125,qry.FieldByName('totalPostesProjetadosSemLevantamentoForaPrazo').AsString,[comp17]);
+    rdprnt1.impf(12,125,qry.FieldByName('totalPostesProjetadosForaPrazoTopografia').AsString,[comp17]);
+
+
+    //porcentagem
+    rdprnt1.impf(14,20,'100,00%',[comp17]);
+    rdprnt1.impf(15,20,(formatfloat('###,###,##0.00',((qry.FieldByName('totalComLevantamento').AsFloat *100)/qry.FieldByName('totalgeral').AsFloat)))+'%',[comp17]);
+    rdprnt1.impf(16,20,formatfloat('###,###,##0.00',(qry.FieldByName('totalSemLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,20,formatfloat('###,###,##0.00',(qry.FieldByName('totalTopografia').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+
+    //devolvidas
+    rdprnt1.impf(14,30,formatfloat('###,###,##0.00',(qry.FieldByName('totalDevolvidasGeral').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,30,formatfloat('###,###,##0.00',(qry.FieldByName('totalDevolvidasComLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,30,formatfloat('###,###,##0.00',(qry.FieldByName('totalDevolvidasSomLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,30,formatfloat('###,###,##0.00',(qry.FieldByName('totalDevolvidasTopografia').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+
+    //improcedentes
+    rdprnt1.impf(14,40,formatfloat('###,###,##0.00',(qry.FieldByName('totalImprocedenteGeral').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,40,formatfloat('###,###,##0.00',(qry.FieldByName('totalImprocedenteComLevantamento').AsFloat*100)/qry.FieldByName('totalImprocedenteGeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,40,formatfloat('###,###,##0.00',(qry.FieldByName('totalImprocedenteSemLevantamento').AsFloat*100)/qry.FieldByName('totalImprocedenteGeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,40,formatfloat('###,###,##0.00',(qry.FieldByName('totalImprocedenteTopografia').AsFloat*100)/qry.FieldByName('totalImprocedenteGeral').AsFloat)+'%',[comp17]);
+
+    //Enviadas
+    rdprnt1.impf(14,55,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasGeral').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,55,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasComLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,55,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasSemLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,55,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasTopografia').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+
+    //em aberto
+    rdprnt1.impf(14,65,formatfloat('###,###,##0.00',(qry.FieldByName('totalEmAbertoGeral').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,65,formatfloat('###,###,##0.00',(qry.FieldByName('totalEmAbertoComLEvantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,65,formatfloat('###,###,##0.00',(qry.FieldByName('totalEmAbertoSemLEvantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,65,formatfloat('###,###,##0.00',(qry.FieldByName('totalEmAbertoTopografia').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+
+    //enviadas x prazo
+    rdprnt1.impf(14,80,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasNoPrazoGeral').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,80,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasNoPrazoComLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,80,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasNoPrazoSemLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,80,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasNoPrazoTopografia').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+
+    rdprnt1.impf(14,90,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasForaPrazoGeral').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,90,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasForaPrazoComLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,90,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasForaPrazoSemLevantamento').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,90,formatfloat('###,###,##0.00',(qry.FieldByName('totalEnviadasForaPrazoTopografia').AsFloat*100)/qry.FieldByName('totalgeral').AsFloat)+'%',[comp17]);
+
+    //postes projetados
+    rdprnt1.impf(14,105,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetados').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,105,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosComLevantamento').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,105,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosSemLevantamento').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,105,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosTopografia').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+
+    //postes projetados em dias
+    rdprnt1.impf(14,115,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosNoPrazo').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,115,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosComLevantamentoNoPrazo').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,115,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosSemmLevantamentoNoPrazo').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,115,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosNoPrazoTopografia').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+
+    //fora do prazo
+    rdprnt1.impf(14,125,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosForaPrazo').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(15,125,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosComLevantamentoForaPrazo').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(16,125,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosSemLevantamentoForaPrazo').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+    rdprnt1.impf(17,125,formatfloat('###,###,##0.00',(qry.FieldByName('totalPostesProjetadosForaPrazoTopografia').AsFloat*100)/qry.FieldByName('totalPostesProjetados').AsFloat)+'%',[comp17]);
+
+  except on E: Exception do
+    CriarLog(Self,E,'Relatorio Indicadores');
+  end;
+end;
+
+procedure TFrmRelIndicadoresGerais.FormShow(Sender: TObject);
+begin
+  inherited;
+  edtini.Text := funcRetornaPrimeiroDiaMes;
+  edtfim.Text := funcRetornaUltimoDiaMes;
+end;
+
+procedure TFrmRelIndicadoresGerais.GrficoPostesProjetados1Click(
+  Sender: TObject);
+begin
+  inherited;
+  FrmGraficoPostProj := TFrmGraficoPostProj.Create(Self);
+  FrmGraficoPostProj.ShowModal;
+  FreeAndNil(FrmGraficoPostProj);
+end;
+
+procedure TFrmRelIndicadoresGerais.Rodape;
+begin
+  rdprnt1.Fechar;
+end;
+
+end.

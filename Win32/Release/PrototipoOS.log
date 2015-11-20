@@ -1,0 +1,8 @@
+FormulariofrmCadastrarProjeto: Usuário:DARLEY
+Ação:Alterar Cadastro Projeto
+09/07/2015 15:08:22:[FireDAC][Phys][MySQL] Table 'supoc.os_engenharia_projeto' doesn't existEMySQLNativeException
+----------------------------------------------------------------------
+FormulariofrmCadastrarConfig: Usuário:DARLEY
+Ação:Erro 
+17/07/2015 17:39:49:[FireDAC][Phys][MySQL] Table 'supoc.os_config' doesn't existEMySQLNativeException
+----------------------------------------------------------------------

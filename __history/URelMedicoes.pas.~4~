@@ -1,0 +1,407 @@
+unit URelMedicoes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, URelPadrao, Vcl.Menus, RDprint,
+  Vcl.Buttons, PngSpeedButton, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.Samples.Gauges, cxGraphics, cxControls,
+  cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit, Vcl.ComCtrls,
+  dxCore, cxDateUtils, dxSkinsCore, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle,
+  dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary,
+  dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, cxTextEdit,
+  cxMaskEdit, cxDropDownEdit, cxCalendar,System.Win.ComObj,
+  FireDAC.Comp.Client, JvComponentBase, JvThread;
+
+type
+  TFrmRelMedicoes = class(TFrmRelPadrao)
+    grp1: TGroupBox;
+    rgSaida: TRadioGroup;
+    grpclasificacao: TGroupBox;
+    lbl20: TLabel;
+    cbbclassificacao: TComboBox;
+    rgTpPeriodo: TRadioGroup;
+    grp2: TGroupBox;
+    lbl3: TLabel;
+    lbl2: TLabel;
+    edtini: TcxDateEdit;
+    edtfim: TcxDateEdit;
+    grp3: TGroupBox;
+    chkcadastrada: TCheckBox;
+    chkLevantamento: TCheckBox;
+    chkAtualizar: TCheckBox;
+    chkProjetar: TCheckBox;
+    chkTopografia: TCheckBox;
+    chkDevolvida: TCheckBox;
+    chkEnviadoCeltins: TCheckBox;
+    chkConcluido: TCheckBox;
+    chkTodos: TCheckBox;
+    chkPendente: TCheckBox;
+    SaveDialog1: TSaveDialog;
+    JvThread1: TJvThread;
+    procedure chkTodosClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnrelatorioClick(Sender: TObject);
+
+  private
+    { Private declarations }
+    _CaminhoRelatorio:string;
+    procedure InicializaComponente;
+    procedure CabecalhoRel;
+    procedure CorpoRel;
+    procedure RodapeRel;
+    procedure verifica66;
+    function somarValoresRelExcel(qry:TFDQuery):Currency;
+    function pegarStatus:string;
+    procedure GerarRelatorio;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmRelMedicoes: TFrmRelMedicoes;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule;
+
+procedure TFrmRelMedicoes.btnrelatorioClick(Sender: TObject);
+begin
+  inherited;
+  frmProcessandoNovo.Show;
+  JvThread1.Execute(nil);
+  JvThread1.WaitFor;
+  frmProcessandoNovo.Hide;
+  frmProcessandoNovo.Close;
+end;
+
+procedure TFrmRelMedicoes.CabecalhoRel;
+begin
+  if(not DataModule1.qryEMPRESA.Active)then
+  begin
+    DataModule1.qryEMPRESA.Active := True;
+  end;
+end;
+
+procedure TFrmRelMedicoes.chkTodosClick(Sender: TObject);
+var
+  I:Integer;
+begin
+  inherited;
+  if(chkTodos.Checked)then
+  begin
+    for  i:=0 to (ComponentCount - 1) do
+    begin
+      if(Components[i] is TCustomCheckBox)then
+      begin
+        (Components[i] as TCheckBox).Checked:=True;
+      end;
+    end;
+  end
+  else
+  begin
+  for  i:=0 to (ComponentCount - 1) do
+    begin
+      if(Components[i] is TCustomCheckBox)then
+      begin
+        (Components[i] as TCheckBox).Checked:=False;
+      end;
+    end;
+  end;
+end;
+
+procedure TFrmRelMedicoes.CorpoRel;
+begin
+
+end;
+
+procedure TFrmRelMedicoes.FormShow(Sender: TObject);
+begin
+  inherited;
+  InicializaComponente;
+end;
+
+procedure TFrmRelMedicoes.GerarRelatorio;
+var
+Excel:Variant;
+I,Linha:Integer;
+qry:TFDQuery;
+  notas: string;
+  numeroos: string;
+begin
+  inherited;
+  //validacoes
+  //data
+  if(Trim(pegarStatus)='')then
+  begin
+          Application.MessageBox('Verificar Informações de Parâmetros !'
+        + #13#10 +
+        'Status Não Definido !',
+        'Atenção', MB_OK
+        +
+        MB_ICONINFORMATION);
+        Abort;
+  end;
+  {Verificar Tipo de Saida}
+  if(rgSaida.ItemIndex=1)then//gerar excel
+  begin
+    try
+      //if FdgLocal.Execute then
+      //_CaminhoRelatorio:=FdgLocal.Directory;
+
+      sqlstr:=' SELECT os_engenharia_projeto.id,os_engenharia_projeto.numero_os,n.descricao as nota,os_engenharia_tipo.descricao as classificacao, '+
+              ' os_engenharia_projeto.dt_chegada_geral,os_engenharia_projeto.dt_conclusao, os_engenharia_projeto.qtd_outros,'+
+              ' os_engenharia_projeto.qtd_deslocamento,os_engenharia_projeto.qtd_improcedente,'+
+              ' os_engenharia_projeto.qtd_incorporacao,os_engenharia_projeto.qtd_travessia,'+
+              ' os_engenharia_projeto.qtd_topografia,os_engenharia_projeto.qtd_post_atu,'+
+              ' os_engenharia_projeto.qtd_post_lev,os_engenharia_projeto.qtd_post_proj_rur,'+
+              ' os_engenharia_projeto.qtd_post_proj_urb,os_engenharia_projeto.vl_outros,'+
+              ' os_engenharia_projeto.vl_deslocamento,os_engenharia_projeto.vl_improcedente,'+
+              ' os_engenharia_projeto.vl_post_proj_urb,os_engenharia_projeto.vl_post_porj_rur,'+
+              ' os_engenharia_projeto.vl_post_lev,os_engenharia_projeto.vl_post_atu,'+
+              ' os_engenharia_projeto.vl_topografia,os_engenharia_projeto.vl_travessia,'+
+              ' os_engenharia_projeto.vl_incorporacao,os_engenharia_projeto.id_os_vinculacao, '+
+              ' (os_engenharia_projeto.vl_outros+os_engenharia_projeto.vl_deslocamento+'+
+							'os_engenharia_projeto.vl_improcedente+os_engenharia_projeto.vl_post_proj_urb+os_engenharia_projeto.vl_post_porj_rur+os_engenharia_projeto.vl_post_lev+os_engenharia_projeto.vl_post_atu+'+
+              'os_engenharia_projeto.vl_topografia+os_engenharia_projeto.vl_travessia+os_engenharia_projeto.vl_incorporacao) as valorTotal '+
+              ' from os_engenharia_projeto INNER JOIN os_engenharia_notas n on (n.id_os_projeto=os_engenharia_projeto.id) '+
+              ' INNER JOIN os_engenharia_tipo ON os_engenharia_projeto.id_tipoos = os_engenharia_tipo.id  where ';
+              //periodo
+              case rgTpPeriodo.ItemIndex of
+                0:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_chegada_geral between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                1:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_liberacao_tec between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                2:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_chegada_tec between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                3:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_envio_projeto between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                4:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_chegada_projeto between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                5:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_envio_atualizacao between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                6:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_chegada_atualizacao between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                 7:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_conclusao between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+                  8:begin
+                    sqlstr:=sqlstr+' os_engenharia_projeto.dt_conclusao between '+QuotedStr(FormataDataMysql(edtini.Text))+' and '+QuotedStr(FormataDataMysql(edtfim.Text))+' ';
+                  end;
+              end;
+              //classificacao
+              sqlstr:=sqlstr+ '  and os_engenharia_projeto.id_statusos in('+pegarStatus+')';
+          if cbbclassificacao.ItemIndex<>3 then //classificao Todos
+           begin
+              sqlstr:=sqlstr+ 'and os_engenharia_projeto.id_tipoos in('+inttostr(Integer(cbbclassificacao.Items.Objects[cbbclassificacao.ItemIndex]))+')'
+           end
+           else
+          sqlstr:=sqlstr+ ' and os_engenharia_projeto.id_tipoos in(1,2,3) ORDER BY dt_conclusao';
+
+      if(ConsultaSqlFd(DataModule1.qryCRUD,sqlstr)<>0)then
+      begin
+      SemRegistros;
+      Abort;
+      end
+      else
+      begin
+        Excel := CreateOleObject('Excel.Application');
+        Excel.Visible :=False;
+        Excel.Workbooks.Add;
+        Excel.WorkBooks[1].Sheets[1].Cells[1,5]:='Relatório Medições Detalhado';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,1]:='NOTA';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,2]:='O.S';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,3]:='DATA DE ENVIO';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,4]:='QTD POSTE PROJ. URB';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,5]:='QTD POSTE PROJ. RURAL';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,6]:='QTD POSTE LEVANTADO';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,7]:='QTD POSTE ATUALIZADO';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,8]:='TOPOGRAFIA';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,9]:='TRAVESSIA';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,10]:='INCORPORAÇÃO';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,11]:='IMPROCEDENTE';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,12]:='DESLOCAMENTO';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,13]:='OUTROS';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,14]:='TOTALIZAÇÃO';
+        Excel.WorkBooks[1].Sheets[1].Cells[2,15]:='CLASSIFICAÇÃO';
+
+        g1.Visible := False;
+        g1.MaxValue:= DataModule1.qryCRUD.RecordCount;
+        g1.Progress:=0;
+        Linha:=3;
+        DataModule1.qryCRUD.First;
+        g1.Visible := True;
+        while(not DataModule1.qryCRUD.Eof)do
+        begin
+          //carregar notas vinculadas
+          if (Trim(DataModule1.qryCRUD.FieldByName('id_os_vinculacao').AsString)<>'') and (DataModule1.qryCRUD.FieldByName('id_os_vinculacao').AsInteger<>0) then
+          begin
+            DataModule1.qryCRUD.Next;
+            Continue;
+          end;
+
+          qry:=TFDQuery.Create(nil);
+          qry.Connection:=DataModule1.ConMySql;
+          qry.SQL.Add('select * from os_engenharia_notas where id_os_projeto='+DataModule1.qryCRUD.FieldByName('id').AsString);
+          qry.Open();
+          qry.First;
+
+          while not qry.Eof do
+          begin
+            notas :=qry.FieldByName('descricao').AsString;
+            qry.Next;
+            if not qry.Eof then
+              notas :=notas+'-';
+          end;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,1]:=notas;
+          //vincular os
+
+          numeroos:=Trim(DataModule1.qryCRUD.FieldByName('numero_os').AsString);
+          qry.Close;
+          qry.SQL.Clear;
+          qry.SQL.Add('select numero_os,id,id_os_vinculacao from os_engenharia_projeto where id_os_vinculacao=+'+DataModule1.qryCRUD.FieldByName('id').AsString);
+          qry.Open();
+          qry.First;
+          while not qry.Eof do
+          begin
+            numeroos:=numeroos+'-'+qry.FieldByName('numero_os').AsString;
+            qry.Next;
+          end;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,2]:=numeroos;
+          //Excel.WorkBooks[1].Sheets[1].Cells[Linha,2]numeroos:=Trim(DataModule1.qryCRUD.FieldByName('numero_os').AsString);
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,3]:=DataModule1.qryCRUD.FieldByName('dt_conclusao').AsDateTime;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,4]:=DataModule1.qryCRUD.FieldByName('qtd_post_proj_urb').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,5]:=DataModule1.qryCRUD.FieldByName('qtd_post_proj_rur').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,6]:=DataModule1.qryCRUD.FieldByName('qtd_post_lev').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,7]:=DataModule1.qryCRUD.FieldByName('qtd_post_atu').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,8]:=DataModule1.qryCRUD.FieldByName('qtd_topografia').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,9]:=DataModule1.qryCRUD.FieldByName('qtd_travessia').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,10]:=DataModule1.qryCRUD.FieldByName('qtd_incorporacao').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,11]:=DataModule1.qryCRUD.FieldByName('qtd_improcedente').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,12]:=DataModule1.qryCRUD.FieldByName('qtd_deslocamento').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,13]:=DataModule1.qryCRUD.FieldByName('qtd_outros').AsString;
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,14]:=somarValoresRelExcel(DataModule1.qryCRUD);
+          Excel.WorkBooks[1].Sheets[1].Cells[Linha,15]:=DataModule1.qryCRUD.FieldByName('classificacao').AsString;;
+          DataModule1.qryCRUD.Next;
+          g1.Progress:=g1.Progress+1;
+          Inc(Linha);
+        end;
+
+        if(SaveDialog1.Execute)then
+        begin
+           _CaminhoRelatorio:=SaveDialog1.FileName;
+           Excel.WorkBooks[1].SaveAs(_CaminhoRelatorio+'.xls');
+            Excel.WorkBooks[1].Close;
+            Application.MessageBox(PChar('Arquivo criado com sucesso!!!' + #13 +_CaminhoRelatorio+'.xls'), PChar(Application.Title), MB_OK + MB_ICONINFORMATION);
+        end;
+      end;
+
+    finally
+      g1.Progress:=0;
+    end;
+  end
+  else
+  begin
+    Application.MessageBox('Formato do Relatório em Desenvolvimento !',
+      'Atenção', MB_OK + MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmRelMedicoes.InicializaComponente;
+begin
+ if ConsultaSqlFd(DataModule1.qryCRUD,'SELECT * from os_engenharia_tipo')=0then
+ begin
+  DataModule1.qryCRUD.First;
+  while not DataModule1.qryCRUD.Eof do
+  begin
+    cbbclassificacao.AddItem(DataModule1.qryCRUD.FieldByName('descricao').AsString,TObject(DataModule1.qryCRUD.FieldByName('id').AsInteger));
+    DataModule1.qryCRUD.Next;
+  end;
+  cbbclassificacao.AddItem('Todos',ObjectMenuItem);
+  cbbclassificacao.ItemIndex:=3;
+ end;
+  edtini.text := funcRetornaPrimeiroDiaMes;
+  edtfim.Text := funcRetornaUltimoDiaMes;
+end;
+
+procedure TFrmRelMedicoes.RodapeRel;
+begin
+
+end;
+
+function TFrmRelMedicoes.somarValoresRelExcel(qry: TFDQuery): Currency;
+begin
+  Result:=(qry.FieldByName('vl_post_proj_urb').AsCurrency+qry.FieldByName('vl_post_porj_rur').AsCurrency+
+  qry.FieldByName('vl_post_lev').AsCurrency+qry.FieldByName('vl_post_atu').AsCurrency+
+  qry.FieldByName('vl_topografia').AsCurrency+qry.FieldByName('vl_travessia').AsCurrency+qry.FieldByName('vl_incorporacao').AsCurrency+
+  qry.FieldByName('vl_improcedente').AsCurrency+qry.FieldByName('vl_deslocamento').AsCurrency+qry.FieldByName('vl_outros').AsCurrency);
+end;
+
+procedure TFrmRelMedicoes.verifica66;
+begin
+
+end;
+
+function TFrmRelMedicoes.pegarStatus: string;
+begin
+//
+  If(chkcadastrada.Checked)then
+  begin
+    Result:='6';
+  end;
+  If(chkLevantamento.Checked)then
+  begin
+    if(Result='')then Result:='1' else Result := Result+',1';
+  end;
+  If(chkAtualizar.Checked)then
+  begin
+    if(Result='')then Result:='4' else Result := Result+',4';
+  end;
+  If(chkProjetar.Checked)then
+  begin
+    if(Result='')then Result:='2' else Result := Result+',2';
+  end;
+  If(chkTopografia.Checked)then
+  begin
+    if(Result='')then Result:='9' else Result := Result+',9';
+  end;
+  If(chkEnviadoCeltins.Checked)then
+  begin
+    if(Result='')then Result:='8' else Result := Result+',8';
+  end;
+  If(chkDevolvida.Checked)then
+  begin
+    if(Result='')then Result:='7' else Result := Result+',7';
+  end;
+  If(chkConcluido.Checked)then
+  begin
+    if(Result='')then Result:='10' else Result := Result+',10';
+  end;
+   if (chkPendente.Checked) then
+  begin
+    if Result='' then Result:='11'else Result:=Result+',11';
+  end;
+end;
+end.

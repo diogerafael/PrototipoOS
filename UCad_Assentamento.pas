@@ -1,0 +1,346 @@
+unit UCad_Assentamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UPadraoNovo, Vcl.Menus,
+  Vcl.Buttons, PngSpeedButton, Vcl.ExtCtrls, Vcl.StdCtrls,
+  cxControls,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  cxEdit,
+  Data.DB, cxGridLevel, cxClasses, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxButtons, RDprint, cxContainer, Vcl.ComCtrls,
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
+  dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator, cxDBData,
+  dxCore, cxDateUtils, FireDAC.Stan.Intf, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf;
+
+type
+  TFrmCadAssentamento = class(TFrmCadPadraoNovoGrande)
+    Label1: TLabel;
+    EditCodAssentamento: TEdit;
+    Label2: TLabel;
+    EditDescricaoAssentamento: TEdit;
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    FDQuery1: TFDQuery;
+    DataSource1: TDataSource;
+    Label3: TLabel;
+    EditNumeroNota: TEdit;
+    btn1: TcxButton;
+    codigo: TcxGridDBColumn;
+    descricao: TcxGridDBColumn;
+    RDprint1: TRDprint;
+    Pmrelatorio: TPopupMenu;
+    RelatrioAssentamento1: TMenuItem;
+    edtdatacadastro: TcxDateEdit;
+    Label4: TLabel;
+    procedure sbnovoClick(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
+    procedure sbconsultarClick(Sender: TObject);
+    procedure EditNumeroNotaKeyPress(Sender: TObject; var Key: Char);
+    procedure sbexcluirClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure sbrelatoriosClick(Sender: TObject);
+    procedure RelatrioAssentamento1Click(Sender: TObject);
+  private
+    FIdAssentamento: Integer;
+    procedure InserirAssentamento;
+    procedure AtualizarGrid;
+    procedure SetIdAssentamento(const Value: Integer);
+    function VerificarSeExisteNota:Boolean;
+    procedure LimparItens;
+    procedure ExcluirAssentamento;
+    procedure ImprimirRelatorio;
+    procedure CabecalhoRel;
+    procedure CorpoRel;
+    procedure Rodape;
+    { Private declarations }
+  public
+    { Public declarations }
+    property IdAssentamento:Integer read FIdAssentamento write SetIdAssentamento;
+  end;
+
+var
+  FrmCadAssentamento: TFrmCadAssentamento;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, UConsAssentamento, uConsProjetoRural, URelAssentamento;
+
+procedure TFrmCadAssentamento.sbconsultarClick(Sender: TObject);
+begin
+  inherited;
+  //consultar assentamentos
+  FrmConsAssentamento:=TFrmConsAssentamento.Create(Self);
+  FrmConsAssentamento.ShowModal;
+  FreeAndNil(FrmConsAssentamento);
+end;
+
+procedure TFrmCadAssentamento.sbexcluirClick(Sender: TObject);
+begin
+  inherited;
+  ExcluirAssentamento;
+end;
+
+procedure TFrmCadAssentamento.sbnovoClick(Sender: TObject);
+begin
+  inherited;
+  if Obrigatorio(Self,EditDescricaoAssentamento,'Definir Descrição Para OS !') then Exit;
+  if Obrigatorio(Self,edtdatacadastro,'Definir Data de Cadastro !') then Exit;
+
+  InserirAssentamento;
+end;
+
+
+procedure TFrmCadAssentamento.sbrelatoriosClick(Sender: TObject);
+begin
+  inherited;
+  //chamar relatorio
+  pmrelatorio.Popup(Self.Left+3+sbrelatorios.Left,Self.Top+sbrelatorios.Top+sbrelatorios.Height+28);
+end;
+
+procedure TFrmCadAssentamento.SetIdAssentamento(const Value: Integer);
+begin
+  FIdAssentamento := Value;
+end;
+
+procedure TFrmCadAssentamento.SpeedButton1Click(Sender: TObject);
+begin
+  inherited;
+  LimparItens;
+end;
+
+procedure TFrmCadAssentamento.LimparItens;
+var
+i:Integer;
+begin
+  for i:=0 to (ComponentCount - 1) do
+  if components[i] is tcustomedit then
+  begin
+    (components[i] as tcustomedit).text := '';
+  end;
+  FDQuery1.Close;
+  sbnovo.Enabled:=True;
+  sbgravar.Enabled:=False;
+  sbexcluir.Enabled:=False;
+end;
+
+procedure TFrmCadAssentamento.ExcluirAssentamento;
+var
+  qryLocal: TFDQuery;
+begin
+  try
+    try
+      qryLocal := TFDQuery.Create(nil);
+      qryLocal.Connection := DataModule1.ConMySql;
+      qryLocal.SQL.Add('delete from os_assentamento_rural where id = ' + EditCodAssentamento.Text);
+      qryLocal.ExecSQL;
+      qryLocal.SQL.Clear;
+      qryLocal.SQL.Add('delete from os_assentamento_os where id_assentamento_rural = ' + EditCodAssentamento.Text);
+      qryLocal.ExecSQL;
+      LimparItens;
+    except
+      on E: Exception do
+        CriarLog(Self, E, 'Excluir Assentamento');
+    end;
+  finally
+    FreeAndNil(qryLocal);
+  end;
+end;
+
+function TFrmCadAssentamento.VerificarSeExisteNota: Boolean;
+var
+  qryTemp:TFDQuery;
+begin
+try
+  try
+     qryTemp := TFDQuery.Create(nil);
+     qryTemp.Connection:=DataModule1.ConMySql;
+
+    ConsultaSqlFd(qryTemp,'select * from os_engenharia_notas_rural where descricao='+QuotedStr(EditNumeroNota.Text));
+    if qryTemp.IsEmpty then
+      Result:=False
+    else
+      result:=True;  
+  except on E: Exception do
+    CriarLog(Self,E,'Verificar Existencia Nota');
+  end;
+finally
+  FreeAndNil(qryTemp);
+end;
+end;
+
+procedure TFrmCadAssentamento.AtualizarGrid;
+begin
+       sqlstr:=' SELECT '+
+             ' os_assentamento_rural.descricao as assentamento ,'+
+             ' os_assentamento_rural.id,'+
+             ' os_engenharia_notas_rural.descricao,'+
+             ' os_engenharia_clientes_rural.descricao as clientes '+
+           ' FROM '+
+             ' os_assentamento_rural,'+
+             ' os_assentamento_os,'+
+             ' os_engenharia_notas_rural,'+
+             ' os_engenharia_clientes_rural '+
+           ' WHERE '+
+             ' (os_assentamento_rural.id = os_assentamento_os.id_assentamento_rural)'+
+            ' AND (os_engenharia_notas_rural.id_os_projeto = os_assentamento_os.id_os_rural)'+
+            ' AND (os_engenharia_clientes_rural.id_projeto = os_assentamento_os.id_os_rural)'+
+            ' and (os_assentamento_rural.id='+EditCodAssentamento.Text+')';
+  ConsultaSqlFd(FDQuery1,sqlstr);
+end;
+
+procedure TFrmCadAssentamento.btn1Click(Sender: TObject);
+var
+  qryLocal:TFDQuery;
+begin
+  inherited;
+  try
+      if EditCodAssentamento.Text='' then
+      begin
+        Application.MessageBox('Cadastrar Assentamento !', 'Atenção', MB_OK + MB_ICONWARNING);
+        Exit;  
+      end;
+      qryLocal:=TFDQuery.Create(nil);
+      qryLocal.Connection:=DataModule1.ConMySql;
+      try
+        if VerificarSeExisteNota then
+        begin
+         qryLocal.SQL.Add('insert into os_assentamento_os (id_assentamento_rural,id_os_rural) values (:id_assentamento_rural,:id_os_rural)');
+         qryLocal.Params.ParamByName('id_assentamento_rural').AsInteger := strtoint(EditCodAssentamento.Text);
+         qryLocal.Params.ParamByName('id_os_rural').AsInteger           := IdAssentamento;
+         qryLocal.ExecSQL;
+         AtualizarGrid;
+        end
+        else
+        begin
+         Application.MessageBox('Nota Não Encontrada !', 'Atenção', MB_OK + MB_ICONWARNING);
+        end;
+      except on E: Exception do
+         CriarLog(Self,E,'Cadastrar Nota em Assentamento:'+EditNumeroNota.Text);
+      end;
+  finally
+    FreeAndNil(qryLocal);
+  end;
+end;
+
+procedure TFrmCadAssentamento.EditNumeroNotaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  inherited;
+  if (Key = #13) and (EditNumeroNota.Text='') then
+  begin
+    frmConsProjetoRural:=TfrmConsProjetoRural.Create(Self);
+    frmConsProjetoRural.Tag:=2;
+    frmConsProjetoRural.ShowModal;
+  end;
+
+end;
+
+procedure TFrmCadAssentamento.ImprimirRelatorio;
+begin
+  CabecalhoRel;
+  CorpoRel;
+  Rodape;
+end;
+
+procedure TFrmCadAssentamento.CabecalhoRel;
+var
+  qryTemp:TFDQuery;
+begin
+  try
+     try
+      qryTemp:=TFDQuery.Create(nil);
+      qryTemp.Connection:=DataModule1.ConMySql;
+     except on E: Exception do
+      CriarLog(Self,E,'');
+     end;
+  finally
+    FreeAndNil(qryTemp);
+  end;
+end;
+
+procedure TFrmCadAssentamento.CorpoRel;
+begin
+
+end;
+
+procedure TFrmCadAssentamento.RelatrioAssentamento1Click(Sender: TObject);
+begin
+  inherited;
+  FrmRelAssentamento := TFrmRelAssentamento.Create(nil);
+  FrmRelAssentamento.ShowModal;
+  FreeAndNil(FrmRelAssentamento);
+end;
+
+procedure TFrmCadAssentamento.Rodape;
+begin
+
+end;
+
+procedure TFrmCadAssentamento.InserirAssentamento;
+var
+  qryLocal:TFDQuery;
+begin
+  try
+   qryLocal:=TFDQuery.Create(nil);
+   qryLocal.Connection:=DataModule1.ConMySql;
+   try
+    qryLocal.SQL.Add('INSERT into os_assentamento_rural (descricao,data) values (:descricao,:data)');
+    qryLocal.Params.ParamByName('descricao').AsString := EditDescricaoAssentamento.Text;
+    qryLocal.Params.ParamByName('data').AsDateTime    := StrToDateTime(edtdatacadastro.Text);
+    qryLocal.ExecSQL;
+    //pegar ultimo id para colocar em codigo
+    qryLocal.SQL.Clear;
+    qryLocal.SQL.Add('select LAST_INSERT_ID() from os_assentamento_rural');
+    qryLocal.Open();
+    EditCodAssentamento.Text:=qryLocal.Fields[0].AsString;
+    qryLocal.Close;
+   except on E: Exception do
+   begin
+    CriarLog(Self,E,'Inserir Assentamento');
+   end;
+   end;
+  finally
+    FreeAndNil(qryLocal);
+  end;
+end;
+
+end.

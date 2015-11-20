@@ -1,0 +1,285 @@
+unit U_ConsultarOSInterno;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls,
+  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
+  dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, Vcl.ExtCtrls, Vcl.StdCtrls, cxGridLevel, cxClasses,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView,
+  cxGridDBTableView, cxGrid, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client,System.DateUtils;
+
+type
+  TFrmConsOrdemServico = class(TForm)
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    shp1: TShape;
+    lbl1: TLabel;
+    img10: TImage;
+    lbltipo: TLabel;
+    edtnome: TEdit;
+    cbbopcao: TComboBox;
+    lbl2: TLabel;
+    lblvencehoje: TLabel;
+    shp4: TShape;
+    lbljapagas: TLabel;
+    shp2: TShape;
+    lblapagar: TLabel;
+    shp5: TShape;
+    FDQuery1: TFDQuery;
+    ds1: TDataSource;
+    cxGrid1DBTableView1solicitante: TcxGridDBColumn;
+    cxGrid1DBTableView1solicitado: TcxGridDBColumn;
+    cxGrid1DBTableView1dt_abertura: TcxGridDBColumn;
+    cxGrid1DBTableView1dt_conclusao: TcxGridDBColumn;
+    cxGrid1DBTableView1dt_limite: TcxGridDBColumn;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    procedure edtnomeKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure cxGrid1DBTableView1DblClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cxGrid1DBTableView1KeyPress(Sender: TObject; var Key: Char);
+  private
+    parametroTag:Integer;
+    procedure CarregarDados;
+    procedure ControlarPermissaoEdicaoServicoInterno;
+    function UsuarioLogadoEhSolicitante:Boolean;
+    function verificaCampoIsNumero(nome: string): Boolean;
+    { Private declarations }
+  public
+    { Public declarations }
+    Constructor Create; overload;   // This constructor uses defaults
+    Constructor Create(AOwner : TComponent;parametroTag : Integer); overload;
+  end;
+
+var
+  FrmConsOrdemServico: TFrmConsOrdemServico;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, U_ordermServicoInterno;
+
+constructor TFrmConsOrdemServico.Create;
+begin
+
+end;
+
+constructor TFrmConsOrdemServico.Create(AOwner : TComponent;parametroTag : Integer);
+begin
+  inherited Create(AOwner);
+  parametroTag := parametroTag;
+end;
+
+function TFrmConsOrdemServico.UsuarioLogadoEhSolicitante:Boolean;
+begin
+  if FrmOrdemServicoInterno.IdSolicitante = DataModule1.qryusuario.FieldByName('iduser').AsInteger then
+  begin
+    result := True;
+  end
+  else
+    Result := False;
+end;
+
+procedure TFrmConsOrdemServico.cxGrid1DBTableView1DblClick(
+  Sender: TObject);
+begin
+  CarregarDados;
+end;
+
+procedure TFrmConsOrdemServico.cxGrid1DBTableView1KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if Key = #13 then
+  begin
+    CarregarDados;
+  end;
+end;
+
+function TFrmConsOrdemServico.verificaCampoIsNumero( nome :string):Boolean;
+var
+I:Integer;
+begin
+
+    for I := 1 to Length(nome) do
+    begin
+      if nome[i] in['0'..'9'] then
+      begin
+        Result:=True;
+      end
+      else
+      begin
+        Result := False;
+        Break;
+      end;
+    end;
+end;
+
+procedure TFrmConsOrdemServico.edtnomeKeyPress(Sender: TObject;
+  var Key: Char);
+  var
+  parametro:string;
+  I: Integer;
+  pesquisa  : string;
+
+
+begin
+  if Key = #13 then
+  begin
+
+
+    if (cbbopcao.ItemIndex =0) and (verificaCampoIsNumero(edtnome.Text)=False) then
+    begin
+      if Application.MessageBox('Pesquisa por Código só aceita números !!',
+        'Atenção !!', MB_OKCANCEL + MB_ICONQUESTION) = IDOK then
+      begin
+        Exit;
+      end;
+
+    end;
+
+    sqlstr := ' SELECT os.id,os.cod_solicitado '+
+                       ', f.nome AS solicitante '+
+                       ', os.cod_solicitado,os.cod_solicitante '+
+                       ', fu.nome_razaosocial AS solicitado '+
+                       ', os.descricao '+
+                       ', os.dt_abertura '+
+                       ', os.dt_conclusao '+
+                       ', os.dt_limite '+
+                       ', os.id  '+
+                       ', os.observacao '+
+                       ', os.prioridade '+
+                       ', os.status '    +
+                       ' FROM  os_engenharia_ordem_servico AS os '+
+                       ' inner JOIN uccaduser AS f '+
+                       ' ON os.cod_solicitante = f.iduser '+
+                       ' inner JOIN cad_funcionarios AS fu '+
+                       ' ON os.cod_solicitado = fu.Id ';
+    if edtnome.Text = EmptyStr then
+    begin
+      FDQuery1.SQL.Clear;
+      FDQuery1.SQL.Add(sqlstr);
+    end
+    else
+    begin
+      FDQuery1.SQL.Clear;
+      //FDQuery1.SQL.Add(sqlstr);
+      case cbbopcao.ItemIndex of
+           0:
+           begin
+            parametro := ' where os.id ='+Trim(edtnome.Text);
+           end;
+           1:
+           begin
+            parametro := ' where nome like '+quotedstr(Trim(UpperCase(edtnome.Text))+'%');
+           end;
+           2:
+           begin
+            parametro := ' where nome_razaosocial like '+quotedstr(Trim(UpperCase(edtnome.Text))+'%');
+           end;
+      end;
+      sqlstr := sqlstr + parametro;
+      FDQuery1.SQL.Add(sqlstr);
+    end;
+    FDQuery1.Open();
+    if FDQuery1.IsEmpty then
+      SemRegistros
+    else
+      cxGrid1.SetFocus;
+  end;
+end;
+
+procedure TFrmConsOrdemServico.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    if Application.MessageBox('Deseja Sair da Tela?', 'Atenção', MB_OKCANCEL +
+      MB_ICONQUESTION) = IDOK then
+    begin
+      Self.Close;
+    end;
+    if Key = VK_F2 then
+    begin
+      cbbopcao.ItemIndex := 0;
+    end;
+    if Key = VK_F3 then
+    begin
+      cbbopcao.ItemIndex := 1;
+    end;
+
+  end;
+end;
+
+procedure TFrmConsOrdemServico.FormShow(Sender: TObject);
+begin
+  edtnome.SetFocus;
+end;
+
+procedure TFrmConsOrdemServico.CarregarDados;
+begin
+  try
+   FrmOrdemServicoInterno.edtnumos.Text         := FDQuery1.FieldByName('id').AsString;
+   FrmOrdemServicoInterno.IdSolicitante         := FDQuery1.FieldByName('cod_solicitante').AsInteger;
+   FrmOrdemServicoInterno.edtsolicitante.Text   := FDQuery1.FieldByName('solicitante').AsString;
+   FrmOrdemServicoInterno.edtCodSolicitado.Text := FDQuery1.FieldByName('cod_solicitado').AsString;
+   FrmOrdemServicoInterno.edtdescsol.Text       := FDQuery1.FieldByName('solicitado').AsString;
+   FrmOrdemServicoInterno.dataAbertura.Text     := FDQuery1.FieldByName('dt_abertura').Asstring;
+   FrmOrdemServicoInterno.cbbprioridade.ItemIndex        := FDQuery1.FieldByName('prioridade').AsInteger;
+   FrmOrdemServicoInterno.edtdtlimite.Text      := FDQuery1.FieldByName('dt_limite').AsString;
+   FrmOrdemServicoInterno.edtdtconclusao.Text   := FDQuery1.FieldByName('dt_conclusao').AsString;
+   FrmOrdemServicoInterno.cbbstatus.Text        := FDQuery1.FieldByName('status').AsString;
+   FrmOrdemServicoInterno.mmoobservacao.Text    := FDQuery1.FieldByName('descricao').AsString;
+   FrmOrdemServicoInterno.mmo1.Text             := FDQuery1.FieldByName('observacao').AsString;
+
+   if Trim(FDQuery1.FieldByName('dt_conclusao').AsString)<>'' then
+    FrmOrdemServicoInterno.cbbstatus.ItemIndex := 2;
+   
+   {verrificando prazo}
+   FrmOrdemServicoInterno.lblprazo.Caption := IntToStr(DaysBetween(FDQuery1.FieldByName('dt_abertura').AsDateTime,FDQuery1.FieldByName('dt_limite').AsDateTime));
+
+   ControlarPermissaoEdicaoServicoInterno;
+
+   FrmOrdemServicoInterno.sbnovo.Enabled    := False;
+   FrmOrdemServicoInterno.sbgravar.Enabled  := True;
+   FrmOrdemServicoInterno.sbexcluir.Enabled := True;
+   Self.Close;
+
+  except on E: Exception do
+    CriarLog(Self,E,'Carregar Dados Ordem Servico Interno');
+  end;
+end;
+
+procedure TFrmConsOrdemServico.ControlarPermissaoEdicaoServicoInterno;
+begin
+  if not UsuarioLogadoEhSolicitante then
+  begin
+    FrmOrdemServicoInterno.edtdtconclusao.Properties.ReadOnly := True;
+    FrmOrdemServicoInterno.cbbprioridade.Enabled              := False;
+    FrmOrdemServicoInterno.edtdtlimite.Properties.ReadOnly    := True;
+  end
+
+end;
+end.

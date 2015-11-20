@@ -1,0 +1,62 @@
+program OrdemServico;
+
+uses
+  Vcl.Forms,
+  uConfigBd in 'uConfigBd.pas' {frmconfigdb},
+  UConsPadraoNovaGrande in 'UConsPadraoNovaGrande.pas' {FrmNovaConsultaPadraoGrande},
+  DataModule in 'DataModule.pas' {DataModule1: TDataModule},
+  UPadraoNovo in 'UPadraoNovo.pas' {FrmCadPadraoNovoGrande},
+  uPrincipal in 'uPrincipal.pas' {frmPrincipal},
+  uFrmCadastrarProjeto in 'uFrmCadastrarProjeto.pas' {frmCadastrarProjeto},
+  uFrmCadastrarRevisao in 'uFrmCadastrarRevisao.pas' {frmCadastrarRevisao},
+  u_conscodmunicipio in 'u_conscodmunicipio.pas' {frmconscidade},
+  UConsFuncionario in 'UConsFuncionario.pas' {FrmConsFuncionario},
+  uConsProjeto in 'uConsProjeto.pas' {frmConsutarProjeto},
+  UDistPeriodos in 'UDistPeriodos.pas' {FrmDistPeriodos},
+  uCadastrarConfig in 'uCadastrarConfig.pas' {frmCadastrarConfig},
+  CAdacesso in 'CAdacesso.pas' {FrmAcesso},
+  uFrmCadastrarProjetoRural in 'uFrmCadastrarProjetoRural.pas' {frmCadastrarProjetoRural},
+  uFrmCadastrarRevisaoRural in 'uFrmCadastrarRevisaoRural.pas' {frmCadastrarRevisaoRural},
+  uConsProjetoRural in 'uConsProjetoRural.pas' {frmConsProjetoRural},
+  URelPadrao in 'URelPadrao.pas' {FrmRelPadrao},
+  URelProjetoPorStatus in 'URelProjetoPorStatus.pas' {FrmRelProjEstatus},
+  UDistPeriodosRural in 'UDistPeriodosRural.pas' {FrmDistPeriodosRural},
+  URelProjetoPorStatusRural in 'URelProjetoPorStatusRural.pas' {FrmRelProjetoStatusRural},
+  URelMedicoes in 'URelMedicoes.pas' {FrmRelMedicoes},
+  uCadSolicitante in 'uCadSolicitante.pas' {FrmCadSolicitante},
+  uCadCrs in 'uCadCrs.pas' {FrmCadCrs},
+  UFrmConsultaRapida in 'UFrmConsultaRapida.pas' {FrmConsultaRapida},
+  UCadObservacao in 'UCadObservacao.pas' {FrmObservacao},
+  UFrmConsultaRapidaRural in 'UFrmConsultaRapidaRural.pas' {FrmConsultaRapidaRural},
+  URelMedicoesRural in 'URelMedicoesRural.pas' {FrmRelMedicoesRural},
+  uProcessandoNovo in 'uProcessandoNovo.pas' {frmProcessandoNovo},
+  URelAnomalias in 'URelAnomalias.pas' {FrmRelAnomalias},
+  UFrmDedoDuro in 'UFrmDedoDuro.pas' {FrmDedoDuro},
+  UFrmDedoDuroRural in 'UFrmDedoDuroRural.pas' {FrmDedoDuroRural},
+  UFrmVinculacao in 'UFrmVinculacao.pas' {frmRelVinculacao},
+  UCad_Assentamento in 'UCad_Assentamento.pas' {FrmCadAssentamento},
+  uFrmRemoverNota in 'uFrmRemoverNota.pas' {FrmExcluirNotasRural},
+  UConsAssentamento in 'UConsAssentamento.pas' {FrmConsAssentamento},
+  URelAssentamento in 'URelAssentamento.pas' {FrmRelAssentamento},
+  u_usuario in 'u_usuario.pas' {Frmusuario},
+  UGerenciamentoMicros in 'UGerenciamentoMicros.pas' {frmgerenciamentomicros},
+  UConsUsuarios in 'UConsUsuarios.pas' {frmconsUsuarios},
+  URelndicadoresGerais in 'URelndicadoresGerais.pas' {FrmRelIndicadoresGerais},
+  UGraficoChart in 'UGraficoChart.pas' {FrmGraficoPostProj},
+  URelProdutividade in 'URelProdutividade.pas' {FrmRelProdutividade},
+  UGraficoProdutividade in 'UGraficoProdutividade.pas' {FrmGraficoProdutividade},
+  UExibirVinculacoes in 'UExibirVinculacoes.pas' {FrmExibirVinculacoes},
+  UAlterarAnoUniversalizacao in 'UAlterarAnoUniversalizacao.pas' {FrmAlterarUniversalizacao};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TfrmProcessandoNovo, frmProcessandoNovo);
+  //if logado = false then
+  //  Halt;
+  Application.Run;
+end.

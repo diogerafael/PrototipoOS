@@ -1,0 +1,441 @@
+unit CAdacesso;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, ExtCtrls, jpeg,DateUtils,variants,midaslib, Buttons,
+  PngSpeedButton,ShellAPI,IniFiles, IdBaseComponent, IdComponent,
+  AdvSmoothLabel, pngimage,adodb, dxGDIPlusClasses,FireDAC.Comp.Client;
+
+type
+  TFrmAcesso = class(TForm)
+    edtcodusuario: TEdit;
+    edtnomeusuario: TEdit;
+    edtsenhausuario: TEdit;
+    PngSpeedButton2: TPngSpeedButton;
+    PngSpeedButton3: TPngSpeedButton;
+    Label1: TLabel;
+    img3: TImage;
+    img4: TImage;
+    lblnome: TLabel;
+    img1: TImage;
+    img2: TImage;
+    lbl1: TLabel;
+    Label2: TLabel;
+    lblmensagem: TAdvSmoothLabel;
+    procedure edtsenhausuarioKeyPress(Sender: TObject; var Key: Char);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
+
+    procedure edtcodusuarioExit(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure edtcodusuarioKeyPress(Sender: TObject; var Key: Char);
+    procedure PngSpeedButton1Click(Sender: TObject);
+    procedure PngSpeedButton3Click(Sender: TObject);
+    procedure PngSpeedButton4Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+
+  private
+  procedure ConsultaUsuario;
+  procedure Conexao;
+  procedure FechaForm();
+    procedure ValidarMicros;
+  public
+    { Public declarations }
+  end;
+
+  function Is4DigitYear: Boolean;
+  function ValidadeChave():boolean;
+  function DSiFileSize(const fileName: string): int64;
+
+var
+  FrmAcesso: TFrmAcesso;
+  produtonovo, produtogravar, produtoconsultar, produtocancelar, produtoexcluir : integer;
+  logado : Boolean;
+
+  //Variáveis para o AutoUpdate
+  versao_local, versao_servidor : string;
+  tamanho_original, tamanho_recebido : integer;
+  local_arquivo_servidor,_NomeExe : string;
+  iArq : Tinifile;
+
+  //tela de login
+  _codusuariologinG  : string;
+  _nomeusuariologinG : string;
+
+implementation
+
+uses DataModule,uConfigBd, uPrincipal, u_usuario, UGerenciamentoMicros;
+
+{$R *.DFM}
+
+
+
+procedure TFrmAcesso.edtsenhausuarioKeyPress(Sender: TObject;
+  var Key: Char);
+var varsenha : string;
+begin
+  if key = #13 then
+  begin
+    if Trim(edtcodusuario.text) = '100' then
+    begin
+      if SenhaPadrao(Trim(edtsenhausuario.Text),'A') = True then
+      begin
+        logado              := true; // validar o acesso
+        _codusuariologinG   := Trim(edtcodusuario.text);
+        _nomeusuariologinG  := trim(lblnome.Caption);  //Trim(edtnomeusuario.text);
+        VerificaMsg;
+        //frmPrincipal.Show;
+        //DataModule1.qryusuario;//:=DataModule1.query01;
+        frmacesso.close;
+        Exit;
+      end
+      else
+      begin
+        Application.MessageBox('Atenção: Senha Inválida!',PChar(Application.Title), MB_OK + MB_ICONWARNING);
+        edtsenhausuario.setfocus;
+      end;
+    end
+    else
+    begin
+
+    end;
+      with datamodule1.qryusuario do
+      begin
+        if not datamodule1.qryusuario.IsEmpty then
+        begin
+          varsenha := crypt('D',fieldbyname('senha').asstring,'HELIO');
+          if edtsenhausuario.text = varsenha then
+          begin
+            logado := true; // validar o acesso
+            _codusuariologinG  := Trim(edtcodusuario.text);
+            _nomeusuariologinG := trim(lblnome.Caption);//Trim(edtnomeusuario.text);
+            VerificaMsg;
+            //frmPrincipal.Show;
+            frmacesso.close;
+          end
+          else
+          begin
+            Application.MessageBox('Atenção: Senha Inválida!',PChar(Application.Title), MB_OK + MB_ICONWARNING);
+            edtsenhausuario.setfocus;
+          end;
+        end;
+      end;
+    end;
+
+  end;
+
+procedure TFrmAcesso.FormActivate(Sender: TObject);
+begin
+//  OBS: Não Descomentar essa procedure. está com erro no windows XP (Hélio em 21/03/2013)
+//  Atualiza_Versao_Aplicacao();
+end;
+
+procedure TFrmAcesso.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = vk_escape then
+    FechaForm();
+end;
+
+procedure TFrmAcesso.FormShow(Sender: TObject);
+var _ultimoacesso : String;
+begin
+  Conexao();           //Realiza conexão com o banco de dados principal MySql/MariaDB
+    //verificar tabelas
+  CriarTabelas;
+  ValidarMicros(); //Validando a quantidade de micros liberadas
+end;
+
+
+function Is4DigitYear: Boolean;
+begin
+  result:=(Pos('yyyy',FormatSettings.ShortDateFormat)>0);
+end;
+
+procedure TFrmAcesso.edtcodusuarioExit(Sender: TObject);
+begin
+  if Obrigatorio(Self, edtcodusuario, 'Informe o código do usuário!') then Exit;
+  ConsultaUsuario();
+end;
+
+procedure TFrmAcesso.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13 then selectnext(activecontrol,true, true);
+end;
+
+procedure TFrmAcesso.edtcodusuarioKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (key in ['0'..'9',#8,',',#13,#03,#22]) then key := #0;
+end;
+
+procedure TFrmAcesso.ConsultaUsuario;
+begin
+  sqlstr := ''+
+  ' select u.iduser,u.nome as nome ,u.senha as senha ,os.*,osr.serv_camp as ser_campo_rural,'+
+  ' osr.serv_proj as ser_proj_rural,osr.serv_edt_vl as serv_edt_vl_rural,osr.serv_topografia as serv_topografia,osr.serv_vl as ser_vl_rural,osr.serv_ace as serv_ace_rural,osr.cod_usuario'+
+  ' from uccaduser u left join os_engenharia_acesso os on (u.iduser= os.cod_usuario) left join os_engenharia_acesso_rural osr on (u.iduser= osr.cod_usuario) where login = '+QuotedStr(edtcodusuario.text)+' and status=1 and tipo='+QuotedStr('U');
+  if ConsultaSqlFd(datamodule1.qryusuario,sqlstr) <> 0 then
+  begin
+    MessageBox(0, ''+#13+#10+'Usuário não cadastrado.', 'Atenção', MB_ICONWARNING or MB_OK);
+    edtcodusuario.setfocus;
+  end;
+    lblnome.Caption := datamodule1.qryusuario.fieldbyname('nome').asstring;
+
+  edtsenhausuario.setfocus;
+end;
+
+
+procedure TFrmAcesso.PngSpeedButton1Click(Sender: TObject);
+begin
+  FechaForm();
+end;
+
+procedure TFrmAcesso.PngSpeedButton3Click(Sender: TObject);
+begin
+  {SuporteSeguro();}
+end;
+
+procedure TFrmAcesso.PngSpeedButton4Click(Sender: TObject);
+begin
+  {if frmconsusuarios = nil then
+    Application.CreateForm(Tfrmconsusuarios,frmconsusuarios);
+  frmconsusuarios.showmodal;}
+end;
+
+procedure TFrmAcesso.Conexao;
+begin
+  logado := false; // validar o acesso
+
+  FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+  //DataModule1     := False;
+  //NOVO PADRÃO DO INSTALADOR DO SISTEMA
+  with TIniFile.Create(ExtractFilePath(Application.ExeName)+'db.ini') do
+  try
+    Servidor      :=  ReadString('BANCO','Servidor','servidor');
+    NomeBanco     :=  ReadString('BANCO','NomeBanco','supoc');
+    PortaServidor :=  ReadString('BANCO','Porta','3306');
+    if not FileExists(ExtractFilePath(Application.ExeName)+'db.ini') then
+    begin
+      WriteString('BANCO','Servidor',Servidor);
+      WriteString('BANCO','NomeBanco',NomeBanco);
+      WriteString('BANCO','Porta',PortaServidor);
+      UsuarioBD     := ReadString('BANCO','UsuarioBD','0AB4');
+      SenhaBD       := ReadString('BANCO','SenhaBD','0AB4');
+    end;
+  finally
+    free;
+  end;
+  //Conexão Firedac - F.T 22/01/2015
+  DataModule1.ConMySql.ConnectionString := 'DriverID="MySQL";Server=' + Trim(Servidor) + ';Port=' + Trim(PortaServidor) + ';Database=' + Trim(NomeBanco) +
+  ';User_name=root;Password=root;';
+
+  try
+    DataModule1.ConMySql.Connected := True; //Conexão Firedac - F.T 22/01/2015
+  except
+    //DataModule1.Con.Connected      := False; //Conexão ADO
+    DataModule1.ConMySql.Connected := False; //Conexão Firedac - F.T 22/01/2015
+
+    Application.MessageBox(''+#13+#10+'Atenção: Servidor Não Encontrado.',PChar(Application.Title), MB_OK + MB_ICONERROR);
+
+    frmconfigdb:= Tfrmconfigdb.Create(Self);
+    frmconfigdb.showmodal;
+    frmconfigdb.Free;
+
+    if (Trim(Servidor) = '') or (Trim(NomeBanco) = '')  then ExitProcess(0);
+
+    //Conexão ADO
+    //datamodule1.con.ConnectionString :=  'Provider=MSDASQL.1;Extended Properties="DRIVER={MySQL ODBC 5.1 Driver};PWD=root;Port='+Trim(PortaServidor)+';SERVER='+Trim(Servidor)+';DATABASE='+Trim(NomeBanco)+';USER=root;OPTION=3;FLAG_BIG_PACKETS=1;FLAG_AUTO_RECONNECT=0;FLAG_USE_MYCNF=1"';
+
+    //Conexão Firedac - F.T 22/01/2015
+    DataModule1.ConMySql.ConnectionString := 'DriverID="MySQL";Server=' + Trim(Servidor) + ';Port=' + Trim(PortaServidor) + ';Database=' + Trim(NomeBanco) +
+    ';User_name=root;Password=root';
+
+    try
+      DataModule1.ConMySql.Connected := True; //Conexão Firedac - F.T 22/01/2015
+    except
+      MessageDlg(''+#13+#10+'Atenção: Servidor Não Encontrado.', mtError, [mbOK], 0);
+      FechaForm();
+    End;
+  End;
+ // Flag_parcelas := 0;
+end;
+
+//Retorna o tamanho de um arquivo em bytes
+function DSiFileSize(const fileName: string): int64;
+var
+  fHandle: DWORD;
+begin
+  fHandle := CreateFile(PChar(fileName), 0, 0, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+  if fHandle = INVALID_HANDLE_VALUE then
+    Result := -1
+  else
+  try
+    Int64Rec(Result).Lo := GetFileSize(fHandle, @Int64Rec(Result).Hi);
+  finally
+    CloseHandle(fHandle);
+  end;
+end;
+
+procedure TFrmAcesso.FechaForm();
+begin
+  try
+    FreeAndNil(frmprincipal);
+    FreeAndNil(datamodule1);
+    frmacesso.close;
+    ExitProcess(0);
+  finally
+    FreeAndNil(frmacesso);
+  end;
+  ExitProcess(0);
+end;
+
+
+function ValidadeChave():boolean;
+begin{var
+
+{  strSql: string;begin
+  _RetornoSenha := true;
+  //Verificando a senha de liberação está correta
+  strSql := ''+
+            'select * from libera';
+
+  if ConsultaSqlFd(datamodule1.query01,strSql)<> 0 then
+  begin
+    Application.MessageBox('      Atenção! Sistema Não Liberado! ' + #13#10 + 'Entre em Contato com o Suporte técnico.', PChar(Application.Title), MB_OK + MB_ICONWARNING);
+    _RetornoSenha := false;
+    Exit;
+  end;
+ // AtualizarQtdeLicencaUsoSite;
+ // LiberaSenhaMensalOnline(); // Liberando o Sistema Automaticamente
+
+  with datamodule1.query01 do
+  begin
+    close;
+    sql.clear;
+    Sql.add('Select l.*, p.cnpj as cnpj2 from libera as l inner join parametro_empresa as p on p.cnpj = l.cnpj');
+    try
+      open;
+      if recordcount = 0 then
+      begin
+        Application.MessageBox('      Atenção! Sistema Não Autorizado! ' + #13#10 + 'Entre em Contato com o Suporte técnico.', PChar(Application.Title), MB_OK + MB_ICONWARNING);
+        _RetornoSenha := false;
+      end
+      Else
+      Begin
+        auxsenha := GeraSenha(trim(fieldByName('cnpj').asstring));
+        if auxsenha <> fieldByName('senha').asstring then
+        begin
+          Application.MessageBox('      Atenção! Sistema Não Autorizado! ' + #13#10 + 'Entre em Contato com o Suporte técnico.', PChar(Application.Title), MB_OK + MB_ICONWARNING);
+          _RetornoSenha := false;
+        end;
+      end;
+    except
+    end;
+  end;
+  result := _RetornoSenha;  }
+end;
+
+procedure TFrmAcesso.ValidarMicros;
+var QryMicrosCadastrados,QryLibera,QryTotalMicrosCadastrados : TFDQuery;
+    _Volume : String;
+begin
+  //Função só irá validar se estiver em release - F.T 10/07/2015 11h50m
+  {$IFDEF DEBUG} Exit(); {$ENDIF}
+
+  try
+    QryMicrosCadastrados                 := TFDQuery.Create(nil);
+    QryMicrosCadastrados.Connection      := datamodule1.ConMySql;
+    QryLibera                            := TFDQuery.Create(nil);
+    QryLibera.Connection                 := datamodule1.ConMySql;
+    QryTotalMicrosCadastrados            := TFDQuery.Create(nil);
+    QryTotalMicrosCadastrados.Connection := datamodule1.ConMySql;
+
+    _QtdMicrosContratados  :=  0;
+    _QtdMicrosLiberados    :=  0;
+
+    //Retornando a Quantidade de Micros já cadatrados
+    sqlstr := 'select count(*) as total from microscadastrados';
+    ConsultaSqlFd(QryTotalMicrosCadastrados,sqlstr);
+
+    //Validando a Qtd de micros liberados
+    sqlstr := 'select servidordedicado,qtdmicro from libera';
+    ConsultaSqlFd(QryLibera,sqlstr);
+
+    //Verificando se o volume está cadastrado
+    _Volume := SerialNum('C');
+    sqlstr := 'select count(*) as total from microscadastrados where volume = '+QuoteDStr(_Volume);
+    ConsultaSqlFd(QryMicrosCadastrados,sqlstr);
+    if QryMicrosCadastrados.FieldByName('total').AsInteger = 0 then
+    begin
+      if QryLibera.FieldByName('servidordedicado').AsInteger + QryTotalMicrosCadastrados.FieldByName('total').AsInteger >= QryLibera.FieldByName('qtdmicro').AsInteger then
+      begin
+        _QtdMicrosContratados  :=  QryLibera.FieldByName('qtdmicro').AsInteger;
+        _QtdMicrosLiberados    :=  QryTotalMicrosCadastrados.FieldByName('total').AsInteger;
+
+        Application.MessageBox(PChar('     Atenção! Quantidade de Micros LIBERADOS ('+IntToStr(_QtdMicrosLiberados)+')'
+          + #13#10 + 'SUPERIOR A Quantidade de Micros CONTRATADOS ('+IntToStr(_QtdMicrosContratados)+')' + #13#10 +
+          #13#10 + 'Favor Entrar em Contato com o Suporte da Sua Região!'),
+          PChar(Application.Title), MB_OK + MB_ICONWARNING);
+
+        //Abrindo a tela de login para acesso ao gerenciador de micros
+        _liberaacesso := False;
+        frmusuario:= Tfrmusuario.Create(Self);
+        frmusuario.tag  := 1;
+        frmusuario.ShowModal;
+        frmusuario.Free;
+        if _liberaacesso then
+        begin
+          if frmgerenciamentomicros = nil then
+            Application.CreateForm(Tfrmgerenciamentomicros,frmgerenciamentomicros);
+          frmgerenciamentomicros.Showmodal;
+        end
+        else
+          ExitProcess(0); //Finalizando a aplicação
+      end
+      else
+      //Cadastrando o Micro na Tabela microscadatrados
+      begin
+        CadastraNovoMicro(_Volume);
+      end;
+    end
+    else
+    begin
+      //Validando a Qtde de micros liberados
+      if QryLibera.FieldByName('servidordedicado').AsInteger + QryTotalMicrosCadastrados.FieldByName('total').AsInteger > QryLibera.FieldByName('qtdmicro').AsInteger then
+      begin
+
+        _QtdMicrosContratados  :=  QryLibera.FieldByName('qtdmicro').AsInteger;
+        _QtdMicrosLiberados    :=  QryTotalMicrosCadastrados.FieldByName('total').AsInteger;
+
+        Application.MessageBox(PChar('     Atenção! Quantidade de Micros LIBERADOS ('+IntToStr(_QtdMicrosLiberados)+')'
+          + #13#10 + 'SUPERIOR A Quantidade de Micros CONTRATADOS ('+IntToStr(_QtdMicrosContratados)+')' + #13#10 +
+          #13#10 + 'Favor Entrar em Contato com o Suporte da Sua Região!'),
+          PChar(Application.Title), MB_OK + MB_ICONWARNING);
+
+        //Abrindo a tela de login para acesso ao gerenciador de micros
+        _liberaacesso := False;
+        frmusuario:= Tfrmusuario.Create(Self);
+        frmusuario.tag  := 1;
+        frmusuario.ShowModal;
+        frmusuario.Free;
+        if _liberaacesso then
+        begin
+          if frmgerenciamentomicros = nil then
+            Application.CreateForm(Tfrmgerenciamentomicros,frmgerenciamentomicros);
+          frmgerenciamentomicros.Showmodal;
+        end
+        else
+          ExitProcess(0); //Finalizando a aplicação
+      end;
+
+    end;
+  finally
+    QryLibera.Free;
+    QryMicrosCadastrados.Free;
+  end;
+end;
+
+end.

@@ -1,0 +1,67 @@
+procedure TFrmAcesso.Conexao;
+begin
+  logado := false; // validar o acesso
+
+  FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+  DataModule1.Con.Connected      := False;
+  DataModule1.ConMySql.Connected := False;
+
+  //NOVO PADRÃO DO INSTALADOR DO SISTEMA
+  with TIniFile.Create(ExtractFilePath(Application.ExeName)+'db.ini') do
+  try
+    Servidor      :=  ReadString('BANCO','Servidor','servidor');
+    NomeBanco     :=  ReadString('BANCO','NomeBanco','supoc');
+    PortaServidor :=  ReadString('BANCO','Porta','3306');
+    if not FileExists(ExtractFilePath(Application.ExeName)+'db.ini') then
+    begin
+      WriteString('BANCO','Servidor',Servidor);
+      WriteString('BANCO','NomeBanco',NomeBanco);
+      WriteString('BANCO','Porta',PortaServidor);
+    end;
+  finally
+    free;
+  end;
+
+  //Conexão ADO
+  DataModule1.Con.ConnectionString :=  'Provider=MSDASQL.1;Extended Properties="DRIVER={MySQL ODBC 5.1 Driver};PWD=root;Port='+Trim(PortaServidor)+';SERVER='+Trim(Servidor)+';DATABASE='+Trim(NomeBanco)+';USER=root;OPTION=3;FLAG_BIG_PACKETS=1;FLAG_AUTO_RECONNECT=0;FLAG_USE_MYCNF=1"';
+
+  //Conexão Firedac - F.T 22/01/2015
+  DataModule1.ConMySql.ConnectionString := 'DriverID="MySQL";Server=' + Trim(Servidor) + ';Port=' + Trim(PortaServidor) + ';Database=' + Trim(NomeBanco) +
+  ';User_name=root;Password=root';
+
+  try
+    DataModule1.Con.Connected      := True; //Conexão ADO
+    DataModule1.ConMySql.Connected := True; //Conexão Firedac - F.T 22/01/2015
+    datamodule1.qryconfig.Active   := True;
+    datamodule1.qryempresa.Active  := True;
+  except
+    DataModule1.Con.Connected      := False; //Conexão ADO
+    DataModule1.ConMySql.Connected := False; //Conexão Firedac - F.T 22/01/2015
+
+    Application.MessageBox(''+#13+#10+'Atenção: Servidor Não Encontrado.',PChar(Application.Title), MB_OK + MB_ICONERROR);
+
+    frmconfigdb:= Tfrmconfigdb.Create(Self);
+    frmconfigdb.showmodal;
+    frmconfigdb.Free;
+
+    if (Trim(Servidor) = '') or (Trim(NomeBanco) = '')  then ExitProcess(0);
+
+    //Conexão ADO
+    datamodule1.con.ConnectionString :=  'Provider=MSDASQL.1;Extended Properties="DRIVER={MySQL ODBC 5.1 Driver};PWD=root;Port='+Trim(PortaServidor)+';SERVER='+Trim(Servidor)+';DATABASE='+Trim(NomeBanco)+';USER=root;OPTION=3;FLAG_BIG_PACKETS=1;FLAG_AUTO_RECONNECT=0;FLAG_USE_MYCNF=1"';
+
+    //Conexão Firedac - F.T 22/01/2015
+    DataModule1.ConMySql.ConnectionString := 'DriverID="MySQL";Server=' + Trim(Servidor) + ';Port=' + Trim(PortaServidor) + ';Database=' + Trim(NomeBanco) +
+    ';User_name=root;Password=root';
+
+    try
+      DataModule1.Con.Connected      := True; //Conexão ADO
+      DataModule1.ConMySql.Connected := True; //Conexão Firedac - F.T 22/01/2015
+      DataModule1.qryconfig.Active   := True;
+      DataModule1.qryempresa.Active  := True;
+    except
+      MessageDlg(''+#13+#10+'Atenção: Servidor Não Encontrado.', mtError, [mbOK], 0);
+      Close;
+    End;
+  End;
+  Flag_parcelas := 0;
+end;

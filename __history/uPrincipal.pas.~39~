@@ -1,0 +1,793 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, Vcl.StdCtrls, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, Vcl.Menus, dxSkinsCore, dxSkinBlack,
+  dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
+  Vcl.ExtCtrls, cxButtons, cxControls, cxContainer, cxEdit, Vcl.ComCtrls,
+  dxCore, cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar,uFrmCadastrarProjeto,IniFiles,
+  Vcl.AppEvnts, RDprint, JvComponentBase,
+  JvThread, JvBalloonHint, dxScreenTip, cxClasses, dxCustomHint, cxHint,
+  dxSkinsdxStatusBarPainter, dxStatusBar;
+
+type
+  TfrmPrincipal = class(TForm)
+    pnl1: TPanel;
+    cxImageList1: TcxImageList;
+    cxButton3: TcxButton;
+    cxButton5: TcxButton;
+    ApplicationEvents1: TApplicationEvents;
+    btn1: TcxButton;
+    RDprint1: TRDprint;
+    Thread: TJvThread;
+    lbl1: TLabel;
+    btnlogof: TcxButton;
+    LabelUser: TLabel;
+    dxStatusBar1: TdxStatusBar;
+    BalloonHint1: TBalloonHint;
+    procedure cxButton3Click(Sender: TObject);
+    procedure cxButton4Click(Sender: TObject);
+    procedure cxButton2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure cxButton5Click(Sender: TObject);
+    procedure ApplicationEvents1Exception(Sender: TObject; E: Exception);
+    procedure btn1Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure ThreadExecute(Sender: TObject; Params: Pointer);
+  private
+    { Private declarations }
+   procedure CriarCamposTopografo;
+   procedure CriarCampodatainiciotopo;
+   procedure CriarCampodatafimtopo;
+   procedure CriarCampodevolvido;
+   procedure AlterarTabelaConfig;
+   procedure Conexao;
+   procedure CriarCamposTopografia;
+   procedure Alterarqtd_post_proj_urbUrbano;
+   procedure Alterarqtd_post_proj_rurUrbano;
+   procedure Alterarqtd_post_levUrbano;
+   procedure Alterarqtd_post_atuUrbano;
+   procedure Alterarqtd_topografiaUrbano;
+   procedure Alterarqtd_travessiaUrbano;
+   procedure Alterarqtd_incorporacaoUrbano;
+   procedure Alterarqtd_improcedenteUrbano;
+   procedure Alterarqtd_deslocamentoUrbano;
+   procedure Alterarqtd_outrosUrbano;
+   procedure Alterarqtd_post_proj_urbRural;
+   procedure Alterarqtd_post_proj_rurRural;
+   procedure Alterarqtd_post_levRural;
+   procedure Alterarqtd_post_atuRural;
+   procedure Alterarqtd_topografiaRural;
+   procedure Alterarqtd_travessiaRural;
+   procedure Alterarqtd_incorporacaoRural;
+   procedure Alterarqtd_improcedenteRural;
+   procedure Alterarqtd_deslocamentoRural;
+   procedure Alterarqtd_outrosRural;
+   procedure CriarCampoQtdLevantamento;
+   procedure CriarCampoVlLevantamento;
+   procedure CriarCampoLevantamento;
+   procedure CriarCampoTopografoRural;
+   procedure CriarCampoTopografiaRevisaoRural;
+   procedure CriarCampoContratoProjetoUrbano;
+   procedure CriarCampoDataLibToporafia;
+   procedure CriarCampoVinculacaoUrbano;
+   procedure CriarCampoVinculacaoRural;
+   procedure CriarCampoDataAssentamento;
+   procedure CriarCampoExibirAnomalias;
+    procedure ExibirAnomaliasUrbano;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+{$R *.dfm}
+ uses
+ uCadPessoa,uCadProjeto,uCadValorProjeto, DataModule, uConfigBd,
+  uCadastrarConfig, CAdacesso,uFrmCadastrarProjetoRural, URelAnomalias;
+procedure TfrmPrincipal.cxButton2Click(Sender: TObject);
+begin
+  case Application.MessageBox('Deseja Encerrar?', 'Atenção!', MB_YESNO + MB_ICONQUESTION) of
+    IDYES:  Close;
+  end;
+end;
+
+procedure TfrmPrincipal.cxButton3Click(Sender: TObject);
+begin
+ frmCadastrarProjetoRural:= TfrmCadastrarProjetoRural.Create(Self);
+ frmCadastrarProjetoRural.ShowModal;
+ FreeAndNil(frmCadastrarProjetoRural);
+end;
+
+procedure TfrmPrincipal.cxButton4Click(Sender: TObject);
+begin
+  frmCadValorProjeto:=TfrmCadValorProjeto.Create(Self,1);
+  frmCadValorProjeto.Show;
+end;
+
+procedure TfrmPrincipal.cxButton5Click(Sender: TObject);
+begin
+  frmCadastrarConfig:=TfrmCadastrarConfig.Create(Self);
+  if(DataModule1.qryusuario.FieldByName('serv_ace').AsInteger=1) or (_codusuariologinG='100') then
+  begin
+    frmCadastrarConfig.ShowModal;
+  end
+  else
+  begin
+      ShowMessage('Usuário Sem Permissão !');
+      FreeAndNil(frmCadastrarConfig);
+  end;
+end;
+
+
+procedure TfrmPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = vk_escape then
+  begin
+    case Application.MessageBox('Deseja Encerrar?', 'Atenção!', MB_YESNO + MB_ICONQUESTION) of
+      IDYES:  Close;
+    end;
+  end;
+end;
+
+procedure TfrmPrincipal.FormShow(Sender: TObject);
+begin
+  try
+  try
+    //verificar atualizacao
+    FrmAcesso := TFrmAcesso.Create(Self);
+    if FrmAcesso.ShowModal <>mrOk then
+    Thread.Execute(nil);
+    Thread.WaitFor;
+
+    dxStatusBar1.Panels[0].Text:= 'Usuário: '+DataModule1.qryusuario.FieldByName('nome').AsString;
+    dxStatusBar1.Panels[1].Text:='Servidor: '+Servidor;
+    dxStatusBar1.Panels[2].Text:='Release:  15/07/2015 15:36';
+
+
+
+  except on E: Exception do
+    Application.MessageBox('O Sistema Se Comportou de Maneira Inesperada !','Atenção', MB_OK + MB_ICONWARNING);
+  end;
+  finally
+  end;
+end;
+
+procedure TfrmPrincipal.ThreadExecute(Sender: TObject; Params: Pointer);
+begin
+  CriarTabelas;
+  CriarCamposTopografia;
+  CriarCamposTopografo;
+  CriarCampodatainiciotopo;
+  CriarCampodatafimtopo;
+  CriarCampodevolvido;
+  AlterarTabelaConfig;
+  CriarCamposTopografia;
+  Alterarqtd_post_proj_urbUrbano;
+  Alterarqtd_post_proj_rurUrbano;
+  Alterarqtd_post_levUrbano;
+  Alterarqtd_post_atuUrbano;
+  Alterarqtd_topografiaUrbano;
+  Alterarqtd_travessiaUrbano;
+  Alterarqtd_incorporacaoUrbano;
+  Alterarqtd_improcedenteUrbano;
+  Alterarqtd_deslocamentoUrbano;
+  Alterarqtd_outrosUrbano;
+  Alterarqtd_post_proj_urbRural;
+  Alterarqtd_post_proj_rurRural;
+  Alterarqtd_post_levRural;
+  Alterarqtd_post_atuRural;
+  Alterarqtd_topografiaRural;
+  Alterarqtd_travessiaRural;
+  Alterarqtd_incorporacaoRural;
+  Alterarqtd_improcedenteRural;
+  Alterarqtd_deslocamentoRural;
+  Alterarqtd_outrosRural;
+  CriarCampoQtdLevantamento;
+  CriarCampoVlLevantamento;
+  CriarCampoLevantamento;
+  CriarCampoTopografoRural;
+  CriarCampoContratoProjetoUrbano;
+  CriarCampoDataLibToporafia;
+  CriarCampoVinculacaoUrbano;
+  CriarCampoVinculacaoRural;
+  CriarCampoDataAssentamento;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_deslocamentoRural;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_deslocamento  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_deslocamentoUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_deslocamento  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_improcedenteRural;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_improcedente  float(16,2)  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_improcedenteUrbano;
+begin
+  try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_improcedente  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_incorporacaoRural;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_incorporacao  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_incorporacaoUrbano;
+begin
+   try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_incorporacao  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_outrosRural;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_outros  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_outrosUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_outros  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_atuRural;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_post_atu  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_atuUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_post_atu  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_levRural;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_post_lev  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_levUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_post_lev  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_proj_rurRural;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_post_proj_rur  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_proj_rurUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_post_proj_rur  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_proj_urbRural;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_post_proj_urb  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_post_proj_urbUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_post_proj_urb  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_topografiaRural;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_topografia  float(16,2)  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_topografiaUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_topografia  float(16,2)  DEFAULT NULL ');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_travessiaRural;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural MODIFY COLUMN qtd_travessia  float(16,2) NULL DEFAULT NULL AFTER qtd_topografia');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.Alterarqtd_travessiaUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto MODIFY COLUMN qtd_travessia  float(16,2) NULL DEFAULT NULL AFTER qtd_topografia');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.AlterarTabelaConfig;
+begin
+ try with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_config ADD COLUMN dias_topografia integer  DEFAULT 0');
+      Execute;
+      CommandText.Clear;
+    end;
+ Except
+
+ end;
+end;
+
+procedure TfrmPrincipal.ApplicationEvents1Exception(Sender: TObject;
+  E: Exception);
+    var
+    NomeDoLog: string;
+    Arquivo: TextFile;
+begin
+  Application.MessageBox('Verifique os Parametros Informados ao Sistema !',
+    'Informação', MB_OK + MB_ICONINFORMATION);
+    CriarLog(Sender,E,'Erro ');
+end;
+
+procedure TfrmPrincipal.btn1Click(Sender: TObject);
+begin
+  frmCadastrarProjeto:= TfrmCadastrarProjeto.Create(Self);
+  frmCadastrarProjeto.ShowModal;
+  FreeAndNil(frmCadastrarProjeto);
+end;
+
+procedure TfrmPrincipal.Conexao;
+begin
+  logado                         := false; // validar o acesso
+  FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+  DataModule1.ConMySql.Connected := False;
+  //NOVO PADRÃO DO INSTALADOR DO SISTEMA
+  with TIniFile.Create(ExtractFilePath(Application.ExeName)+'db.ini') do
+  try
+    Servidor                     :=  ReadString('BANCO','Servidor','servidor');
+    NomeBanco                    :=  ReadString('BANCO','NomeBanco','supoc');
+    PortaServidor                :=  ReadString('BANCO','Porta','3306');
+    if not FileExists(ExtractFilePath(Application.ExeName)+'db.ini') then
+    begin
+      WriteString('BANCO','Servidor',Servidor);
+      WriteString('BANCO','NomeBanco',NomeBanco);
+      WriteString('BANCO','Porta',PortaServidor);
+    end;
+  finally
+    free;
+  end;
+
+  //Conexão Firedac - Diogenes 04/02/2015
+  DataModule1.ConMySql.ConnectionString := 'DriverID="MySQL";Server=' + Trim(Servidor) + ';Port=' + Trim(PortaServidor) + ';Database=' + Trim(NomeBanco) +
+  ';User_name=root;Password=root';
+
+  try
+    DataModule1.ConMySql.Connected := True; //Conexão Firedac - F.T 22/01/2015
+//    datamodule1.qryconfig.Active   := True;
+//    datamodule1.qryempresa.Active  := True;
+//    LerConfig();
+  except
+    DataModule1.ConMySql.Connected := False; //Conexão Firedac - F.T 22/01/2015
+
+    Application.MessageBox(''+#13+#10+'Atenção: Servidor Não Encontrado.',PChar(Application.Title), MB_OK + MB_ICONERROR);
+
+    frmconfigdb:= Tfrmconfigdb.Create(nil);
+    frmconfigdb.showmodal;
+    frmconfigdb.Free;
+
+    if (Trim(Servidor) = '') or (Trim(NomeBanco) = '')  then ExitProcess(0);
+
+    //Conexão Firedac - F.T 22/01/2015
+    DataModule1.ConMySql.ConnectionString := 'DriverID="MySQL";Server=' + Trim(Servidor) + ';Port=' + Trim(PortaServidor) + ';Database=' + Trim(NomeBanco) +
+    ';User_name=root;Password=root';
+
+    try
+      DataModule1.ConMySql.Connected := True; //Conexão Firedac - F.T 22/01/2015
+
+
+      //Adicionado para ser alterado junto com as configurações do parametros evitando ter que sair e entra no sistema - F.T 11/11/2014 09h30m
+
+    except
+      MessageDlg(''+#13+#10+'Atenção: Servidor Não Encontrado.', mtError, [mbOK], 0);
+      //FechaForm();
+      Application.Terminate;
+    End;
+  End;
+end;
+
+procedure TfrmPrincipal.CriarCampoContratoProjetoUrbano;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto ADD COLUMN contrato  smallint(1) DEFAULT 0');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoDataAssentamento;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_assentamento_rural ADD COLUMN data  datetime NULL AFTER descricao');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampodatafimtopo;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto ADD COLUMN dt_chegada_topografia datetime  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampodatainiciotopo;
+begin
+try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto ADD COLUMN dt_envio_topografia datetime  DEFAULT NULL');
+      Execute;
+
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoDataLibToporafia;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural ADD COLUMN dt_liberacao_top datetime  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampodevolvido;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto ADD COLUMN dt_devolvido datetime  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoExibirAnomalias;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_acesso ADD COLUMN exibir_anomalias  smallint(1) default 0');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoLevantamento;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_valoresprojeto ADD COLUMN levantamento float(16,2)  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoQtdLevantamento;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural ADD COLUMN qtd_levantamento float(16,2)  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCamposTopografia;
+begin
+ {try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural ADD COLUMN vl_levantamento float(16,2)  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;}
+end;
+
+procedure TfrmPrincipal.CriarCamposTopografo;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto ADD COLUMN topografo varchar(50)  DEFAULT NULL');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoTopografiaRevisaoRural;
+begin
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_revisao_rural_topografia ADD COLUMN topografo varchar(50)  DEFAULT null');
+      Execute;
+    end;
+  except
+  end;
+end;
+end;
+
+procedure TfrmPrincipal.CriarCampoTopografoRural;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural ADD COLUMN topografo varchar(50)  DEFAULT null');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoVinculacaoUrbano;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto ADD COLUMN id_os_vinculacao  integer   DEFAULT null');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoVinculacaoRural;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural ADD COLUMN id_os_vinculacao  integer   DEFAULT null');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.CriarCampoVlLevantamento;
+begin
+ try
+    with datamodule1.comand do
+    begin
+      CommandText.Clear;
+      CommandText.Add('ALTER TABLE os_engenharia_projeto_rural ADD COLUMN vl_levantamento float(16,2)  DEFAULT null');
+      Execute;
+    end;
+  except
+  end;
+end;
+
+procedure TfrmPrincipal.ExibirAnomaliasUrbano;
+begin
+  try
+     if DataModule1.qryusuario.FieldByName('exibir_anomalias').AsInteger=1 then
+     begin
+      FrmRelAnomalias := TFrmRelAnomalias.Create(Self);
+      FrmRelAnomalias.btnrelatorioClick(Self);
+     end;
+  except on E: Exception do
+    CriarLog(Self,E,'Exibir Relatorio Anomalias');
+  end;
+end;
+
+
+end.

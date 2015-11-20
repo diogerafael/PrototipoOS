@@ -1,0 +1,300 @@
+object FrmDedoDuro: TFrmDedoDuro
+  Left = 223
+  Top = 53
+  ClientHeight = 570
+  ClientWidth = 912
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lbl3: TLabel
+    Left = 338
+    Top = 7
+    Width = 44
+    Height = 16
+    Caption = 'C'#243'digo'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lbl4: TLabel
+    Left = 396
+    Top = 7
+    Width = 103
+    Height = 16
+    Caption = 'Nome do usu'#225'rio'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
+  object btnconsultar: TPngSpeedButton
+    Left = 800
+    Top = 54
+    Width = 97
+    Height = 60
+    Cursor = crHandPoint
+    Hint = 'Consulta'
+    Caption = '&Consultar'
+    Flat = True
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    OnClick = btnconsultarClick
+    PngImage.Data = {
+      89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+      F400000006624B474400FF00FF00FFA0BDA79300000009704859730000004800
+      0000480046C96B3E000007A44944415478DAA5576B4C1457143E333B3BB3EC83
+      85E58D8828A8A0BC14DA1F6D69AD5893B692B4A98D9AFA7EA469131B9236D658
+      D3F8A3497F10FBAF4D7FF9C3B4363EA88F46AB488CD8DA1ADB2CA58A0A880A02
+      8AB002BB2CFB9AD9E939979DDDD9E5A1496F72D999CBBDF77CF73BDF39E70EA7
+      AA2ACCD6E8FFA150880B0402C2D8D89868B15864B3D91C1204216C3018E0FF36
+      4E03A0280A1C3D7AD4D4D5D565E6799ED9464329F3F2F3AB8CA2586332490513
+      DE096B52525220ACAA83B22C5FEBEBEBFBC3E572F5711C6D137790C45345DFC3
+      E130CC9F3F5F5EBF7EFD84288A31007842D8BD7B77ED82050BBE341A8D424F4F
+      0FE07366557575BE644B1143C0411878FCAB8291C335015FB8BBB363F0FA5FD7
+      1F381C694A666626E840C4014080FA31031EF61602F8342D2DCD1305E0F7FBE1
+      C08103EFAD5DBBF688C7E3166DF61490450BF4BAFD30E20B425051218C53692B
+      01094A960498936C0287A082EBC92064656541414181662CFA9BD888DDBB77EF
+      B6E6E4E4AC72381C4FE3007CBE77EFFB2F5657FF5052562E3E0AF230E497C180
+      0B24038F46F1F41C690240462421A45256C260113828B01AC035D007C4028198
+      E2675C488679B60707DDDDDDCEBCBCBC37E2000C0F0F8B870F1FFEEEE59A5777
+      0C4312F8541E52CD1258F1A4022E52709E12261688068E311190157007645042
+      41C84FE2A0EF5E1764676703521B7587C644727232A0803506A602B872E5CA9B
+      C160F0272123CFEE5638C84BB5824D14F0A42AF8E5303BB15E67B42FC12040DE
+      400842013FD8431E78D4DF074B962C81C408210056AB95019A0280C2EBFCF95F
+      7F2C2A295BFB581620D7910C19168919F62BF186A7D04BCA467D0D8D79C1A206
+      E0717707D3434646865E94B303686B6B5BFCE0C183E6ACA292BCA04182A20C3B
+      6E4A14ABD35BD46B9D9B1C1AF30560DCE301C535C07E8B8B8BE300D8ED76E602
+      6A0460EEDCB9310067CF9E7DC76CB11C9332E71A09658EDD0201253CED894907
+      13C110F8B0CBE8169EE3C18CAEE2790E5C631E10BC23D0D37D172A2A2AA2A2D3
+      18C0BCC2F2000140B1C6005CB870E1630CBB6FF9D44CB09A2D90664B620BB904
+      C3E381208C4EF8D1B83C29469DCA8D182906350C469F1B3A6FDD84CACA4AC07C
+      129D63B3D9C06432B18477FFFE7D2726A318808B172F7E66B5253788E93910C4
+      6423090648C253192342A27023A37E79D23037832F2841F1DE51B873A30D2A97
+      2D03CA74ECBFB886E82700F48CEE7662928B01387DFAF49664BBFD50FABC423E
+      08026E1709A18891C47748308DA98031A0283204478690817658B67C3960BD60
+      068976A21FD3385B43000A0B0BE31878DDEBF5FE525C5965915184B397A7A9CD
+      66E481F41A0A06E049CF3D7834D00F555555CC38514E00485B0480C630CD3B8B
+      8A8A62007020B3B9B9B9E9A59AD72A049B1D548E7F6EE326149F64E0603CA440
+      D0EB81DB6DAD806916162F5E4C559419271B4C5311411280850B17C600600282
+      43870E7D555C52F2C5BCA245C04B49CF6481B612D1E72202F063C084301B3EEE
+      ED81CE3BB761C58A154C74645C03A03D53EBEDED65003063C632A1D3E95C78F5
+      EAD5332B56AE2C766466036F9458E59BCC42F814713F2E4099AA60C08EB641C6
+      B710A6E451D710FCF9FB6FEC94AB57AF8E334E9DF4A0654702B068D1A278003E
+      9F0FF6EDDB575F525272F0959A1A3E0D41184589156160C8D56841654CA29BC2
+      D8653CF9A8CB0537FE6D83C6C64670BBDDB071E346282F2F67FED700E8A3E0E1
+      C3874E74513C00AA86FBF7EF5F83D49C90B095969641EE9C396046F1180C42C4
+      7F6A34AC643CB56FC20B43588ADB6FDE84A6A6268A6F6634353515366CD80065
+      65655116120160A69C0A00EF03755BB76E3D8E371DA9A3A303727373213F3F1F
+      521D0E304926462119A0CBCBE8E8080C0C0C00DEA0005D074343435191D19C94
+      941458B76E1D94969646C3500380FB3B91E9E901ECD8B1E3389654A9BFBF1F5A
+      5B5BD1D0284BA9242ACA6CB4F9F8F8389B4F6BB1A8502D8196969638A5E3958D
+      E57F0241D59142500F00C7A605B006019C20009A88303F50EE86C1C141A613CA
+      6EB4195D3EC800898BC64F9D3A45259DB1A40741C0B76CD902CB313169B608C0
+      D2A54B67074027A54606289EA96B73F561A58516B9E5E4C9935457A220B44444
+      8568F3E6CDAC40D17C64B7155DB3EAB900D066FA84A2EFFA312D928E1D3B0697
+      2E5D8A2B441A139B366D624C74767636E3EFBBE9E9E9E3CF0440FEA7D0F2608D
+      D74E3F53D7983877EE1C1326814874475D5D5D3F46C007D5D5D52DC4EE1400DB
+      B66D3B8146250A2536013720E3D4F5866603417B11886BD7AE31CDE841E0C106
+      76EDDAB51D6FDF17D87D2101C0DBDBB76F6F449F49DA42EAA47A12E3B30C9338
+      69537A2726B0CAC2E5CB97A32026F3874CAEEBDEB367CFFADADADABFA700D8B9
+      736723B9402F3ADA8CEAC54CFED7BA664813268D9D397386AA6DF46EA0318A89
+      EA23B4F57D2280B750033FE3A59201D05AA2B199DEF5E35AF241F6C61B1A1A9C
+      7807A84666CD91FC701D19D888E9BA6B5A0630C6259AA80FB99900CCF41C011E
+      C2F4FC0D96DD8623478ED4B7B7B77F887BDFA9AFAFFF0445F84FA4B84D4EA613
+      1F3C78F005BC2A1D40A4228D933F09C84CE29B4E135AC3671E4BCA7534F435A6
+      74F7C8C88884E15784A1378C3606A39F70FA454F9F3EE5F11B41E266FAB08B6D
+      1EF5E76C9FF7789020261B79B6BDFE0317359F0C2536FF88000000227A545874
+      536F667477617265000078DA2B2F2FD7CBCCCB2E4E4E2C48D5CB2F4A070036D8
+      06581053CA5C0000000049454E44AE426082}
+  end
+  object lbl2: TLabel
+    Left = 2
+    Top = 472
+    Width = 126
+    Height = 16
+    Caption = 'Opera'#231#227'o Realizada'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
+  object grpgpbdata: TGroupBox
+    Left = 8
+    Top = 7
+    Width = 290
+    Height = 50
+    Caption = 'Per'#237'odo de acesso'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    object lbl1: TLabel
+      Left = 135
+      Top = 23
+      Width = 6
+      Height = 13
+      Caption = #224
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object edtIni: TcxDateEdit
+      Left = 6
+      Top = 20
+      TabOrder = 0
+      Width = 121
+    end
+    object edtFim: TcxDateEdit
+      Left = 160
+      Top = 20
+      TabOrder = 1
+      Width = 121
+    end
+  end
+  object edtcodigo: TEdit
+    Left = 338
+    Top = 29
+    Width = 52
+    Height = 19
+    Ctl3D = False
+    MaxLength = 9
+    ParentCtl3D = False
+    TabOrder = 1
+    OnKeyPress = edtcodigoKeyPress
+  end
+  object edtnome: TEdit
+    Left = 396
+    Top = 29
+    Width = 501
+    Height = 19
+    Ctl3D = False
+    ParentCtl3D = False
+    TabOrder = 2
+  end
+  object dbgrd1: TDBGrid
+    Left = -9
+    Top = 128
+    Width = 953
+    Height = 298
+    TabStop = False
+    Ctl3D = False
+    DataSource = ds1
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick]
+    ParentCtl3D = False
+    ParentFont = False
+    TabOrder = 3
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+    TitleFont.Style = []
+    OnColEnter = dbgrd1ColEnter
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'codigo'
+        Title.Alignment = taCenter
+        Title.Caption = 'Seq.'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'cod_usuario'
+        Title.Alignment = taCenter
+        Title.Caption = 'C'#243'd.Usu'#225'rio'
+        Width = 91
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'nome_usuario'
+        Title.Alignment = taCenter
+        Title.Caption = 'Nome do Usu'#225'rio'
+        Width = 342
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'data_hora'
+        Title.Alignment = taCenter
+        Title.Caption = 'Data Opera'#231#227'o'
+        Width = 128
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'usercomputador'
+        Title.Alignment = taCenter
+        Title.Caption = 'Nome Computador'
+        Width = 131
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ipcomputador'
+        Title.Alignment = taCenter
+        Title.Caption = 'IP Computador'
+        Width = 149
+        Visible = True
+      end>
+  end
+  object dbmmodboperacao: TDBMemo
+    Left = 3
+    Top = 489
+    Width = 906
+    Height = 97
+    TabStop = False
+    Ctl3D = False
+    DataSource = ds1
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentCtl3D = False
+    ParentFont = False
+    TabOrder = 4
+  end
+  object FDQuery1: TFDQuery
+    Connection = DataModule1.ConMySql
+    Left = 504
+    Top = 288
+  end
+  object ds1: TDataSource
+    DataSet = FDQuery1
+    Left = 448
+    Top = 288
+  end
+end

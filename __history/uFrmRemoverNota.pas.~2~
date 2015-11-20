@@ -1,0 +1,98 @@
+unit uFrmRemoverNota;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TFrmExcluirNotasRural = class(TForm)
+    Edit1: TEdit;
+    Label1: TLabel;
+    Button1: TButton;
+    Button2: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  private
+    procedure ExcluirNota(nota: string);
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmExcluirNotasRural: TFrmExcluirNotasRural;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule;
+
+procedure TFrmExcluirNotasRural.Button1Click(Sender: TObject);
+begin
+  if Edit1.Text<>'' then
+  begin
+    case Application.MessageBox('Deseja Realmente Excluir a Nota?' + #13#10 +
+      ' Isso Pode Gerar Erros em Relatórios!', 'Aviso', MB_OKCANCEL +
+      MB_ICONQUESTION) of
+      IDOK:
+        begin
+          ExcluirNota(Edit1.Text);
+        end;
+      IDCANCEL:
+        begin
+
+        end;
+    end;
+
+  end;
+end;
+
+procedure TFrmExcluirNotasRural.Button2Click(Sender: TObject);
+begin
+  Edit1.Text:='';
+end;
+
+procedure TFrmExcluirNotasRural.ExcluirNota(nota:string);
+begin
+  //verificar se nota existe
+  DataModule1.qryCRUD.Close;
+  DataModule1.qryCRUD.SQL.Clear;
+  DataModule1.qryCRUD.SQL.Add('select * from os_engenharia_notas_rural where descricao ='+QuotedStr(nota));
+  DataModule1.qryCRUD.Open();
+  if DataModule1.qryCRUD.IsEmpty then
+  begin
+    Application.MessageBox('Número de Nota Não Encontrado !', 'Aviso', MB_OK +
+      MB_ICONINFORMATION);
+    Exit;
+  end
+  else
+  begin
+    DataModule1.qryCRUD.Close;
+    DataModule1.qryCRUD.SQL.Clear;
+    DataModule1.qryCRUD.SQL.Add('delete from os_engenharia_notas_rural where descricao ='+QuotedStr(nota));
+    InsereDedoDuroRural(DataModule1.qryusuario.FieldByName('iduser').AsString,DataModule1.qryusuario.FieldByName('nome').AsString,'Remover Nota de Número '+nota,1);
+    Application.MessageBox('Operação Executada Com Sucesso !', 'Aviso', MB_OK
+      + MB_ICONINFORMATION);
+
+  end;
+
+end;
+
+procedure TFrmExcluirNotasRural.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    case Application.MessageBox('Deseja Encerrar?', 'Atenção!', MB_YESNO + MB_ICONQUESTION) of
+      IDYES:  Close;
+    end;
+  end;
+
+end;
+
+end.

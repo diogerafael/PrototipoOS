@@ -1,0 +1,597 @@
+unit uConsProjeto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, Vcl.Buttons, PngSpeedButton, Vcl.Menus, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ExtCtrls,System.Math,System.StrUtils,uFrmCadastrarProjeto;
+
+type
+  TfrmConsutarProjeto = class(TForm)
+    shp1: TShape;
+    img10: TImage;
+    lbl1: TLabel;
+    lbltipo: TLabel;
+    edtnome: TEdit;
+    lbl2: TLabel;
+    cbbopcao: TComboBox;
+    dbgrd1: TDBGrid;
+    qry: TFDQuery;
+    ds1: TDataSource;
+    pm1: TPopupMenu;
+    itemCalculadoraF81: TMenuItem;
+    itemN3: TMenuItem;
+    itemConsultarPorNome1: TMenuItem;
+    itemN1: TMenuItem;
+    itemConsultarPorCPFCNPJ1: TMenuItem;
+    itemN2: TMenuItem;
+    itemConsultar1: TMenuItem;
+    btninserirbtnsair: TPngSpeedButton;
+    lbl8: TLabel;
+    edtcodmunicipio: TEdit;
+    edtdescmunicipio: TEdit;
+    procedure edtnomeKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure dbgrd1DblClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btninserirbtnsairClick(Sender: TObject);
+    procedure dbgrd1KeyPress(Sender: TObject; var Key: Char);
+    procedure dbgrd1TitleClick(Column: TColumn);
+    procedure edtcodmunicipioKeyPress(Sender: TObject; var Key: Char);
+    procedure dbgrd1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+  private
+    { Private declarations }
+    procedure InicializaStringGrid;
+    procedure CarregaDados;
+    procedure MontarObjetoPesquisa(obj:TProjetoUrbano);
+    function  PegarUltimaAlteracao(id_projeto:integer):string;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  frmConsutarProjeto: TfrmConsutarProjeto;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, u_conscodmunicipio;
+
+procedure TfrmConsutarProjeto.btninserirbtnsairClick(Sender: TObject);
+begin
+  case Application.MessageBox('Deseja Encerrar?', 'Atenção!', MB_YESNO + MB_ICONQUESTION) of
+    IDYES:  Close;
+  end;
+end;
+
+procedure TfrmConsutarProjeto.CarregaDados;
+var
+qry:TFDQuery;
+begin
+  //controlando o menu
+  frmCadastrarProjeto.sbnovo.Enabled                     := False;
+  frmCadastrarProjeto.sbgravar.Enabled                   := True;
+  frmCadastrarProjeto.sbexcluir.Enabled                  := True;
+  if(not qry.IsEmpty)then
+  begin
+    if frmCadastrarProjeto.objConsulta<>nil then
+        FreeAndNil(frmCadastrarProjeto.objConsulta);
+    frmCadastrarProjeto.objConsulta:= TProjetoUrbano.Create;
+
+    frmCadastrarProjeto.FIdProjeto                       := qry.FieldByName('id').AsInteger;
+    frmCadastrarProjeto.edtnumos.Text                    := qry.FieldByName('numero_os').AsString;
+    frmCadastrarProjeto.edtnumpvt.Text                   := qry.FieldByName('numero_pvt').AsString;
+    frmCadastrarProjeto.edtsolicitante.Text              := qry.FieldByName('solicitante').AsString;
+    frmCadastrarProjeto.edtendereco.Text                 := qry.FieldByName('endereco').AsString;
+    frmCadastrarProjeto.edttelefone.EditMask:='';
+    frmCadastrarProjeto.edttelefone.Text                 := qry.FieldByName('telefone').AsString;
+    frmCadastrarProjeto.edtcodmunicipio.Text             := qry.FieldByName('id_municipio').AsString;
+    frmCadastrarProjeto.edtdescmunicipio.Text            :=qry.FieldByName('nome_municipio').AsString;
+    frmCadastrarProjeto.cbbstatus.ItemIndex              := frmCadastrarProjeto.cbbstatus.Items.IndexOf(qry.FieldByName('status_desc').AsString);
+    frmCadastrarProjeto.edtdtlimitegeral.Date            := qry.FieldByName('dt_limite_geral').AsDateTime;
+    frmCadastrarProjeto.edtdtchegadageral.Text           := qry.FieldByName('dt_chegada_geral').AsString;
+    frmCadastrarProjeto.edtdataconclusao.Text            :=qry.FieldByName('dt_conclusao').AsString;
+    frmCadastrarProjeto.cbbclassificacaoos.ItemIndex     := frmCadastrarProjeto.cbbclassificacaoos.Items.IndexOf(qry.FieldByName('os_classificacao').AsString);
+    frmCadastrarProjeto.cbbcrs.ItemIndex                 := frmCadastrarProjeto.cbbcrs.Items.IndexOf(qry.FieldByName('crs_desc').AsString);
+    frmCadastrarProjeto.rgdocceltins.ItemIndex           :=qry.FieldByName('doc_celtins').AsInteger  ;
+    frmCadastrarProjeto.mmoobservacao.Text               := qry.FieldByName('observacao_geral').AsString;
+    frmCadastrarProjeto.edtdiretorio.Text                := qry.FieldByName('caminho_arquivo').AsString;
+
+    if(qry.FieldByName('id_tec_campo').AsString <>'0')then frmCadastrarProjeto.edtcodtecnico.Text   := qry.FieldByName('id_tec_campo').AsString;
+    frmCadastrarProjeto.edtdesctecnico.Text              := qry.FieldByName('nometec').AsString;
+
+    frmCadastrarProjeto.edtdtliberacaotec.Text           := qry.FieldByName('dt_liberacao_tec').AsString;
+    frmCadastrarProjeto.edtdtchegada.Text                := qry.FieldByName('dt_chegada_tec').AsString;
+
+    frmCadastrarProjeto.edtdtenvioprojeto.Text           := qry.FieldByName('dt_envio_projeto').AsString;
+    frmCadastrarProjeto.edtdtretornoprojeto.Text         := qry.FieldByName('dt_chegada_projeto').AsString;
+
+    frmCadastrarProjeto.edtenvioatualizacao.Text         := qry.FieldByName('dt_envio_atualizacao').AsString;
+    frmCadastrarProjeto.edtretornoatualizacao.Text       := qry.FieldByName('dt_chegada_atualizacao').AsString;
+
+    frmCadastrarProjeto.edtdtenvioTopografia.Text        :=qry.FieldByName('dt_envio_topografia').AsString;
+    frmCadastrarProjeto.edtRetornoTopografia.Text        :=qry.FieldByName('dt_chegada_topografia').AsString;
+
+    frmCadastrarProjeto.BuscaConfig();
+    sqlstr:='select * from os_cargahoraria where id_projeto ='+qry.FieldByName('id').AsString+' order by id desc limit 1 ';
+    //sqlstr  :=  ''
+
+    //carregar prorrogacao
+    if(ConsultaSqlFd(DataModule1.qryprorrogacao,sqlstr)=0)then
+    begin
+      //inserir prorrogacao
+      frmCadastrarProjeto.edtdataprorrogacao.Text:=DataModule1.qryprorrogacao.FieldByName('prorrogacao').AsString;
+
+      if Trim(frmCadastrarProjeto.edtdtchegada.Text) = '' then
+      begin
+        if Trim(frmCadastrarProjeto.edtdtliberacaotec.text) <> '' then
+          frmCadastrarProjeto.lblprazoservico.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtliberacaotec.text,''
+          ,FloatToStr(frmCadastrarProjeto.qryconfigdias.FieldByName('dias_campo').AsFloat+DataModule1.qryprorrogacao.FieldByName('servcampo').AsFloat));
+      end
+      else
+      begin
+        if Trim(frmCadastrarProjeto.edtdtliberacaotec.text) <> '' then
+          frmCadastrarProjeto.edtdtchegadaExit(Self);
+      end;
+
+      //data projeto
+      if Trim(frmCadastrarProjeto.edtdtretornoprojeto.Text) = '' then
+      begin
+        if Trim(frmCadastrarProjeto.edtdtenvioprojeto.text) <> '' then
+          frmCadastrarProjeto.lblprazoprojeto.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtenvioprojeto.text,''
+          ,FloatToStr(frmCadastrarProjeto.qryconfigdias.FieldByName('dias_projeto').AsFloat+DataModule1.qryprorrogacao.FieldByName('projeto').AsFloat));
+      end
+      else
+      begin
+        if Trim(frmCadastrarProjeto.edtdtenvioprojeto.text) <> '' then
+          frmCadastrarProjeto.edtdtretornoprojetoExit(Self);
+      end;
+
+
+      //mub
+       if Trim(frmCadastrarProjeto.edtretornoatualizacao.Text) = '' then
+      begin
+        if Trim(frmCadastrarProjeto.edtenvioatualizacao.text) <> '' then
+          frmCadastrarProjeto.lblprazomub.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtenvioatualizacao.text,''
+          ,FloatToStr(frmCadastrarProjeto.qryconfigdias.FieldByName('dias_mub').AsFloat+DataModule1.qryprorrogacao.FieldByName('atualizacaomub').AsFloat));
+      end
+      else
+      begin
+        if Trim(frmCadastrarProjeto.edtenvioatualizacao.text) <> '' then
+          frmCadastrarProjeto.edtretornoatualizacaoExit(Self);
+      end;
+
+      //topografia
+      if Trim(frmCadastrarProjeto.edtRetornoTopografia.Text) = '' then
+      begin
+        if Trim(frmCadastrarProjeto.edtdtenvioTopografia.text) <> '' then
+          frmCadastrarProjeto.lblprazoTopografia.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtenvioTopografia.text,''
+          ,FloatToStr(frmCadastrarProjeto.qryconfigdias.FieldByName('topografia').AsFloat+DataModule1.qryprorrogacao.FieldByName('topografia').AsFloat));
+      end
+      else
+      begin
+        if Trim(frmCadastrarProjeto.edtdtenvioTopografia.text) <> '' then
+          frmCadastrarProjeto.edtRetornoTopografiaExit(Self);
+      end;
+
+    end
+    else //sem prorrogacao
+    begin
+      if Trim(frmCadastrarProjeto.edtdtchegada.Text) = '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtdtliberacaotec.text) <> '' then
+            frmCadastrarProjeto.lblprazoservico.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtliberacaotec.text,'',frmCadastrarProjeto.qryconfigdias.FieldByName('dias_campo').AsString);
+      end;
+
+      if Trim(frmCadastrarProjeto.edtdtchegada.Text) <> '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtdtliberacaotec.text) <> '' then
+            frmCadastrarProjeto.edtdtchegadaExit(Self);
+            //frmCadastrarProjeto.lblprazoservico.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtliberacaotec.text,frmCadastrarProjeto.edtdtchegada.Text,frmCadastrarProjeto.qryconfigdias.FieldByName('dias_campo').AsString);
+      end;
+
+       //projeto
+      if Trim(frmCadastrarProjeto.edtdtretornoprojeto.Text) = '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtdtenvioprojeto.text) <> '' then
+            frmCadastrarProjeto.lblprazoprojeto.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtenvioprojeto.text,'',frmCadastrarProjeto.qryconfigdias.FieldByName('dias_projeto').AsString);
+      end;
+
+      if Trim(frmCadastrarProjeto.edtdtretornoprojeto.Text) <> '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtdtenvioprojeto.text) <> '' then
+            frmCadastrarProjeto.edtdtretornoprojetoExit(Self);
+            //frmCadastrarProjeto.lblprazoprojeto.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtenvioprojeto.text,frmCadastrarProjeto.edtdtretornoprojeto.Text,frmCadastrarProjeto.qryconfigdias.FieldByName('dias_projeto').AsString);
+      end;
+
+      //mmub
+      if Trim(frmCadastrarProjeto.edtretornoatualizacao.Text) = '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtenvioatualizacao.text) <> '' then
+            frmCadastrarProjeto.lblprazomub.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtenvioatualizacao.text,'',frmCadastrarProjeto.qryconfigdias.FieldByName('dias_mub').AsString);
+      end;
+
+      if Trim(frmCadastrarProjeto.edtretornoatualizacao.Text) <> '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtenvioatualizacao.text) <> '' then
+            frmCadastrarProjeto.edtretornoatualizacaoExit(Self);
+      end;
+
+      //topografia
+      if Trim(frmCadastrarProjeto.edtRetornoTopografia.Text) = '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtdtenvioTopografia.text) <> '' then
+            frmCadastrarProjeto.lblprazoTopografia.Caption := frmCadastrarProjeto.CalculaPrazo(frmCadastrarProjeto.edtdtenvioTopografia.text,'',frmCadastrarProjeto.qryconfigdias.FieldByName('dias_topografia').AsString);
+      end;
+
+      if Trim(frmCadastrarProjeto.edtRetornoTopografia.Text) <> '' then
+      begin
+          if Trim(frmCadastrarProjeto.edtdtenvioTopografia.text) <> '' then
+            frmCadastrarProjeto.edtretornoatualizacaoExit(Self);
+      end;
+    end;
+
+    if qry.FieldByName('id_projetista').AsString<>'0' then frmCadastrarProjeto.edtcodprojetista.Text := qry.FieldByName('id_projetista').AsString;
+    frmCadastrarProjeto.edtdescprojetista.Text        := qry.FieldByName('nome_projetista').AsString;
+
+    if qry.FieldByName('id_tec_atualizador').AsString <>'0' then frmCadastrarProjeto.edtcodtecmub.Text   := qry.FieldByName('id_tec_atualizador').AsString;
+    frmCadastrarProjeto.edtdesctecmub.Text            :=qry.FieldByName('nome_atualizador').AsString;
+
+    //frmCadastrarProjeto.edtdataprorrogacao.Text          := qry.FieldByName('dt_novo_prazo').AsString;
+    {*************************carregando valores e quantidade projeto******************}
+    frmCadastrarProjeto.edtqtdposteprojurbano.Text       :=qry.FieldByName('qtd_post_proj_urb').AsString;
+    frmCadastrarProjeto.edtqtdposterural.Text            :=qry.FieldByName('qtd_post_proj_rur').AsString;
+    frmCadastrarProjeto.edtqtdlevantado.Text             :=qry.FieldByName('qtd_post_lev').AsString;
+    frmCadastrarProjeto.edtqtdposteatualizado.Text       :=qry.FieldByName('qtd_post_atu').AsString;
+    frmCadastrarProjeto.edtqtdtopografia.Text            :=qry.FieldByName('qtd_topografia').AsString;
+    frmCadastrarProjeto.edtqttravessia.Text              :=qry.FieldByName('qtd_travessia').AsString;
+    frmCadastrarProjeto.edtqtincorporacao.Text           :=qry.FieldByName('qtd_incorporacao').AsString;
+    frmCadastrarProjeto.edtqtdimprocedente.Text          :=qry.FieldByName('qtd_improcedente').AsString;
+    frmCadastrarProjeto.edtqtddeslocamento.Text          :=qry.FieldByName('qtd_deslocamento').AsString;
+    frmCadastrarProjeto.edtqtdoutros.Text                :=qry.FieldByName('qtd_outros').AsString;
+    frmCadastrarProjeto.edtvlposteprojurbano.Text        :=FormatFloat(',.00',qry.FieldByName('vl_post_proj_urb').AsFloat);
+    frmCadastrarProjeto.edtvlposterural.Text             :=FormatFloat(',.00',qry.FieldByName('vl_post_porj_rur').AsFloat);
+    frmCadastrarProjeto.edtvllevantado.Text              :=FormatFloat(',.00',qry.FieldByName('vl_post_lev').AsFloat);
+    frmCadastrarProjeto.edtvlposteatualizado.Text        :=FormatFloat(',.00',qry.FieldByName('vl_post_atu').AsFloat);
+    frmCadastrarProjeto.edtvlrtopografia.Text            :=FormatFloat(',.00',qry.FieldByName('vl_topografia').AsFloat);
+    frmCadastrarProjeto.edtvltravessia.Text              :=FormatFloat(',.00',qry.FieldByName('vl_travessia').AsFloat);
+    frmCadastrarProjeto.edtvlrincorporacao.Text          :=FormatFloat(',.00',qry.FieldByName('vl_incorporacao').AsFloat);
+    frmCadastrarProjeto.edtedvlimprocedente.Text         :=FormatFloat(',.00',qry.FieldByName('vl_improcedente').AsFloat);
+    frmCadastrarProjeto.edtvldeslocamento.Text           :=FormatFloat(',.00',qry.FieldByName('vl_deslocamento').AsFloat);
+    frmCadastrarProjeto.edtvloutros.Text                 :=FormatFloat(',.00',qry.FieldByName('vl_outros').AsFloat);
+
+    if (qry.FieldByName('improcedente').AsInteger=1) and (qry.FieldByName('status_desc').AsString='Pendente')then
+    frmCadastrarProjeto.rgimprocedente.ItemIndex         :=qry.FieldByName('improcedente').AsInteger;
+
+    if (qry.FieldByName('improcedente').AsInteger=0 ) and (qry.FieldByName('id_statusos').AsInteger=10)then
+    frmCadastrarProjeto.rgimprocedente.ItemIndex         :=qry.FieldByName('improcedente').AsInteger;
+
+
+    frmCadastrarProjeto.FIdUsuarioCad                    :=qry.FieldByName('id_func_cad').AsInteger;
+
+    frmCadastrarProjeto.edtTopografo.Text                :=qry.FieldByName('topografo').AsString;
+
+    frmCadastrarProjeto.edtdtDevolvida.Text              :=qry.FieldByName('dt_devolvido').AsString;
+
+    frmCadastrarProjeto.chkContrato.Checked              :=StrToBool( ifthen((qry.FieldByName('contrato').AsInteger<>0),'True','False') );
+
+    //carregar labels de prazo
+    frmCadastrarProjeto.cbbclassificacaoosExit(Self);
+    //frmCadastrarProjeto.edtdtliberacaotecExit(Self);
+
+    //DataModule1.qryrevisaoos.Text:=' SELECT os.*,cad.nome_razaosocial as nome FROM os_engenharia_revisao os  left JOIN cad_funcionarios  cad on os.cod_projetista = cad.id WHERE os.id_projeto=:prcodprojeto';
+    DataModule1.qryrevisaoos.ParamByName('prcodprojeto').AsInteger :=qry.FieldByName('id').AsInteger;
+    DataModule1.qryrevisaoos.Open();
+
+    sqlstr :=' select * from os_engenharia_notas where id_os_projeto = '+inttostr(frmCadastrarProjeto.FIdProjeto);
+    //carregar tabela de notas
+    ConsultaSqlFd(frmCadastrarProjeto.qrynota,sqlstr);
+    //frmCadastrarProjeto.qrynota.Open();
+
+
+    qry:=TFDQuery.Create(nil);
+    qry.Connection:=DataModule1.ConMySql;
+    qry.SQL.Add('select * from os_engenharia_projeto where id='+IntToStr(qry.FieldByName('id_os_vinculacao').AsInteger))
+
+    frmCadastrarProjeto.AtualizarGrid;
+
+
+    MontarObjetoPesquisa(frmCadastrarProjeto.objConsulta);
+
+   frmCadastrarProjeto.lblDedoDuro.Caption:= PegarUltimaAlteracao(frmCadastrarProjeto.FIdProjeto);
+  end;
+end;
+
+procedure TfrmConsutarProjeto.dbgrd1DblClick(Sender: TObject);
+begin
+  CarregaDados;
+  frmCadastrarProjeto.controleacesso;
+  Self.Close;
+end;
+
+procedure TfrmConsutarProjeto.dbgrd1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+ { with dbgrd1 do
+  begin
+    with Canvas do
+    begin
+      if not (gdSelected in State) then
+      Begin // Se o estado da célula não é selecionado
+        with DataSource.DataSet do
+        begin
+          if not(Odd(RecNo)) then
+          begin
+            Brush.Color := _corZebra; // Cor da célula
+          end;
+        end;
+      end;
+      if qry.FieldByName('id_statusos').AsInteger=8 then
+      begin
+        Brush.Color :=clBlue;
+      end
+      else if qry.FieldByName('id_statusos').AsInteger=1 then
+      begin
+        Brush.Color :=clBlue;
+      end
+      else
+      begin
+        with DataSource.DataSet do
+        begin
+          Font.Color := clBlack;
+          Brush.Color := clWhite;
+        end;
+      end;
+      FillRect (Rect); // Pinta a célula
+      DefaultDrawDataCell (Rect, Column.Field, State) // Reescreve o valor que vem do banco
+    end;
+  end;}
+end;
+
+procedure TfrmConsutarProjeto.dbgrd1KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+//metodo que faz o carregamento de dados
+if(Key= #13)then
+begin
+  CarregaDados;
+  frmCadastrarProjeto.controleacesso;
+  Self.Close;
+end;
+end;
+
+procedure TfrmConsutarProjeto.dbgrd1TitleClick(Column: TColumn);
+begin
+  OrdenarDbGrid(qry,Column.FieldName);
+end;
+
+procedure TfrmConsutarProjeto.edtcodmunicipioKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key = #13 then
+  begin
+    if trim(edtcodmunicipio.text)='' then
+    begin
+      if frmconscidade = nil then
+        application.createform(tfrmconscidade,frmconscidade);
+      frmconscidade.edtopcao.text := edtcodmunicipio.text;
+      frmconscidade.tag := 4 ;
+      frmconscidade.showmodal;
+    end
+    else
+    begin
+       sqlstr:= ' '+
+       ' select * from municipios where cod_municipio = '+quotedstr(edtcodmunicipio.text);
+      if consultasqlFD(datamodule1.Qry20,sqlstr) = 0 then
+      begin
+        edtdescmunicipio.text      := datamodule1.query01.fieldbyname('nome_municipio').asstring;
+        edtcodmunicipio.text      := datamodule1.query01.fieldbyname('cod_municipio').asstring;
+      end
+      else
+      begin
+        SemRegistros;
+        edtcodmunicipio.SetFocus;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmConsutarProjeto.edtnomeKeyPress(Sender: TObject; var Key: Char);
+var
+consulta,qlstr:string;
+begin
+ try
+   sqlstr:=' SELECT distinct os.id,'+
+          ' os.numero_os,os.numero_pvt,os.doc_celtins,'+
+          ' os.solicitante,os.endereco,os.telefone,os.id_municipio,'+
+          ' m.nome_municipio,os.id_crs,crs.descricao as crs_desc ,os.dt_limite_geral,'+
+          ' os.dt_chegada_geral,os.id_tipoos,os_tp.descricao as os_classificacao,os.id_statusos,'+
+          ' os_st.descricao as status_desc,os.observacao_geral,os.caminho_arquivo,os.id_tec_campo, fun.nome_razaosocial as nometec,'+
+          ' os.dt_liberacao_tec,os.dt_chegada_tec,os.id_projetista, fu.nome_razaosocial as nome_projetista,'+
+          ' os.dt_envio_projeto,os.dt_chegada_projeto,os.dt_envio_atualizacao,'+
+          ' os.dt_chegada_atualizacao,os.id_tec_atualizador , f.nome_razaosocial as nome_atualizador,os.dt_novo_prazo, '+
+          ' os.qtd_deslocamento,os.qtd_improcedente,os.qtd_incorporacao,os.qtd_outros,'+
+          ' os.qtd_post_atu,os.qtd_post_lev,os.qtd_post_proj_rur,os.qtd_post_proj_urb,'+
+          ' os.qtd_topografia,os.qtd_travessia,os.vl_deslocamento,os.vl_improcedente,'+
+          ' os.vl_incorporacao,os.vl_outros,os.vl_post_atu,os.vl_post_lev,os.vl_post_porj_rur,'+
+          ' os.vl_post_proj_urb,os.vl_topografia,os.vl_travessia,os.improcedente,os.id_func_cad,os.dt_conclusao,'+
+          ' os.topografo,os.dt_envio_topografia,os.dt_chegada_topografia,os.dt_devolvido,os.contrato,os.id_os_vinculacao '+
+          ' from os_engenharia_projeto os '+
+          ' left join municipios m on(os.id_municipio = m.cod_municipio) '+
+          ' left join os_engenharia_crs  crs on (os.id_crs=crs.id)'+
+          ' left join os_engenharia_tipo os_tp on (os.id_tipoos = os_tp.id) '+
+          ' left join os_engenharia_status os_st on (os.id_statusos = os_st.id)'+
+          ' left join cad_funcionarios fun on (os.id_tec_campo = fun.id)'+
+          ' left join cad_funcionarios fu on (os.id_projetista = fu.id)'+
+          ' left join cad_funcionarios f on (os.id_tec_atualizador = f.id) where  (os.numero_os <> NULL  or trim(os.numero_os) <> '+QuotedStr('')+')';
+
+  if key =#13 then
+  begin
+    if((edtnome.Text='') and (edtcodmunicipio.Text=''))then
+    begin
+      if ConsultaSqlFd(qry,sqlstr) <> 0 then
+      begin
+        semregistros;
+        edtnome.SetFocus;
+      end
+      else
+        dbgrd1.SetFocus;
+    end
+    else
+    begin
+      if cbbopcao.ItemIndex =0 then
+      begin
+        sqlstr :=sqlstr+ ' and os.id= (select  o.id_os_projeto from os_engenharia_notas o where o.descricao ='+QuotedStr(edtnome.Text)+')';
+      end
+      else if cbbopcao.ItemIndex =1 then
+      begin
+        consulta :=' and (numero_os like'+QuotedStr('%'+edtnome.Text)+') ';
+        sqlstr :=sqlstr+ consulta;
+      end
+      else if cbbopcao.ItemIndex=2 then  //solicitante
+      begin
+        consulta := ' and (solicitante like '+QuotedStr('%'+edtnome.Text+'%')+')';
+         sqlstr :=sqlstr+ consulta;
+      end
+      else if (Trim(edtcodmunicipio.Text)<>'') and (Trim(edtnome.Text)='') and (cbbopcao.ItemIndex=3) then
+      begin
+        consulta := ' and (os.id_municipio ='+trim(edtcodmunicipio.Text)+')';
+        sqlstr :=sqlstr+ consulta;
+      end;
+
+      if ConsultaSqlFd(qry,sqlstr) <> 0 then
+      begin
+        semregistros;
+        edtnome.SetFocus;
+      end
+      else
+        dbgrd1.SetFocus;
+    end;
+
+  end;
+ except on E: Exception do
+  CriarLog(Sender,E,'Consultar Projeto Urbano');
+ end;
+end;
+
+procedure TfrmConsutarProjeto.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = vk_escape then
+    Close;
+end;
+
+procedure TfrmConsutarProjeto.FormShow(Sender: TObject);
+begin
+  qry.close;
+  edtnome.Clear;
+  cbbopcao.ItemIndex := 0;
+  edtnome.SetFocus;
+  InicializaStringGrid;
+end;
+
+procedure TfrmConsutarProjeto.InicializaStringGrid;
+begin
+
+end;
+
+
+
+procedure TfrmConsutarProjeto.MontarObjetoPesquisa(obj: TProjetoUrbano);
+begin
+    if obj=nil then
+    obj:=TProjetoUrbano.Create;
+    obj.fid                       := qry.FieldByName('id').AsInteger;
+    obj.Fnumero_os                := qry.FieldByName('numero_os').AsString;
+    obj.numero_pvt                := qry.FieldByName('numero_pvt').AsString;
+    obj.solicitante               := qry.FieldByName('solicitante').AsString;
+    obj.endereco                  := qry.FieldByName('endereco').AsString;
+    obj.telefone                  := qry.FieldByName('telefone').AsString;
+    obj.id_municipio              := qry.FieldByName('id_municipio').AsInteger;
+    obj.id_statusos               := qry.FieldByName('id_statusos').AsInteger;
+    obj.dt_limite_geral           := qry.FieldByName('dt_limite_geral').AsString;
+    obj.dt_chegada_geral          := qry.FieldByName('dt_chegada_geral').AsString;
+    obj.dt_conclusao              :=qry.FieldByName('dt_conclusao').AsString;
+    obj.id_tipoos                 := qry.FieldByName('id_tipoos').AsInteger;
+    obj.id_crs                    := qry.FieldByName('id_crs').AsInteger;
+    obj.doc_celtins               :=qry.FieldByName('doc_celtins').AsInteger  ;
+    obj.observacao_geral          := qry.FieldByName('observacao_geral').AsString;
+    obj.caminho_arquivo           := qry.FieldByName('caminho_arquivo').AsString;
+
+    obj.id_tec_campo              := qry.FieldByName('id_tec_campo').AsString;
+
+    obj.dt_liberacao_tec          := qry.FieldByName('dt_liberacao_tec').AsString;
+    obj.dt_chegada_tec            := qry.FieldByName('dt_chegada_tec').AsString;
+
+    obj.dt_envio_projeto          := qry.FieldByName('dt_envio_projeto').AsString;
+    obj.dt_chegada_projeto        := qry.FieldByName('dt_chegada_projeto').AsString;
+
+    obj.dt_envio_atualizacao      := qry.FieldByName('dt_envio_atualizacao').AsString;
+    obj.dt_chegada_atualizacao    := qry.FieldByName('dt_chegada_atualizacao').AsString;
+
+    obj.dt_envio_topografia       :=qry.FieldByName('dt_envio_topografia').AsString;
+    obj.dt_chegada_topografia     :=qry.FieldByName('dt_chegada_topografia').AsString;
+
+
+    obj.id_projetista             := qry.FieldByName('id_projetista').AsString;
+
+    obj.id_tec_atualizador        := qry.FieldByName('id_tec_atualizador').AsString;
+
+    obj.qtd_post_proj_urb         :=qry.FieldByName('qtd_post_proj_urb').AsString;
+    obj.qtd_post_proj_rur         :=qry.FieldByName('qtd_post_proj_rur').AsString;
+    obj.qtd_post_lev              :=qry.FieldByName('qtd_post_lev').AsString;
+    obj.qtd_post_atu              :=qry.FieldByName('qtd_post_atu').AsString;
+    obj.qtd_topografia            :=qry.FieldByName('qtd_topografia').AsString;
+    obj.qtd_travessia             :=qry.FieldByName('qtd_travessia').AsString;
+    obj.qtd_incorporacao          :=qry.FieldByName('qtd_incorporacao').AsString;
+    obj.qtd_improcedente          :=qry.FieldByName('qtd_improcedente').AsString;
+    obj.qtd_deslocamento          :=qry.FieldByName('qtd_deslocamento').AsString;
+    obj.qtd_outros                :=qry.FieldByName('qtd_outros').AsString;
+    obj.vl_post_proj_urb          :=FormatFloat(',.00',qry.FieldByName('vl_post_proj_urb').AsFloat);
+    obj.vl_post_porj_rur          :=FormatFloat(',.00',qry.FieldByName('vl_post_porj_rur').AsFloat);
+    obj.vl_post_lev               :=FormatFloat(',.00',qry.FieldByName('vl_post_lev').AsFloat);
+    obj.vl_post_atu               :=FormatFloat(',.00',qry.FieldByName('vl_post_atu').AsFloat);
+    obj.vl_topografia             :=FormatFloat(',.00',qry.FieldByName('vl_topografia').AsFloat);
+    obj.vl_travessia              :=FormatFloat(',.00',qry.FieldByName('vl_travessia').AsFloat);
+    obj.vl_incorporacao           :=FormatFloat(',.00',qry.FieldByName('vl_incorporacao').AsFloat);
+    obj.vl_improcedente           :=FormatFloat(',.00',qry.FieldByName('vl_improcedente').AsFloat);
+    obj.vl_deslocamento           :=FormatFloat(',.00',qry.FieldByName('vl_deslocamento').AsFloat);
+    obj.vl_outros                 :=FormatFloat(',.00',qry.FieldByName('vl_outros').AsFloat);
+
+    obj.improcedente              :=qry.FieldByName('improcedente').AsInteger;
+
+    obj.topografo                 :=qry.FieldByName('topografo').AsString;
+
+    obj.dt_devolvido              :=qry.FieldByName('dt_devolvido').AsString;
+
+end;
+
+function TfrmConsutarProjeto.PegarUltimaAlteracao(id_projeto:integer): string;
+var
+ qryTemp:TFDQuery;
+begin
+try
+        try
+                qryTemp:=TFDQuery.Create(nil);
+                qryTemp.Connection:=DataModule1.ConMySql;
+                sqlstr:= 'select * from os_engenharia_dedo where id_projeto='+IntToStr(id_projeto)+' order by codigo desc limit 1';
+               if ConsultaSqlFd(qryTemp,sqlstr)=0then
+                        Result:='Última Alteração :'+qryTemp.FieldByName('nome_usuario').AsString +' '+qryTemp.FieldByName('data_hora').AsString;
+        except on E: Exception do
+        CriarLog(Self,E,'Pegar Ultima Alteração Projeto');
+        end;
+finally
+        qryTemp.Free;
+end;
+end;
+
+end.
